@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -66,7 +64,7 @@ namespace Courses_v2.Controllers
             var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
             {
-                HasPassword = HasPassword(),
+                HasPassword = true,
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
@@ -99,10 +97,7 @@ namespace Courses_v2.Controllers
 
         //
         // GET: /Manage/AddPhoneNumber
-        public ActionResult AddPhoneNumber()
-        {
-            return View();
-        }
+        public ActionResult AddPhoneNumber() => View();
 
         //
         // POST: /Manage/AddPhoneNumber
@@ -177,10 +172,7 @@ namespace Courses_v2.Controllers
 
         //
         // GET: /Manage/ChangePassword
-        public ActionResult ChangePassword()
-        {
-            return View();
-        }
+        public ActionResult ChangePassword() => View();
 
         //
         // POST: /Manage/ChangePassword
@@ -208,10 +200,7 @@ namespace Courses_v2.Controllers
 
         //
         // GET: /Manage/SetPassword
-        public ActionResult SetPassword()
-        {
-            return View();
-        }
+        public ActionResult SetPassword() => View();
 
         //
         // POST: /Manage/SetPassword
@@ -270,15 +259,6 @@ namespace Courses_v2.Controllers
             }
         }
 
-        private bool HasPassword()
-        {
-            var user = UserManager.FindById(User.Identity.GetUserId());
-            if (user != null)
-            {
-                return user.PasswordHash != null;
-            }
-            return false;
-        }
 
         private bool HasPhoneNumber()
         {
