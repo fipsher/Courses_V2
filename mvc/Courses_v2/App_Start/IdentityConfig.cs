@@ -10,6 +10,12 @@ using Data.Services;
 
 namespace Courses_v2
 {
+    public class PasswordHasher : IPasswordHasher
+    {
+        public string HashPassword(string password) => password;
+        public PasswordVerificationResult VerifyHashedPassword(string hashedPassword, string providedPassword) => hashedPassword == providedPassword ? PasswordVerificationResult.Success : PasswordVerificationResult.Failed;
+    }
+
     public class ApplicationUserManager : UserManager<User>
     {
         public ApplicationUserManager(IUserStore<User> store)
@@ -22,7 +28,7 @@ namespace Courses_v2
             var ds = new DataService();
             var manager = new ApplicationUserManager(new CustomUserStore(ds.Users));
             //var manager = new ApplicationUserManager(new CustomUserStore(context.Get<ApplicationDbContext>()));
-
+            manager.PasswordHasher = new PasswordHasher();
             manager.UserValidator = new UserValidator<User>(manager)
             {
                 AllowOnlyAlphanumericUserNames = false,
@@ -60,6 +66,11 @@ namespace Courses_v2
             : base(userManager, authenticationManager)
         {
         }
+
+        //public override Task<SignInStatus> PasswordSignInAsync(string userName, string password, bool isPersistent, bool shouldLockout)
+        //{
+        //    return Task.FromResult(SignInStatus.Success);
+        //}
 
         public override Task<ClaimsIdentity> CreateUserIdentityAsync(User user) => user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
 

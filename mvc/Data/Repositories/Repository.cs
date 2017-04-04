@@ -1,4 +1,5 @@
-﻿using Core.Interfaces;
+﻿using Core.Entities;
+using Core.Interfaces;
 using System;
 
 namespace Data.Repositories
@@ -10,9 +11,11 @@ namespace Data.Repositories
         //    _service = service
         //}
 
-        public void Add(TEntity entity) => throw new NotImplementedException();
-        public void Delete(TId id) => throw new NotImplementedException();
-        public TEntity Find(TId id) => throw new NotImplementedException();
-        public void Update(TEntity entity) => throw new NotImplementedException();
+
+
+        public virtual void Add(TEntity entity) => throw new NotImplementedException();
+        public virtual void Delete(TId id) => throw new NotImplementedException();
+        public virtual TEntity Find(TId id) => throw new NotImplementedException();
+        public virtual void Update(TEntity entity) => throw new NotImplementedException();
     }
 }
