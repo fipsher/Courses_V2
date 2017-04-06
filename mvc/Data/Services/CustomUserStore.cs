@@ -18,9 +18,9 @@ namespace Data.Services
 
 
         public Task CreateAsync(User user) => Task.Run(() => Reposirory.Add(user));
-        public Task DeleteAsync(User user) => Task.Run(() => Reposirory.Delete(user.Id));
+        public Task DeleteAsync(User user) => Task.Run(() => Reposirory.Delete(user.Id)); 
         public Task<User> FindByIdAsync(string userId) => Task.FromResult(Reposirory.Find(userId));
-        public Task<User> FindByNameAsync(string userName) => Task.FromResult(Reposirory.Find(userName));
+        public Task<User> FindByNameAsync(string userName) => FindByIdAsync(userName);
         public Task UpdateAsync(User user) => Task.Run(() => Reposirory.Update(user));
         public void Dispose() { }
 
@@ -33,9 +33,9 @@ namespace Data.Services
         public Task SetLockoutEnabledAsync(User user, bool enabled) => Task.FromResult(user.LockoutEnabled = enabled);
 
 
-        public Task SetPasswordHashAsync(User user, string passwordHash) => Task.FromResult(user.PasswordHash = passwordHash);
-        public Task<string> GetPasswordHashAsync(User user) => Task.FromResult(user.PasswordHash);
-        public Task<bool> HasPasswordAsync(User user) => Task.FromResult(true);
+        public Task SetPasswordHashAsync(User user, string passwordHash) => Task.FromResult(user.Password = passwordHash);
+        public Task<string> GetPasswordHashAsync(User user) => Task.FromResult(user.Password);
+        public Task<bool> HasPasswordAsync(User user) => Task.FromResult(!string.IsNullOrEmpty(user.Password));
 
         public Task SetTwoFactorEnabledAsync(User user, bool enabled) => throw new NotImplementedException();
         public Task<bool> GetTwoFactorEnabledAsync(User user) => Task.FromResult(false);

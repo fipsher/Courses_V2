@@ -8,7 +8,7 @@ namespace Data.Repositories
         private static User _user;
         public UserRepository()
         {
-            _user = _user ?? new User() { UserName = "fipsher123@gmail.com", PasswordHash = "Ryba5656", Email = "fipsher123@gmail.com" , AccessFailedCount = 0};
+            _user = _user ?? new User() { UserName = "fipsher123@gmail.com", Password = "Ryba5656", Email = "fipsher123@gmail.com" , AccessFailedCount = 0};
         }
 
         public override User Find(string id) => _user;
