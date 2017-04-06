@@ -16,7 +16,7 @@ namespace Data.Services
         }
 
 
-
+        //IUserStore
         public Task CreateAsync(User user) => Task.Run(() => Reposirory.Add(user));
         public Task DeleteAsync(User user) => Task.Run(() => Reposirory.Delete(user.Id)); 
         public Task<User> FindByIdAsync(string userId) => Task.FromResult(Reposirory.Find(userId));
@@ -24,6 +24,7 @@ namespace Data.Services
         public Task UpdateAsync(User user) => Task.Run(() => Reposirory.Update(user));
         public void Dispose() { }
 
+        //IUserLockoutStore
         public Task<DateTimeOffset> GetLockoutEndDateAsync(User user) => Task.FromResult(new DateTimeOffset(user.LockoutEndDateUtc.Value));
         public Task SetLockoutEndDateAsync(User user, DateTimeOffset lockoutEnd) => Task.FromResult(user.LockoutEndDateUtc = lockoutEnd.UtcDateTime);
         public Task<int> IncrementAccessFailedCountAsync(User user) => Task.FromResult(user.AccessFailedCount++);
@@ -32,11 +33,12 @@ namespace Data.Services
         public Task<bool> GetLockoutEnabledAsync(User user) => Task.FromResult(user.LockoutEnabled);
         public Task SetLockoutEnabledAsync(User user, bool enabled) => Task.FromResult(user.LockoutEnabled = enabled);
 
-
+        //IUserPasswordStore
         public Task SetPasswordHashAsync(User user, string passwordHash) => Task.FromResult(user.Password = passwordHash);
         public Task<string> GetPasswordHashAsync(User user) => Task.FromResult(user.Password);
         public Task<bool> HasPasswordAsync(User user) => Task.FromResult(!string.IsNullOrEmpty(user.Password));
 
+        //IUserTwoFactorStore
         public Task SetTwoFactorEnabledAsync(User user, bool enabled) => throw new NotImplementedException();
         public Task<bool> GetTwoFactorEnabledAsync(User user) => Task.FromResult(false);
     }
