@@ -7,6 +7,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Core.Entities;
 using Data.Services;
+using Core;
 
 namespace Courses_v2
 {
@@ -25,7 +26,7 @@ namespace Courses_v2
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
         {
-            var ds = new DataService();
+            var ds = new DataService(new WebApplicationConfig());
             var manager = new ApplicationUserManager(new CustomUserStore(ds.Users));
             //var manager = new ApplicationUserManager(new CustomUserStore(context.Get<ApplicationDbContext>()));
             manager.PasswordHasher = new PasswordHasher();

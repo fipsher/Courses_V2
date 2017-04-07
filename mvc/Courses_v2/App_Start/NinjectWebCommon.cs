@@ -5,6 +5,7 @@ using Ninject;
 using Ninject.Web.Common;
 using Data;
 using Core.Interfaces;
+using Core;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Courses_v2.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(Courses_v2.App_Start.NinjectWebCommon), "Stop")]
