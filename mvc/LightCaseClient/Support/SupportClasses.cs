@@ -56,15 +56,9 @@ namespace LightCaseClient.Support
             serializer = new JavaScriptSerializer();
         }
 
-        public string Serialize(object obj)
-        {
-            return serializer.Serialize(obj);
-        }
+        public string Serialize(object obj) => serializer.Serialize(obj);
 
-        public T Deserialize<T>(string input)
-        {
-            return serializer.Deserialize<T>(input);
-        }
+        public T Deserialize<T>(string input) => serializer.Deserialize<T>(input);
     }
 
     // The configuration class defines how the rest call is made.

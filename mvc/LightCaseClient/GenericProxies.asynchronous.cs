@@ -37,10 +37,7 @@ namespace LightCaseClient
         }
 
         // Overload method
-        public static void RestGetAsync<TR>(string url, RestCallBack<TR> callback)
-        {
-            RestGetAsync<TR>(url, callback, DefaultConfiguration);
-        }
+        public static void RestGetAsync<TR>(string url, RestCallBack<TR> callback) => RestGetAsync<TR>(url, callback, DefaultConfiguration);
 
         // *********** Asynchronous Get, no response expected *************
         public static void RestGetNonQueryAsync(string url,
@@ -64,10 +61,7 @@ namespace LightCaseClient
 
         // Overload method
         public static void RestGetNonQueryAsync(string url,
-            RestCallBackNonQuery callback)
-        {
-            RestGetNonQueryAsync(url, callback, DefaultConfiguration);
-        }
+            RestCallBackNonQuery callback) => RestGetNonQueryAsync(url, callback, DefaultConfiguration);
 
         // *************** Asynchronous Post *********************
         public static void RestPostAsync<TR, TI>(string url, TI data,
@@ -91,10 +85,7 @@ namespace LightCaseClient
 
         // Overload method
         public static void RestPostAsync<TR, TI>(string url, TI data,
-            RestCallBack<TR> callback)
-        {
-            RestPostAsync<TR, TI>(url, data, callback, DefaultConfiguration);
-        }
+            RestCallBack<TR> callback) => RestPostAsync<TR, TI>(url, data, callback, DefaultConfiguration);
 
 
         // ********* Asynchronous Post, not response expected *********
@@ -118,9 +109,6 @@ namespace LightCaseClient
 
         // Overload method
         public static void RestPostNonQueryAsync<TI>(string url, TI data,
-            RestCallBackNonQuery callback)
-        {
-            RestPostNonQueryAsync(url, data, callback, DefaultConfiguration);
-        }
+            RestCallBackNonQuery callback) => RestPostNonQueryAsync(url, data, callback, DefaultConfiguration);
     }
 }

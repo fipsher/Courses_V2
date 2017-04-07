@@ -23,11 +23,8 @@ namespace LightCaseClient
 
         // Create a request object according to the configuration
         private static HttpWebRequest CreateRequest(string url,
-            ClientConfiguration clientConfig)
-        {
-            return (clientConfig.RequrieSession) ? CookiedHttpWebRequestFactory.Create(url) :
+            ClientConfiguration clientConfig) => (clientConfig.RequrieSession) ? CookiedHttpWebRequestFactory.Create(url) :
                 (HttpWebRequest)WebRequest.Create(url);
-        }
 
         // Post data to the service
         private static void PostData<T>(HttpWebRequest request,

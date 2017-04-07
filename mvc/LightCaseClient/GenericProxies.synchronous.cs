@@ -17,10 +17,7 @@ namespace LightCaseClient
         }
 
         // Overload method
-        public static TR RestGet<TR>(string url)
-        {
-            return RestGet<TR>(url, DefaultConfiguration);
-        }
+        public static TR RestGet<TR>(string url) => RestGet<TR>(url, DefaultConfiguration);
 
 
         // ******** Synchronous GET, no response expected *******
@@ -35,10 +32,7 @@ namespace LightCaseClient
         }
 
         // Overload method
-        public static void RestGetNonQuery(string url)
-        {
-            RestGetNonQuery(url, DefaultConfiguration);
-        }
+        public static void RestGetNonQuery(string url) => RestGetNonQuery(url, DefaultConfiguration);
 
         // ***************** Synchronous POST ********************
         public static TR RestPost<TR, TI>(string url,
@@ -55,10 +49,7 @@ namespace LightCaseClient
         }
 
         // Overload method
-        public static TR RestPost<TR, TI>(string url, TI data)
-        {
-            return RestPost<TR, TI>(url, data, DefaultConfiguration);
-        }
+        public static TR RestPost<TR, TI>(string url, TI data) => RestPost<TR, TI>(url, data, DefaultConfiguration);
 
         // ****** Synchronous GET, no respons expected ******
         public static void RestPostNonQuery<TI>(string url,
@@ -75,9 +66,6 @@ namespace LightCaseClient
         }
 
         // Overload method
-        public static void RestPostNonQuery<TI>(string url, TI data)
-        {
-            RestPostNonQuery(url, data, DefaultConfiguration);
-        }
+        public static void RestPostNonQuery<TI>(string url, TI data) => RestPostNonQuery(url, data, DefaultConfiguration);
     }
 }
