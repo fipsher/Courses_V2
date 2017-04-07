@@ -44,6 +44,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -60,6 +61,7 @@
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Interfaces\IWebApplicationConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebApplicationConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

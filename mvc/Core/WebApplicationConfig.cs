@@ -1,7 +1,7 @@
 ﻿using System.Configuration;
 using Core.Interfaces;
 
-namespace Courses_v2
+namespace Core
 {
     public class WebApplicationConfig : IWebApplicationConfig
     {
