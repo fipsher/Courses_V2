@@ -6,9 +6,9 @@ namespace Data.Repositories
     public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId> where TEntity : class, IEntity<TId>
     {
         protected string BaseUrl { get; private set; }
-        public Repository()
+        public Repository(string webApiUrl)
         {
-            BaseUrl = "" + typeof(TEntity).Name;//should inject some class with strings
+            BaseUrl = webApiUrl + typeof(TEntity).Name;//should inject some class with strings
         }
 
         public virtual void Add(TEntity entity) => GenericProxies.RestPostNonQuery($"{BaseUrl}/Add", entity);

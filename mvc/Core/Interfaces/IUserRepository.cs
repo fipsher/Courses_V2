@@ -2,7 +2,7 @@
 
 namespace Core.Interfaces
 {
-    internal interface IUserRepository : IRepository<User, string>
+    public interface IUserRepository : IRepository<User, string>
     {
 
     }

@@ -1,12 +1,12 @@
 ﻿using Core.Entities;
-using System.Collections.Generic;
+using Core.Interfaces;
 
 namespace Data.Repositories
 {
     class UserRepository : Repository<User, string>, IUserRepository
     {
         private static User _user;
-        public UserRepository()
+        public UserRepository(string webApiUrl) : base(webApiUrl)
         {
             _user = _user ?? new User() { UserName = "fipsher123@gmail.com", Password = "Ryba5656", Email = "fipsher123@gmail.com" , AccessFailedCount = 0};
         }
