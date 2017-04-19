@@ -23,6 +23,12 @@ namespace Courses_v2
             : base(store)
         {
         }
+        public async Task UpdatePhoneNumber(string userId, string phoneNumber)
+        {
+            var user = await Store.FindByIdAsync(userId);
+            user.PhoneNumber = phoneNumber;
+            await Store.UpdateAsync(user);
+        }
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
         {

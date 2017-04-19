@@ -247,3 +247,4 @@ front/.tmp/
 .idea/
 api/WellsUp.Api/logs/Business_Log.txt
 api/WellsUp.Api/logs/Error_Log.txt
+.vs/

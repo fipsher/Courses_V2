@@ -6,7 +6,7 @@ namespace Data.Services
 {
     public class DataService : IDataService
     {
-        private Repository<User, string> _users;
+        private IUserRepository _users;
         private IWebApplicationConfig _webConfig;
 
         public DataService(IWebApplicationConfig webConfig)
@@ -14,6 +14,6 @@ namespace Data.Services
             _webConfig = webConfig;
         }
 
-        public Repository<User, string> Users => _users ?? (_users = new UserRepository(_webConfig.WebApiUrl));
+        public IUserRepository Users => _users ?? (_users = new UserRepository(_webConfig.WebApiUrl));
     }
 }

@@ -16,14 +16,11 @@ namespace Core.Entities
 
         public string Id { get; }
 
+        public Guid GroupId { get; set; }
         public string UserName { get; set; }
         public virtual string Email { get; set; }
         public virtual string Password { get; set; }
-        public virtual string SecurityStamp { get; set; }
         public virtual string PhoneNumber { get; set; }
-        public virtual DateTime? LockoutEndDateUtc { get; set; }
-        public virtual bool LockoutEnabled { get; set; }
-        public virtual int AccessFailedCount { get; set; }
         public virtual List<string> Roles { get; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
