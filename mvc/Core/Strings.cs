@@ -8,6 +8,5 @@ namespace Core
 {
     public class Strings
     {
-        public static readonly int DefaultTake = 100;
     }
 }

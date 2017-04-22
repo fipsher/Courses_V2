@@ -32,7 +32,7 @@ namespace Courses_v2
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
         {
-            var ds = new DataService(new WebApplicationConfig());
+            var ds = new RepositoryStrategy(new WebApplicationConfig());
             var manager = new ApplicationUserManager(new CustomUserStore(ds.Users));
             //var manager = new ApplicationUserManager(new CustomUserStore(context.Get<ApplicationDbContext>()));
             manager.PasswordHasher = new PasswordHasher();

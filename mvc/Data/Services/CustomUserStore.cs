@@ -1,8 +1,8 @@
 ﻿using Core.Entities;
-using Core.Interfaces;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
 using System;
+using System.Linq;
 
 namespace Data.Services
 {
@@ -20,7 +20,7 @@ namespace Data.Services
         //IUserStore
         public Task CreateAsync(User user) => Task.Run(() => Repository.Add(user));
         public Task DeleteAsync(User user) => Task.Run(() => Repository.Delete(user.Id)); 
-        public Task<User> FindByIdAsync(string userId) => Task.FromResult(Repository.Find(userId));
+        public Task<User> FindByIdAsync(string userId) => Task.FromResult(Repository.Find(new Core.Helpers.BaseSearchFilter<User> { Query = new User { Id = userId} }).SingleOrDefault());
         public Task<User> FindByNameAsync(string userName) => FindByIdAsync(userName);
         public Task UpdateAsync(User user) => Task.Run(() => Repository.Update(user));
         public void Dispose() { }
@@ -70,6 +70,6 @@ namespace Data.Services
         public Task<string> GetEmailAsync(User user) => Task.FromResult(user.Email);
         public Task<bool> GetEmailConfirmedAsync(User user) => Task.FromResult(true);
         public Task SetEmailConfirmedAsync(User user, bool confirmed) => Task.FromResult(0);
-        public Task<User> FindByEmailAsync(string email) => Task.FromResult(Repository.GetByEmail(email));
+        public Task<User> FindByEmailAsync(string email) => Task.FromResult(Repository.Find(new Core.Helpers.BaseSearchFilter<User> { Query = new User { Email = email } }).SingleOrDefault());
     }
 }

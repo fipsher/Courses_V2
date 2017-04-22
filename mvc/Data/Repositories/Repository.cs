@@ -1,20 +1,23 @@
-﻿using Core.Interfaces;
+﻿using Core.Helpers;
+using Core.Interfaces;
 using LightCaseClient;
+using System.Collections.Generic;
 
 namespace Data.Repositories
 {
-    public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId> where TEntity : class, IEntity<TId>
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
     {
         protected string BaseUrl { get; private set; }
         public Repository(string webApiUrl)
         {
-            BaseUrl = webApiUrl + typeof(TEntity).Name;//should inject some class with strings
+            BaseUrl = webApiUrl + typeof(TEntity).Name;
         }
 
-        public virtual void Add(TEntity entity) => GenericProxies.RestPostNonQuery($"{BaseUrl}/Add", entity);
-        public virtual void Delete(TId id) => GenericProxies.RestPostNonQuery($"{BaseUrl}/Delete", id);
-        public virtual TEntity Find(TId id) => GenericProxies.RestGet<TEntity>($"{BaseUrl}/Find?id={id}");
-        public virtual TEntity GetAll() => GenericProxies.RestGet<TEntity>($"{BaseUrl}/GetAll");
-        public virtual void Update(TEntity entity) => GenericProxies.RestPostNonQuery($"{BaseUrl}/Update", entity);
+        public virtual void Add(TEntity entity) => GenericProxies.RestPostNonQuery($"{BaseUrl}/add", entity);
+        public virtual void Delete(string id) => GenericProxies.RestPostNonQuery($"{BaseUrl}/delete", id);
+        public virtual List<TEntity> Find(BaseSearchFilter<TEntity> filter) => GenericProxies.RestPost<List<TEntity>, BaseSearchFilter<TEntity>>($"{BaseUrl}/find", filter);
+        public virtual TEntity GetAll() => GenericProxies.RestGet<TEntity>($"{BaseUrl}/get-all");
+        public virtual void Update(TEntity entity) => GenericProxies.RestPostNonQuery($"{BaseUrl}/update", entity);
     }
+
 }

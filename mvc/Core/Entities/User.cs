@@ -1,5 +1,4 @@
-﻿using Core.Interfaces;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -7,14 +6,9 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    public class User : IUser, IEntity<string>
+    public class User : Entity, IUser
     {
-        public User()
-        {
-            Id = "fipsher123@gmail.com";
-        }
-
-        public string Id { get; }
+        public string Login { get; }
 
         public Guid GroupId { get; set; }
         public string UserName { get; set; }

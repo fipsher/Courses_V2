@@ -1,7 +1,9 @@
 ﻿using Core;
 using Core.Entities;
+using Core.Helpers;
 using Core.Interfaces;
 using System;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace Courses_v2.Areas.Admin.Controllers
@@ -15,11 +17,27 @@ namespace Courses_v2.Areas.Admin.Controllers
         }
 
         // GET: Admin/Disciplines
-        public ActionResult Index(int skip = 0, string nameFilter = "") => View(_disciplineRepository.Get(Strings.DefaultTake, skip, nameFilter));
+        public ActionResult Index(int skip = 0, int take = 100, string nameFilter = "")
+        {
+            var disciplines = _disciplineRepository.Find((new ExtendedSearchFilter<Discipline, string>()
+            {
+                Take = take,
+                Skip = skip,
+                Query = new Discipline { Name = nameFilter }
+            }));
 
+            return View(disciplines);
+        }
         // GET: Admin/Disciplines/Details/5
-        public ActionResult Details(Guid id) => View(_disciplineRepository.Find(id));
+        public ActionResult Details(string id)
+        {
+            var disciplines = _disciplineRepository.Find((new BaseSearchFilter<Discipline, string>()
+            {
+                Query = new Discipline() { Id = id }
+            }));
 
+            return View(disciplines.SingleOrDefault());
+        }
         // GET: Admin/Disciplines/Create
         public ActionResult Create() => View();
 
@@ -44,7 +62,12 @@ namespace Courses_v2.Areas.Admin.Controllers
         }
 
         // GET: Admin/Disciplines/Edit/5
-        public ActionResult Edit(Guid id) => View(_disciplineRepository.Find(id));
+        public ActionResult Edit(string id)
+        {
+            var disciplines = _disciplineRepository.Find((new BaseSearchFilter<Discipline, string>() { Query = new Discipline() { Id = id } }));
+
+            return View(disciplines.SingleOrDefault());
+        }
 
         // POST: Admin/Disciplines/Edit/5
         [HttpPost]
@@ -62,11 +85,18 @@ namespace Courses_v2.Areas.Admin.Controllers
         }
 
         // GET: Admin/Disciplines/Delete/5
-        public ActionResult Delete(Guid id) => View(_disciplineRepository.Find(id));
+        public ActionResult Delete(string id)
+        {
+            var disciplines = _disciplineRepository.Find((new BaseSearchFilter<Discipline, string>()
+            {
+                Query = new Discipline() { Id = id }
+            }));
 
+            return View(disciplines.SingleOrDefault());
+        }
         // POST: Admin/Disciplines/Delete/5
         [HttpPost]
-        public ActionResult Delete(Guid id, Discipline discipline)
+        public ActionResult Delete(string id, Discipline discipline)
         {
             try
             {

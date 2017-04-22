@@ -13,7 +13,7 @@ namespace Data
         public static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<IUserRepository>().To<UserRepository>();
-            kernel.Bind<IDataService>().To<IDataService>();
+            kernel.Bind<IRepositoryFactory>().To<IRepositoryFactory>();
         }
     }
 }

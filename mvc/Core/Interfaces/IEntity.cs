@@ -1,7 +1,7 @@
 ﻿namespace Core.Interfaces
 {
-    public interface IEntity<out T>
+    public interface IEntity
     {
-        T Id { get; }
+        string Id { get; }
     }
 }
