@@ -7,9 +7,9 @@ namespace Data.Services
     internal abstract class BaseService<TEntity> : IService<TEntity> where TEntity : class, IEntity
     { 
         protected IRepository<TEntity> Repository;
-        protected RepositoryBootstrapper RepositoryResolver;
+        protected IRepositoryBootstrapper RepositoryResolver;
 
-        public BaseService(RepositoryBootstrapper repositoryBootstrapper)
+        public BaseService(IRepositoryBootstrapper repositoryBootstrapper)
         {
             RepositoryResolver = repositoryBootstrapper;
             Repository = (IRepository<TEntity>)repositoryBootstrapper[typeof(TEntity)];//fix

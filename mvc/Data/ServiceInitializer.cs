@@ -1,4 +1,5 @@
-﻿using Core.Interfaces.Services;
+﻿using Core.Interfaces;
+using Core.Interfaces.Services;
 using Data.Services;
 using Ninject;
 
@@ -14,6 +15,7 @@ namespace Data
         {
             kernel.Bind<IUserService>().To<UserService>();
             kernel.Bind<IDisciplineService>().To<DisciplineService>();
+            kernel.Bind<IRepositoryBootstrapper>().To<RepositoryBootstrapper>();
         }
     }
 }

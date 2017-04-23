@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Data.Services
 {
-    public class RepositoryBootstrapper
+    internal class RepositoryBootstrapper : IRepositoryBootstrapper
     {
         private readonly Dictionary<Type, IRepository> RepositoryResolver = new Dictionary<Type, IRepository>();
 

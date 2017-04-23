@@ -7,7 +7,9 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Core.Entities;
 using Data.Services;
-using Core;
+using Courses_v2.App_Start;
+using Ninject;
+using Core.Interfaces.Services;
 
 namespace Courses_v2
 {
@@ -32,10 +34,11 @@ namespace Courses_v2
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
         {
-            var ds = new RepositoryStrategy(new WebApplicationConfig());
-            var manager = new ApplicationUserManager(new CustomUserStore(ds.Users));
-            //var manager = new ApplicationUserManager(new CustomUserStore(context.Get<ApplicationDbContext>()));
-            manager.PasswordHasher = new PasswordHasher();
+            var userService = NinjectWebCommon.Bootstrapper.Kernel.Get<IUserService>();
+            var manager = new ApplicationUserManager(new CustomUserStore(userService))
+            {
+                PasswordHasher = new PasswordHasher()
+            };
             manager.UserValidator = new UserValidator<User>(manager)
             {
                 AllowOnlyAlphanumericUserNames = false,

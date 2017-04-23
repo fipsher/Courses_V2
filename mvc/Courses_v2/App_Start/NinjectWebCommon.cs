@@ -15,7 +15,7 @@ namespace Courses_v2.App_Start
 
     public static class NinjectWebCommon 
     {
-        private static readonly Bootstrapper bootstrapper = new Bootstrapper();
+        public static readonly Bootstrapper Bootstrapper = new Bootstrapper();
 
         /// <summary>
         /// Starts the application
@@ -24,13 +24,13 @@ namespace Courses_v2.App_Start
         {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
-            bootstrapper.Initialize(CreateKernel);
+            Bootstrapper.Initialize(CreateKernel);
         }
 
         /// <summary>
         /// Stops the application.
         /// </summary>
-        public static void Stop() => bootstrapper.ShutDown();
+        public static void Stop() => Bootstrapper.ShutDown();
 
         /// <summary>
         /// Creates the kernel that will manage your application.
