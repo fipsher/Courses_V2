@@ -3,26 +3,27 @@ using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
+using Core.Interfaces.Services;
 
 namespace Data.Services
 {
     public class CustomUserStore : IUserStore<User>, IUserLockoutStore<User, string>, IUserPasswordStore<User>,
                                    IUserTwoFactorStore<User, string>, IUserPhoneNumberStore<User>, IUserSecurityStampStore<User>, IUserEmailStore<User>
     {
-        public IUserRepository Repository { get; private set; }
+        private IUserService Service { get; set; }
 
-        public CustomUserStore(IUserRepository userRepository)
+        public CustomUserStore(IUserService userRepository)
         {
-            Repository = userRepository;
+            Service = userRepository;
         }
 
 
         //IUserStore
-        public Task CreateAsync(User user) => Task.Run(() => Repository.Add(user));
-        public Task DeleteAsync(User user) => Task.Run(() => Repository.Delete(user.Id)); 
-        public Task<User> FindByIdAsync(string userId) => Task.FromResult(Repository.Find(new Core.Helpers.BaseSearchFilter<User> { Query = new User { Id = userId} }).SingleOrDefault());
+        public Task CreateAsync(User user) => Task.Run(() => Service.Add(user));
+        public Task DeleteAsync(User user) => Task.Run(() => Service.Delete(user.Id)); 
+        public Task<User> FindByIdAsync(string userId) => Task.FromResult(Service.Find(new Core.Helpers.BaseSearchFilter<User> { Query = new User { Id = userId} }).SingleOrDefault());
         public Task<User> FindByNameAsync(string userName) => FindByIdAsync(userName);
-        public Task UpdateAsync(User user) => Task.Run(() => Repository.Update(user));
+        public Task UpdateAsync(User user) => Task.Run(() => Service.Update(user));
         public void Dispose() { }
 
         //IUserLockoutStore
@@ -38,7 +39,7 @@ namespace Data.Services
         public Task SetPasswordHashAsync(User user, string passwordHash) => Task.Run(() => 
         {
             user.Password = passwordHash;
-            Repository.Update(user);
+            Service.Update(user);
         });
         public Task<string> GetPasswordHashAsync(User user) => Task.FromResult(user.Password);
         public Task<bool> HasPasswordAsync(User user) => Task.FromResult(!string.IsNullOrEmpty(user.Password));
@@ -51,7 +52,7 @@ namespace Data.Services
         public Task SetPhoneNumberAsync(User user, string phoneNumber) => Task.Run(() =>
         {
             user.PhoneNumber = phoneNumber;
-            Repository.Update(user);
+            Service.Update(user);
         });
         public Task<string> GetPhoneNumberAsync(User user) => Task.FromResult(user.PhoneNumber);
         public Task<bool> GetPhoneNumberConfirmedAsync(User user) => Task.FromResult(true);
@@ -65,11 +66,11 @@ namespace Data.Services
         public Task SetEmailAsync(User user, string email) => Task.Run(() =>
         {
             user.Email = email;
-            Repository.Update(user);
+            Service.Update(user);
         });
         public Task<string> GetEmailAsync(User user) => Task.FromResult(user.Email);
         public Task<bool> GetEmailConfirmedAsync(User user) => Task.FromResult(true);
         public Task SetEmailConfirmedAsync(User user, bool confirmed) => Task.FromResult(0);
-        public Task<User> FindByEmailAsync(string email) => Task.FromResult(Repository.Find(new Core.Helpers.BaseSearchFilter<User> { Query = new User { Email = email } }).SingleOrDefault());
+        public Task<User> FindByEmailAsync(string email) => Task.FromResult(Service.Find(new Core.Helpers.BaseSearchFilter<User> { Query = new User { Email = email } }).SingleOrDefault());
     }
 }

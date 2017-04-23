@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Data.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
+    public class Repository<TEntity> : IRepository, IRepository<TEntity> where TEntity : class, IEntity
     {
         protected string BaseUrl { get; private set; }
         public Repository(string webApiUrl)

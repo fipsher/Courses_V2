@@ -1,5 +1,5 @@
-﻿using Core.Interfaces;
-using Data.Repositories;
+﻿using Core.Interfaces.Services;
+using Data.Services;
 using Ninject;
 
 namespace Data
@@ -12,8 +12,8 @@ namespace Data
         /// <param name="kernel">The kernel.</param>
         public static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<IUserRepository>().To<UserRepository>();
-            kernel.Bind<IRepositoryFactory>().To<IRepositoryFactory>();
+            kernel.Bind<IUserService>().To<UserService>();
+            kernel.Bind<IDisciplineService>().To<DisciplineService>();
         }
     }
 }

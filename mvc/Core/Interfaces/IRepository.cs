@@ -3,7 +3,9 @@ using System.Collections.Generic;
 
 namespace Core.Interfaces
 {
-    public interface IRepository<TEntity> where TEntity : class, IEntity
+    public interface IRepository { }
+
+    public interface IRepository<TEntity> : IRepository where TEntity : class, IEntity
     {
         List<TEntity> Find(BaseSearchFilter<TEntity> filter);
 

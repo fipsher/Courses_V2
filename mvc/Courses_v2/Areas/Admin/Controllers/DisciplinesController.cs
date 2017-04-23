@@ -1,7 +1,6 @@
-﻿using Core;
-using Core.Entities;
+﻿using Core.Entities;
 using Core.Helpers;
-using Core.Interfaces;
+using Core.Interfaces.Services;
 using System;
 using System.Linq;
 using System.Web.Mvc;
@@ -10,8 +9,8 @@ namespace Courses_v2.Areas.Admin.Controllers
 {
     public class DisciplineController : Controller
     {
-        private IDisciplineRepository _disciplineRepository;
-        public DisciplineController(IDisciplineRepository disciplineRepository)
+        private IDisciplineService _disciplineRepository;
+        public DisciplineController(IDisciplineService disciplineRepository)
         {
             _disciplineRepository = disciplineRepository;
         }
@@ -19,7 +18,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/Disciplines
         public ActionResult Index(int skip = 0, int take = 100, string nameFilter = "")
         {
-            var disciplines = _disciplineRepository.Find((new ExtendedSearchFilter<Discipline, string>()
+            var disciplines = _disciplineRepository.Find((new ExtendedSearchFilter<Discipline>
             {
                 Take = take,
                 Skip = skip,
@@ -31,7 +30,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/Disciplines/Details/5
         public ActionResult Details(string id)
         {
-            var disciplines = _disciplineRepository.Find((new BaseSearchFilter<Discipline, string>()
+            var disciplines = _disciplineRepository.Find((new BaseSearchFilter<Discipline>
             {
                 Query = new Discipline() { Id = id }
             }));
@@ -64,7 +63,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/Disciplines/Edit/5
         public ActionResult Edit(string id)
         {
-            var disciplines = _disciplineRepository.Find((new BaseSearchFilter<Discipline, string>() { Query = new Discipline() { Id = id } }));
+            var disciplines = _disciplineRepository.Find((new BaseSearchFilter<Discipline>() { Query = new Discipline() { Id = id } }));
 
             return View(disciplines.SingleOrDefault());
         }
@@ -87,7 +86,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/Disciplines/Delete/5
         public ActionResult Delete(string id)
         {
-            var disciplines = _disciplineRepository.Find((new BaseSearchFilter<Discipline, string>()
+            var disciplines = _disciplineRepository.Find((new BaseSearchFilter<Discipline>()
             {
                 Query = new Discipline() { Id = id }
             }));

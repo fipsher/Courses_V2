@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Core.Interfaces.Services;
 
 namespace Data.Services
 {
@@ -7,9 +8,5 @@ namespace Data.Services
         public DisciplineService(RepositoryBootstrapper repositoryStrategy) : base(repositoryStrategy)
         {
         }
-    }
-
-    internal interface IDisciplineService
-    {
     }
 }
