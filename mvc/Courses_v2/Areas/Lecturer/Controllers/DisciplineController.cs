@@ -75,7 +75,7 @@ namespace Courses_v2.Areas.Lecturer.Controllers
             //{
 
             //}
-            throw new NotImplementedException()
+            throw new NotImplementedException();
         }
 #endregion
     }
