@@ -207,9 +207,13 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Areas\Admin\Controllers\DisciplinesController.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\CathedraController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DisciplineController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GroupController.cs" />
     <Compile Include="Areas\Watcher\WatcherAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -238,6 +242,14 @@
     <Content Include="Areas\Admin\Views\Discipline\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Discipline\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Discipline\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Discipline\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\Discipline\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Cathedra\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Cathedra\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Cathedra\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Cathedra\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Cathedra\Delete.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -274,7 +286,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Disciplines\" />
+    <Folder Include="Areas\Admin\Views\Group\" />
     <Folder Include="Areas\Lecturer\Controllers\" />
     <Folder Include="Areas\Lecturer\Models\" />
     <Folder Include="Areas\Lecturer\Views\Shared\" />
@@ -287,6 +299,7 @@
     <Folder Include="Areas\Watcher\Controllers\" />
     <Folder Include="Areas\Watcher\Models\" />
     <Folder Include="Areas\Watcher\Views\Shared\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

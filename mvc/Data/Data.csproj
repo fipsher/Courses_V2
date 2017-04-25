@@ -89,6 +89,7 @@
   <ItemGroup>
     <Compile Include="ServiceInitializer.cs" />
     <Compile Include="Services\BaseService.cs" />
+    <Compile Include="Services\CathedraService.cs" />
     <Compile Include="Services\CustomUserStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Repository.cs" />
