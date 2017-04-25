@@ -7,6 +7,6 @@ namespace Core.Interfaces.Services
 {
     public interface IDisciplineService : IService<Discipline>
     {
-        List<DisciplineResponce> FindDisciplineResponse(BaseSearchFilter<Discipline> filter, bool includingSubscriberCathedras = false, bool includingStudents = false);
+        List<DisciplineResponce> FindDisciplineResponse(SearchFilter<Discipline> filter, bool includingSubscriberCathedras = false, bool includingStudents = false);
     }
 }

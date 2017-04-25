@@ -15,7 +15,7 @@ namespace Data.Services
             Repository = (IRepository<TEntity>)repositoryBootstrapper[typeof(TEntity)];//fix
         }
 
-        public List<TEntity> Find(BaseSearchFilter<TEntity> filter) => Repository.Find(filter);
+        public List<TEntity> Find(SearchFilter<TEntity> filter) => Repository.Find(filter);
 
         public void Add(TEntity entity) => Repository.Add(entity);
 

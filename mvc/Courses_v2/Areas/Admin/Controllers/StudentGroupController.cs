@@ -1,6 +1,8 @@
 ﻿using Core.Entities;
+using Core.Helpers;
 using Core.Interfaces.Services;
 using Courses_v2.Controllers;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace Courses_v2.Areas.Admin.Controllers
@@ -11,76 +13,97 @@ namespace Courses_v2.Areas.Admin.Controllers
         {
         }
 
-        // GET: Admin/Group
-        public ActionResult Index()
+        // GET: Admin/StudentGroup
+        public ActionResult Index(int skip = 0, int take = 10, string nameFilter = "")
         {
-            return View();
+            var groups = Service.Find((new SearchFilter<StudentGroup>
+            {
+                Take = take,
+                Skip = skip,
+                Query = new[] { new StudentGroup { Name = nameFilter } }
+            }));
+
+            return View(groups);
         }
 
-        // GET: Admin/Group/Details/5
-        public ActionResult Details(int id)
+        // GET: Admin/StudentGroup/Details/5
+        public ActionResult Details(string id)
         {
-            return View();
+            var groups = Service.Find((new SearchFilter<StudentGroup>
+            {
+                Query = new[] { new StudentGroup() { Id = id } }
+            }));
+
+            return View(groups.SingleOrDefault());
         }
 
-        // GET: Admin/Group/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+        // GET: Admin/StudentGroup/Create
+        public ActionResult Create() => View();
 
-        // POST: Admin/Group/Create
+        // POST: Admin/StudentGroup/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(StudentGroup studentGroup)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    Service.Add(studentGroup);
+                    return RedirectToAction("Index");
+                }
             }
             catch
             {
-                return View();
+                //
             }
-        }
-
-        // GET: Admin/Group/Edit/5
-        public ActionResult Edit(int id)
-        {
             return View();
         }
 
-        // POST: Admin/Group/Edit/5
+        // GET: Admin/StudentGroup/Edit/5
+        public ActionResult Edit(string id)
+        {
+            var groups = Service.Find((new SearchFilter<StudentGroup>() { Query = new[] { new StudentGroup() { Id = id } } }));
+
+            return View(groups.SingleOrDefault());
+        }
+
+        // POST: Admin/StudentGroup/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(string id, StudentGroup studentGroup)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    Service.Update(studentGroup);
+                    return RedirectToAction("Index");
+                }
             }
             catch
             {
-                return View();
+                //
             }
-        }
-
-        // GET: Admin/Group/Delete/5
-        public ActionResult Delete(int id)
-        {
             return View();
         }
 
-        // POST: Admin/Group/Delete/5
+        // GET: Admin/StudentGroup/Delete/5
+        public ActionResult Delete(string id)
+        {
+            var groups = Service.Find((new SearchFilter<StudentGroup>()
+            {
+                Query = new[] { new StudentGroup() { Id = id } }
+            }));
+
+            return View(groups?.SingleOrDefault());
+        }
+
+        // POST: Admin/StudentGroup/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(string id, StudentGroup studentGroup)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                Service.Delete(id);
                 return RedirectToAction("Index");
             }
             catch

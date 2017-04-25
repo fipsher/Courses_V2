@@ -95,6 +95,8 @@
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Services\DisciplineService.cs" />
     <Compile Include="Services\RepositoryBootstrapper.cs" />
+    <Compile Include="Services\SettingService.cs" />
+    <Compile Include="Services\StudentGroupService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>

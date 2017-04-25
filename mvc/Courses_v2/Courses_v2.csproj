@@ -210,12 +210,15 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\CathedraController.cs" />
     <Compile Include="Areas\Admin\Controllers\DisciplineController.cs" />
-    <Compile Include="Areas\Admin\Controllers\GroupController.cs" />
+    <Compile Include="Areas\Admin\Controllers\StudentGroupController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Areas\Lecturer\Controllers\DisciplineController.cs" />
     <Compile Include="Areas\Watcher\WatcherAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SettingController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -250,6 +253,17 @@
     <Content Include="Areas\Admin\Views\Cathedra\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Cathedra\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Cathedra\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\StudentGroup\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\StudentGroup\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\StudentGroup\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\StudentGroup\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\StudentGroup\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Setting\Edit.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -286,9 +300,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Group\" />
-    <Folder Include="Areas\Lecturer\Controllers\" />
     <Folder Include="Areas\Lecturer\Models\" />
+    <Folder Include="Areas\Lecturer\Views\Discipline\" />
     <Folder Include="Areas\Lecturer\Views\Shared\" />
     <Folder Include="Areas\Moderator\Controllers\" />
     <Folder Include="Areas\Moderator\Models\" />
@@ -300,6 +313,7 @@
     <Folder Include="Areas\Watcher\Models\" />
     <Folder Include="Areas\Watcher\Views\Shared\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Setting\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

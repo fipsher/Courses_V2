@@ -12,6 +12,7 @@ namespace Core.Responces
             Name = discipline.Name;
             DisciplineType = discipline.DisciplineType;
             Semestr = discipline.Semestr;
+            Description = discipline.Description;
         }
 
         public string Id { get; set; }
@@ -20,6 +21,7 @@ namespace Core.Responces
         public List<Cathedra> SubscriberCathedras { get; set; }
         public DisciplineType DisciplineType { get; set; }
         public int Semestr { get; set; }
+        public string Description { get; set; }
 
         public List<User> Students { get; set; }
     }

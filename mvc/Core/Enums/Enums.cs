@@ -4,8 +4,15 @@
     {
         public enum DisciplineType
         {
-            Socio = 1,
+            Socio = 0,
             ByDirection = 1
+        }
+
+        public enum Role
+        {
+            Student = 0,
+            Lecturer = 1,
+            Moderator = 2
         }
     }
 }

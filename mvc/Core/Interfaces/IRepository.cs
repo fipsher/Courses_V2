@@ -7,7 +7,7 @@ namespace Core.Interfaces
 
     public interface IRepository<TEntity> : IRepository where TEntity : class, IEntity
     {
-        List<TEntity> Find(BaseSearchFilter<TEntity> filter);
+        List<TEntity> Find(SearchFilter<TEntity> filter);
 
         void Add(TEntity entity);
 

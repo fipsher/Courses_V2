@@ -21,7 +21,7 @@ namespace Data.Services
         //IUserStore
         public Task CreateAsync(User user) => Task.Run(() => Service.Add(user));
         public Task DeleteAsync(User user) => Task.Run(() => Service.Delete(user.Id)); 
-        public Task<User> FindByIdAsync(string userId) => Task.FromResult(Service.Find(new Core.Helpers.BaseSearchFilter<User> { Query = new[] { new User { Id = userId } } }).SingleOrDefault());
+        public Task<User> FindByIdAsync(string userId) => Task.FromResult(Service.Find(new Core.Helpers.SearchFilter<User> { Query = new[] { new User { Id = userId } } }).SingleOrDefault());
         public Task<User> FindByNameAsync(string userName) => FindByIdAsync(userName);
         public Task UpdateAsync(User user) => Task.Run(() => Service.Update(user));
         public void Dispose() { }
@@ -71,6 +71,6 @@ namespace Data.Services
         public Task<string> GetEmailAsync(User user) => Task.FromResult(user.Email);
         public Task<bool> GetEmailConfirmedAsync(User user) => Task.FromResult(true);
         public Task SetEmailConfirmedAsync(User user, bool confirmed) => Task.FromResult(0);
-        public Task<User> FindByEmailAsync(string email) => Task.FromResult(Service.Find(new Core.Helpers.BaseSearchFilter<User> { Query =new[] { new User { Email = email } } }).SingleOrDefault());
+        public Task<User> FindByEmailAsync(string email) => Task.FromResult(Service.Find(new Core.Helpers.SearchFilter<User> { Query =new[] { new User { Email = email } } }).SingleOrDefault());
     }
 }

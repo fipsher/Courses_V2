@@ -16,7 +16,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/Cathedra
         public ActionResult Index(int skip = 0, int take = 100, string nameFilter = "")
         {
-            var catherdas = Service.Find((new ExtendedSearchFilter<Cathedra>
+            var catherdas = Service.Find((new SearchFilter<Cathedra>
             {
                 Take = take,
                 Skip = skip,
@@ -29,7 +29,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/Cathedra/Details/5
         public ActionResult Details(string id)
         {
-            var catherdas = Service.Find((new BaseSearchFilter<Cathedra>
+            var catherdas = Service.Find((new SearchFilter<Cathedra>
             {
                 Query = new[] { new Cathedra() { Id = id } }
             }));
@@ -62,7 +62,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/Cathedra/Edit/5
         public ActionResult Edit(string id)
         {
-            var disciplines = Service.Find((new BaseSearchFilter<Cathedra>() { Query = new[] { new Cathedra() { Id = id } } }));
+            var disciplines = Service.Find((new SearchFilter<Cathedra>() { Query = new[] { new Cathedra() { Id = id } } }));
 
             return View(disciplines.SingleOrDefault());
         }
@@ -89,7 +89,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/Cathedra/Delete/5
         public ActionResult Delete(string id)
         {
-            var disciplines = Service.Find((new BaseSearchFilter<Cathedra>()
+            var disciplines = Service.Find((new SearchFilter<Cathedra>()
             {
                 Query = new[] { new Cathedra() { Id = id } }
             }));
@@ -99,7 +99,7 @@ namespace Courses_v2.Areas.Admin.Controllers
 
         // POST: Admin/Cathedra/Delete/5
         [HttpPost]
-        public ActionResult Delete(string id, FormCollection collection)
+        public ActionResult Delete(string id, Cathedra cathedra)
         {
             try
             {

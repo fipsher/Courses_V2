@@ -2,11 +2,13 @@
 using Core.Helpers;
 using Core.Interfaces.Services;
 using Courses_v2.Controllers;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace Courses_v2.Areas.Admin.Controllers
+namespace Courses_v2.Areas.Lecturer.Controllers
 {
+    // will be added some base discipline ctrl
     public class DisciplineController : BaseController<Discipline, IDisciplineService>
     {
         public DisciplineController(IDisciplineService _disciplineService) : base(_disciplineService)
@@ -25,10 +27,11 @@ namespace Courses_v2.Areas.Admin.Controllers
             }));
             return View(disciplines);
         }
-        
+
         // GET: Admin/Disciplines/Details/5
         public ActionResult Details(string id)
         {
+            //insert logic for details for lecturer
             var disciplines = Service.Find((new SearchFilter<Discipline>
             {
                 Query = new[] { new Discipline() { Id = id } }
@@ -36,32 +39,11 @@ namespace Courses_v2.Areas.Admin.Controllers
 
             return View(disciplines.SingleOrDefault());
         }
-       
-        // GET: Admin/Disciplines/Create
-        public ActionResult Create() => View();
-        // POST: Admin/Disciplines/Create
-        [HttpPost]
-        public ActionResult Create(Discipline discipline)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    Service.Add(discipline);
-                    return RedirectToAction("Index");
-                }
-            }
-            catch
-            {
-                //
-            }
-            return View();
-
-        }
 
         // GET: Admin/Disciplines/Edit/5
         public ActionResult Edit(string id)
         {
+            // same logic
             var disciplines = Service.Find((new SearchFilter<Discipline>() { Query = new[] { new Discipline() { Id = id } } }));
 
             return View(disciplines.SingleOrDefault());
@@ -72,6 +54,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         {
             try
             {
+                // lect logic
                 if (ModelState.IsValid)
                 {
                     Service.Add(discipline);
@@ -85,29 +68,15 @@ namespace Courses_v2.Areas.Admin.Controllers
             return View();
         }
 
-        // GET: Admin/Disciplines/Delete/5
-        public ActionResult Delete(string id)
+        #region Helpers
+        private bool CheckLecturerAccess(Discipline discipline)
         {
-            var disciplines = Service.Find((new SearchFilter<Discipline>()
-            {
-                Query = new[] { new Discipline() { Id = id } }
-            }));
+            //if (discipline.LecturerId == HttpContext.User.Identity.GetId())
+            //{
 
-            return View(disciplines?.SingleOrDefault());
+            //}
+            throw new NotImplementedException()
         }
-        // POST: Admin/Disciplines/Delete/5
-        [HttpPost]
-        public ActionResult Delete(string id, Discipline discipline)
-        {
-            try
-            {
-                Service.Delete(id);
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+#endregion
     }
 }

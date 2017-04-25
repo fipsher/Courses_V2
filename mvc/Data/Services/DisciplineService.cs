@@ -19,7 +19,7 @@ namespace Data.Services
             _userRepo = (IRepository<User>)repositoryStrategy[typeof(User)];
         }
 
-        public List<DisciplineResponce> FindDisciplineResponse(BaseSearchFilter<Discipline> filter, bool includingSubscriberCathedras = false, bool includingStudents = false)
+        public List<DisciplineResponce> FindDisciplineResponse(SearchFilter<Discipline> filter, bool includingSubscriberCathedras = false, bool includingStudents = false)
         {
             var disciplines = Find(filter);
             List<DisciplineResponce> result = new List<DisciplineResponce>();
@@ -29,14 +29,14 @@ namespace Data.Services
                 List<Cathedra> subscriberCathedras = new List<Cathedra>();
                 List<User> students = new List<User>();
 
-                var providerCathedra = _cathedraRepo.Find(new BaseSearchFilter<Cathedra>
+                var providerCathedra = _cathedraRepo.Find(new SearchFilter<Cathedra>
                 {
                     Query = new[] { new Cathedra() { Id = d.ProviderCathedraId } }
                 })?.SingleOrDefault();
 
                 if (includingSubscriberCathedras)
                 {
-                    subscriberCathedras = _cathedraRepo.Find(new BaseSearchFilter<Cathedra>
+                    subscriberCathedras = _cathedraRepo.Find(new SearchFilter<Cathedra>
                     {
                         Query = d.SubscriberCathedraIds.Select(id => new Cathedra() { Id = id})
                     });
@@ -44,7 +44,7 @@ namespace Data.Services
 
                 if (includingStudents)
                 {
-                    students = _userRepo.Find(new BaseSearchFilter<User>
+                    students = _userRepo.Find(new SearchFilter<User>
                     {
                         Query = d.StudentIds.Select(id => new User() { Id = id })
                     });
