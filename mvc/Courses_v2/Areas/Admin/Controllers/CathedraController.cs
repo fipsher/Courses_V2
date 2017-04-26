@@ -14,9 +14,9 @@ namespace Courses_v2.Areas.Admin.Controllers
         }
 
         // GET: Admin/Cathedra
-        public ActionResult Index(SearchFilter<Cathedra> filter)
+        public ActionResult Index(SearchFilter<Cathedra> filter = null)
         {
-            filter = filter ?? SearchFilter<Cathedra>.DefaultFilter;
+            filter = filter ?? SearchFilter<Cathedra>.Default;
             var catherdas = Service.Find(filter);
             return View(catherdas);
         }

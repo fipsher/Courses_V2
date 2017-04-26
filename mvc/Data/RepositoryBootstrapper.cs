@@ -4,7 +4,7 @@ using Data.Repositories;
 using System;
 using System.Collections.Generic;
 
-namespace Data.Services
+namespace Data
 {
     internal class RepositoryBootstrapper : IRepositoryBootstrapper
     {

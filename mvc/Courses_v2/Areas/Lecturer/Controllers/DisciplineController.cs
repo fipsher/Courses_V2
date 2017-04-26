@@ -17,14 +17,10 @@ namespace Courses_v2.Areas.Lecturer.Controllers
         }
 
         // GET: Admin/Disciplines
-        public ActionResult Index(int skip = 0, int take = 10, string nameFilter = "")
+        public ActionResult Index(SearchFilter<Discipline> filter = null)
         {
-            var disciplines = Service.FindDisciplineResponse((new SearchFilter<Discipline>
-            {
-                Take = take,
-                Skip = skip,
-                Query = new[] { new Discipline { Name = nameFilter } }
-            }));
+            filter = filter ?? SearchFilter<Discipline>.Default;
+            var disciplines = Service.FindDisciplineResponse(filter);
             return View(disciplines);
         }
 

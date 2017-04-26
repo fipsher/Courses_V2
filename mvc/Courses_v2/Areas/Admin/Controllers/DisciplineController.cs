@@ -16,7 +16,7 @@ namespace Courses_v2.Areas.Admin.Controllers
 
         // GET: Admin/Disciplines
         public ActionResult Index(SearchFilter<Discipline> filter = null)
-        {
+        {            
             filter = filter ?? SearchFilter<Discipline>.Default;
             var disciplines = Service.FindDisciplineResponse(filter);
             return View(disciplines);

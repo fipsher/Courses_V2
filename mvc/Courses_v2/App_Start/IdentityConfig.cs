@@ -5,8 +5,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using Core.Entities;
-using Data.Services;
 using Courses_v2.App_Start;
 using Ninject;
 using Core.Interfaces.Services;
@@ -78,11 +76,6 @@ namespace Courses_v2
             : base(userManager, authenticationManager)
         {
         }
-
-        //public override Task<SignInStatus> PasswordSignInAsync(string usApplicationUsererName, string password, bool isPersistent, bool shouldLockout)
-        //{
-        //    return Task.FromResult(SignInStatus.Success);
-        //}
 
         public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser user) => user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
 

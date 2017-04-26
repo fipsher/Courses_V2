@@ -36,7 +36,10 @@ namespace Courses_v2.Authentication
         public void Dispose() { }
 
         //IUserLockoutStore
-        public Task<DateTimeOffset> GetLockoutEndDateAsync(ApplicationUser user) => throw new NotImplementedException();
+        public Task<DateTimeOffset> GetLockoutEndDateAsync(ApplicationUser user)
+        {
+            throw new NotImplementedException();
+        }
         public Task SetLockoutEndDateAsync(ApplicationUser user, DateTimeOffset lockoutEnd) => Task.FromResult(0);
         public Task<int> IncrementAccessFailedCountAsync(ApplicationUser user) => Task.FromResult(0);
         public Task ResetAccessFailedCountAsync(ApplicationUser user) => Task.FromResult(0);
@@ -54,7 +57,10 @@ namespace Courses_v2.Authentication
         public Task<bool> HasPasswordAsync(ApplicationUser user) => Task.FromResult(!string.IsNullOrEmpty(user.Password));
 
         //IUserTwoFactorStore
-        public Task SetTwoFactorEnabledAsync(ApplicationUser user, bool enabled) => throw new NotImplementedException();
+        public Task SetTwoFactorEnabledAsync(ApplicationUser user, bool enabled)
+        {
+            throw new NotImplementedException();
+        }
         public Task<bool> GetTwoFactorEnabledAsync(ApplicationUser user) => Task.FromResult(false);
 
         //IUserPhoneNumberStore
