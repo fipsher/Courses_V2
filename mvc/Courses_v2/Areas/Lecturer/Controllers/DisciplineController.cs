@@ -17,7 +17,7 @@ namespace Courses_v2.Areas.Lecturer.Controllers
         }
 
         // GET: Admin/Disciplines
-        public ActionResult Index(int skip = 0, int take = 100, string nameFilter = "")
+        public ActionResult Index(int skip = 0, int take = 10, string nameFilter = "")
         {
             var disciplines = Service.FindDisciplineResponse((new SearchFilter<Discipline>
             {

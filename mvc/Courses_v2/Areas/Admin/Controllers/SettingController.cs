@@ -16,7 +16,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/Setting
         public ActionResult Index()
         {
-            var settings = Service.Find((new SearchFilter<Setting>()));
+            var settings = Service.Find(SearchFilter<Setting>.Default);
 
             return View(settings);
         }
@@ -24,7 +24,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/Setting/Edit/5
         public ActionResult Edit(string id)
         {
-            var settings = Service.Find((new SearchFilter<Setting>()));
+            var settings = Service.Find((SearchFilter<Setting>.Empty));
 
             return View(settings);
         }

@@ -14,15 +14,10 @@ namespace Courses_v2.Areas.Admin.Controllers
         }
 
         // GET: Admin/StudentGroup
-        public ActionResult Index(int skip = 0, int take = 10, string nameFilter = "")
+        public ActionResult Index(SearchFilter<StudentGroup> filter = null)
         {
-            var groups = Service.Find((new SearchFilter<StudentGroup>
-            {
-                Take = take,
-                Skip = skip,
-                Query = new[] { new StudentGroup { Name = nameFilter } }
-            }));
-
+            filter = filter ?? SearchFilter<StudentGroup>.Default;
+            var groups = Service.Find(filter);
             return View(groups);
         }
 

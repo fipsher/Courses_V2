@@ -15,10 +15,10 @@ namespace Courses_v2.Areas.Admin.Controllers
 
         // GET: Admin/User
         [HttpPost]
-        public ActionResult Index(SearchFilter<User> filter)
+        public ActionResult Index(SearchFilter<User> filter = null)
         {
+            filter = filter ?? SearchFilter<User>.Default;
             var users = Service.Find(filter);
-
             return View(users);
         }
 

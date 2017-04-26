@@ -14,15 +14,10 @@ namespace Courses_v2.Areas.Admin.Controllers
         }
 
         // GET: Admin/Cathedra
-        public ActionResult Index(int skip = 0, int take = 100, string nameFilter = "")
+        public ActionResult Index(SearchFilter<Cathedra> filter)
         {
-            var catherdas = Service.Find((new SearchFilter<Cathedra>
-            {
-                Take = take,
-                Skip = skip,
-                Query = new[] { new Cathedra { Name = nameFilter } }
-            }));
-
+            filter = filter ?? SearchFilter<Cathedra>.DefaultFilter;
+            var catherdas = Service.Find(filter);
             return View(catherdas);
         }
 

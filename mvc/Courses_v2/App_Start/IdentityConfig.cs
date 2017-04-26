@@ -10,6 +10,8 @@ using Data.Services;
 using Courses_v2.App_Start;
 using Ninject;
 using Core.Interfaces.Services;
+using Courses_v2.Models;
+using Courses_v2.Authentication;
 
 namespace Courses_v2
 {
@@ -19,9 +21,9 @@ namespace Courses_v2
         public PasswordVerificationResult VerifyHashedPassword(string hashedPassword, string providedPassword) => hashedPassword == providedPassword ? PasswordVerificationResult.Success : PasswordVerificationResult.Failed;
     }
 
-    public class ApplicationUserManager : UserManager<User>
+    public class ApplicationUserManager : UserManager<ApplicationUser>
     {
-        public ApplicationUserManager(IUserStore<User> store)
+        public ApplicationUserManager(IUserStore<ApplicationUser> store)
             : base(store)
         {
         }
@@ -39,7 +41,7 @@ namespace Courses_v2
             {
                 PasswordHasher = new PasswordHasher()
             };
-            manager.UserValidator = new UserValidator<User>(manager)
+            manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
@@ -63,26 +65,26 @@ namespace Courses_v2
             if (dataProtectionProvider != null)
             {
                 manager.UserTokenProvider = 
-                    new DataProtectorTokenProvider<User>(dataProtectionProvider.Create("ASP.NET Identity"));
+                    new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
         }
     }
 
     // Configure the application sign-in manager which is used in this application.
-    public class ApplicationSignInManager : SignInManager<User, string>
+    public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
     {
         public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)
             : base(userManager, authenticationManager)
         {
         }
 
-        //public override Task<SignInStatus> PasswordSignInAsync(string userName, string password, bool isPersistent, bool shouldLockout)
+        //public override Task<SignInStatus> PasswordSignInAsync(string usApplicationUsererName, string password, bool isPersistent, bool shouldLockout)
         //{
         //    return Task.FromResult(SignInStatus.Success);
         //}
 
-        public override Task<ClaimsIdentity> CreateUserIdentityAsync(User user) => user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
+        public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser user) => user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
 
         public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context) => new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
     }
