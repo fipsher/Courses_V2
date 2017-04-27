@@ -296,6 +296,10 @@
     <Content Include="Areas\Moderator\Views\Discipline\Edit.cshtml" />
     <Content Include="Areas\Moderator\Views\Discipline\Index.cshtml" />
     <Content Include="Areas\Student\Views\web.config" />
+    <Content Include="Areas\Student\Views\Discipline\Index.cshtml" />
+    <Content Include="Areas\Student\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Student\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Student\Views\Discipline\MyDisciplines.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -335,7 +339,6 @@
     <Folder Include="Areas\Lecturer\Models\" />
     <Folder Include="Areas\Moderator\Models\" />
     <Folder Include="Areas\Student\Models\" />
-    <Folder Include="Areas\Student\Views\Shared\" />
     <Folder Include="Areas\Watcher\Controllers\" />
     <Folder Include="Areas\Watcher\Models\" />
     <Folder Include="Areas\Watcher\Views\Shared\" />

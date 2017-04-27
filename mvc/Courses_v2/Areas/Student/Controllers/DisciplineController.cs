@@ -33,7 +33,7 @@ namespace Courses_v2.Areas.Student.Controllers
             {
                 Query = new[] { new User { Id = _userId } }
             }).SingleOrDefault();
-            var disciplines = Service.Find(new SearchFilter<Discipline>
+            var disciplines = Service.FindDisciplineResponse(new SearchFilter<Discipline>
             {
                 Query = user.ChoosenDisciplineIds.Select(id => new Discipline { Id = id })
             });
