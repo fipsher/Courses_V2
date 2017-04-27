@@ -2,6 +2,7 @@
 using Core.Helpers;
 using Core.Interfaces.Services;
 using Courses_v2.Controllers;
+using System.Linq;
 using System.Web.Mvc;
 using static Core.Enums.Enums;
 
@@ -23,6 +24,19 @@ namespace Courses_v2.Areas.Student.Controllers
         {
             filter = filter ?? SearchFilter<Discipline>.Default;
             var disciplines = Service.FindDisciplineResponse(filter);
+            return View(disciplines);
+        }
+
+        public ActionResult MyDisciplines()
+        {
+            var user = _userService.Find(new SearchFilter<User>()
+            {
+                Query = new[] { new User { Id = _userId } }
+            }).SingleOrDefault();
+            var disciplines = Service.Find(new SearchFilter<Discipline>
+            {
+                Query = user.ChoosenDisciplineIds.Select(id => new Discipline { Id = id })
+            });
             return View(disciplines);
         }
 
