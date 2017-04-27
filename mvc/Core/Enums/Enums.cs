@@ -5,7 +5,7 @@
         public enum DisciplineType
         {
             Socio = 0,
-            ByDirection = 1
+            Special = 1
         }
 
         public enum Role

@@ -9,7 +9,7 @@ namespace Core.Entities
         public string ProviderCathedraId { get; set; }
         public List<string> SubscriberCathedraIds { get; set; }
         public DisciplineType DisciplineType { get; set; }
-        public int Semestr { get; set; }
+        public int Semester { get; set; }
         public string Description { get; set; }
         public string LecturerId { get; set; }
 

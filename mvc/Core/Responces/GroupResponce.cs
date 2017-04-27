@@ -7,10 +7,10 @@ namespace Core.Responces
         public StudentGroupResponce(StudentGroup group)
         {
             Id = group.Id;
-            Semestr = group.Semestr;
+            Semester = group.Semester;
         }
         public string Id { get; set; }
         public Cathedra Cathedra { get; set; }
-        public int Semestr { get; set; }
+        public int Semester { get; set; }
     }
 }

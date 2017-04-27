@@ -11,9 +11,11 @@ namespace Core.Entities
 
         public Guid GroupId { get; set; }
         public string UserName { get; set; }
-        public virtual string Email { get; set; }
-        public virtual string Password { get; set; }
-        public virtual string PhoneNumber { get; set; }
-        public virtual List<Role> Roles { get; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string PhoneNumber { get; set; }
+        public List<Role> Roles { get; set; }
+
+        public List<string> ChoosenDisciplineIds { get; set; }
     }
 }

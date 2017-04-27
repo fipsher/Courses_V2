@@ -5,7 +5,7 @@ using Courses_v2.Controllers;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace Courses_v2.Areas.Lecturer.Controllers
+namespace Courses_v2.Areas.Moderator.Controllers
 {
     // will be added some base discipline ctrl
     public class DisciplineController : BaseController<Discipline, IDisciplineService>

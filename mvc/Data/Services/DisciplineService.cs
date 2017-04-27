@@ -5,6 +5,9 @@ using Core.Interfaces;
 using Core.Interfaces.Services;
 using System.Linq;
 using Core.Responces;
+using System;
+using static Core.Enums.Enums;
+using Core;
 
 namespace Data.Services
 {
@@ -28,6 +31,11 @@ namespace Data.Services
                 List<Cathedra> subscriberCathedras = new List<Cathedra>();
                 List<User> students = new List<User>();
 
+                var lecturer = _userRepo.Find(new SearchFilter<User>
+                {
+                    Query = new[] { new User() { Id = d.LecturerId } }
+                })?.SingleOrDefault();
+
                 var providerCathedra = _cathedraRepo.Find(new SearchFilter<Cathedra>
                 {
                     Query = new[] { new Cathedra() { Id = d.ProviderCathedraId } }
@@ -37,7 +45,7 @@ namespace Data.Services
                 {
                     subscriberCathedras = _cathedraRepo.Find(new SearchFilter<Cathedra>
                     {
-                        Query = d.SubscriberCathedraIds.Select(id => new Cathedra() { Id = id})
+                        Query = d.SubscriberCathedraIds.Select(id => new Cathedra() { Id = id })
                     });
                 }
 
@@ -49,6 +57,7 @@ namespace Data.Services
                     });
                 }
 
+                disciplineResponce.Lecturer = lecturer;
                 disciplineResponce.ProviderCathedra = providerCathedra;
                 disciplineResponce.SubscriberCathedras = subscriberCathedras;
                 disciplineResponce.Students = students;
@@ -56,6 +65,39 @@ namespace Data.Services
                 result.Add(disciplineResponce);
             });
 
+            return result;
+        }
+
+        public bool RegisterStudent(string studentId, string disciplineId)
+        {
+            var result = false;
+            var student = _userRepo.Find(new SearchFilter<User>()
+            {
+                Query = new[] { new User() { Id = studentId } }
+            }).SingleOrDefault();
+
+            var discipline = Find(new SearchFilter<Discipline>()
+            {
+                Query = new[] { new Discipline() { Id = disciplineId } }
+            }).SingleOrDefault();
+
+            if (student.Roles.Contains(Role.Student))
+            {
+                var disciplines = Find(new SearchFilter<Discipline>()
+                {
+                    Query = student.ChoosenDisciplineIds.Select(id => new Discipline { Id = id })
+                });
+                if (disciplines.Count(d => d.DisciplineType == DisciplineType.Socio) < Constants.AmountSocioDisciplines &&
+                    disciplines.Count(d => d.DisciplineType == DisciplineType.Special) < Constants.AmountSpecialDisciplines &&
+                    !student.ChoosenDisciplineIds.Contains(disciplineId))
+                {
+                    discipline.StudentIds.Add(studentId);
+                    student.ChoosenDisciplineIds.Add(disciplineId);
+                    this.Add(discipline);
+                    _userRepo.Update(student);
+                    result = true;
+                }
+            }
             return result;
         }
     }

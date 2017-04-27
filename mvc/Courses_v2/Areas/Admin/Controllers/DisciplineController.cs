@@ -2,39 +2,60 @@
 using Core.Helpers;
 using Core.Interfaces.Services;
 using Courses_v2.Controllers;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using static Core.Enums.Enums;
 
 namespace Courses_v2.Areas.Admin.Controllers
 {
     public class DisciplineController : BaseController<Discipline, IDisciplineService>
     {
-        public DisciplineController(IDisciplineService _disciplineService) : base(_disciplineService)
+        private readonly IUserService _userService;
+        private readonly ICathedraService _cathedraService;
+
+        public DisciplineController(IDisciplineService disciplineService, IUserService userService, ICathedraService cathedraService) : base(disciplineService)
         {
-            Service = _disciplineService;
+            Service = disciplineService;
+            _userService = userService;
+            _cathedraService = cathedraService;
         }
 
         // GET: Admin/Disciplines
         public ActionResult Index(SearchFilter<Discipline> filter = null)
-        {            
+        {
             filter = filter ?? SearchFilter<Discipline>.Default;
             var disciplines = Service.FindDisciplineResponse(filter);
             return View(disciplines);
         }
-        
+
         // GET: Admin/Disciplines/Details/5
         public ActionResult Details(string id)
         {
-            var disciplines = Service.Find((new SearchFilter<Discipline>
+            var disciplines = Service.FindDisciplineResponse((new SearchFilter<Discipline>
             {
                 Query = new[] { new Discipline() { Id = id } }
             }));
 
             return View(disciplines.SingleOrDefault());
         }
-       
+
         // GET: Admin/Disciplines/Create
-        public ActionResult Create() => View();
+        public ActionResult Create()
+        {
+            ViewBag.Cathedras = _cathedraService.Find(SearchFilter<Cathedra>.Empty);
+
+            var lecturersFilter = new SearchFilter<User>
+            {
+                Query = new List<User>()
+                {
+                    new User(){Roles = new List<Role> { Role.Lecturer }}
+                }
+            };
+            ViewBag.Lecturers = _userService.Find(lecturersFilter);
+
+            return View();
+        }
         // POST: Admin/Disciplines/Create
         [HttpPost]
         public ActionResult Create(Discipline discipline)
@@ -60,6 +81,17 @@ namespace Courses_v2.Areas.Admin.Controllers
         {
             var disciplines = Service.Find((new SearchFilter<Discipline>() { Query = new[] { new Discipline() { Id = id } } }));
 
+            ViewBag.Cathedras = _cathedraService.Find(SearchFilter<Cathedra>.Empty);
+
+            var lecturersFilter = new SearchFilter<User>
+            {
+                Query = new List<User>()
+                {
+                    new User(){Roles = new List<Role> { Role.Lecturer }}
+                }
+            };
+            ViewBag.Lecturers = _userService.Find(lecturersFilter);
+
             return View(disciplines.SingleOrDefault());
         }
         // POST: Admin/Disciplines/Edit/5
@@ -84,7 +116,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/Disciplines/Delete/5
         public ActionResult Delete(string id)
         {
-            var disciplines = Service.Find((new SearchFilter<Discipline>()
+            var disciplines = Service.FindDisciplineResponse((new SearchFilter<Discipline>()
             {
                 Query = new[] { new Discipline() { Id = id } }
             }));
