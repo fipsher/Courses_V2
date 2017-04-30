@@ -43,16 +43,26 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/Disciplines/Create
         public ActionResult Create()
         {
-            ViewBag.Cathedras = _cathedraService.Find(SearchFilter<Cathedra>.Empty);
+            ViewBag.Cathedras = _cathedraService.Find(SearchFilter<Cathedra>.Empty)
+                                                .Select(x => new SelectListItem
+                                                {
+                                                    Text = x.Name,
+                                                    Value = x.Id
+                                                }); ;
 
             var lecturersFilter = new SearchFilter<User>
-            {
-                OptionList = new List<User>()
-                {
-                    new User(){Roles = new List<Role> { Role.Lecturer }}
-                }
-            };
-            ViewBag.Lecturers = _userService.Find(lecturersFilter);
+                                        {
+                                            OptionList = new List<User>()
+                                            {
+                                                new User(){Roles = new List<Role> { Role.Lecturer }}
+                                            }
+                                        };
+            ViewBag.Lecturers = _userService.Find(lecturersFilter)
+                                            .Select(x => new SelectListItem
+                                            {
+                                                Text = x.UserName,
+                                                Value = x.Id
+                                            });
 
             return View();
         }
@@ -81,7 +91,11 @@ namespace Courses_v2.Areas.Admin.Controllers
         {
             var disciplines = Service.Find((new SearchFilter<Discipline>() { OptionList = new[] { new Discipline() { Id = id } } }));
 
-            ViewBag.Cathedras = _cathedraService.Find(SearchFilter<Cathedra>.Empty);
+            ViewBag.Cathedras = _cathedraService.Find(SearchFilter<Cathedra>.Empty)
+                                                .Select(x => new SelectListItem
+                                                {
+                                                    Text = x.Name, Value = x.Id
+                                                }); ;
 
             var lecturersFilter = new SearchFilter<User>
             {
@@ -90,7 +104,11 @@ namespace Courses_v2.Areas.Admin.Controllers
                     new User(){Roles = new List<Role> { Role.Lecturer }}
                 }
             };
-            ViewBag.Lecturers = _userService.Find(lecturersFilter);
+            ViewBag.Lecturers = _userService.Find(lecturersFilter)
+                                            .Select(x => new SelectListItem
+                                            {
+                                                Text = x.UserName, Value = x.Id
+                                            });
 
             return View(disciplines.SingleOrDefault());
         }
