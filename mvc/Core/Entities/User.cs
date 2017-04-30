@@ -9,7 +9,7 @@ namespace Core.Entities
     {
         public string Login { get; }
 
-        public Guid GroupId { get; set; }
+        public string GroupId { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }

@@ -5,7 +5,6 @@ using Core.Interfaces;
 using Core.Interfaces.Services;
 using System.Linq;
 using Core.Responces;
-using System;
 using static Core.Enums.Enums;
 using Core;
 
@@ -99,6 +98,23 @@ namespace Data.Services
                 }
             }
             return result;
+        }
+
+        public bool UnregisterStudent(string studentId, string disciplineId)
+        {
+            var student = _userRepo.Find(new SearchFilter<User>()
+            {
+                OptionList = new[] { new User() { Id = studentId } }
+            }).SingleOrDefault();
+
+            var discipline = Find(new SearchFilter<Discipline>()
+            {
+                OptionList = new[] { new Discipline() { Id = disciplineId } }
+            }).SingleOrDefault();
+
+            student.DisciplineIds?.Remove(disciplineId);
+            discipline.StudentIds?.Remove(studentId);
+            return true;
         }
     }
 }

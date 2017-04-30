@@ -27,6 +27,16 @@ namespace Courses_v2.Areas.Student.Controllers
             return View(disciplines);
         }
 
+        public ActionResult Details(string id)
+        {
+            var disciplines = Service.FindDisciplineResponse((new SearchFilter<Discipline>
+            {
+                OptionList = new[] { new Discipline() { Id = id } }
+            }));
+
+            return View(disciplines.SingleOrDefault());
+        }
+
         public ActionResult MyDisciplines()
         {
             var user = _userService.Find(new SearchFilter<User>()
@@ -45,6 +55,19 @@ namespace Courses_v2.Areas.Student.Controllers
             var result = Service.RegisterStudent(_userId, id);
             ViewBag.RegisterResult = result ? "Успішно зареєстровано" : "Упс, щось не так";
             return View();
+        }
+
+        public ActionResult Unregister(string id)
+        {
+            try
+            {
+                Service.UnregisterStudent(_userId, id);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }

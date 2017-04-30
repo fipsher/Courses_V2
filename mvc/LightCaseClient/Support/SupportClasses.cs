@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Web.Script.Serialization;
@@ -50,15 +51,15 @@ namespace LightCaseClient.Support
     // An implementation of ISerializerAdapter based on the JavaScriptSerializer
     public class JavaScriptSerializerAdapter : ISerializerAdapter
     {
-        private JavaScriptSerializer serializer;
-        public JavaScriptSerializerAdapter()
-        {
-            serializer = new JavaScriptSerializer();
-        }
+        //private JsonSerializer serializer;
+        //public JavaScriptSerializerAdapter()
+        //{
+        //    serializer = new JsonSerializer();
+        //}
 
-        public string Serialize(object obj) => serializer.Serialize(obj);
+        public string Serialize(object obj) => JsonConvert.SerializeObject(obj);
 
-        public T Deserialize<T>(string input) => serializer.Deserialize<T>(input);
+        public T Deserialize<T>(string input) => JsonConvert.DeserializeObject<T>(input);
     }
 
     // The configuration class defines how the rest call is made.

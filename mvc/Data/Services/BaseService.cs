@@ -15,13 +15,13 @@ namespace Data.Services
             Repository = (IRepository<TEntity>)repositoryBootstrapper[typeof(TEntity)];//fix
         }
 
-        public List<TEntity> Find(SearchFilter<TEntity> filter) => Repository.Find(filter);
+        public virtual List<TEntity> Find(SearchFilter<TEntity> filter) => Repository.Find(filter);
 
-        public void Add(TEntity entity) => Repository.Add(entity);
+        public virtual void Add(TEntity entity) => Repository.Add(entity);
 
-        public void Delete(string id) => Repository.Delete(id);
+        public virtual void Delete(string id) => Repository.Delete(id);
 
-        public void Update(TEntity entity) => Repository.Update(entity);
+        public virtual void Update(TEntity entity) => Repository.Update(entity);
 
     }
 }

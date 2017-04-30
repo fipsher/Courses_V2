@@ -15,7 +15,6 @@ namespace Data
         {
             kernel.Bind<IUserService>().To<UserService>();
             kernel.Bind<IDisciplineService>().To<DisciplineService>();
-            kernel.Bind<IUserService>().To<UserService>();
             kernel.Bind<ICathedraService>().To<CathedraService>();
             kernel.Bind<IStudentGroupService>().To<StudentGroupService>();
             kernel.Bind<ISettingService>().To<SettingService>();
