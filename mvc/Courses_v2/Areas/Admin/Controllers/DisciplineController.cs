@@ -34,7 +34,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         {
             var disciplines = Service.FindDisciplineResponse((new SearchFilter<Discipline>
             {
-                Query = new[] { new Discipline() { Id = id } }
+                OptionList = new[] { new Discipline() { Id = id } }
             }));
 
             return View(disciplines.SingleOrDefault());
@@ -47,7 +47,7 @@ namespace Courses_v2.Areas.Admin.Controllers
 
             var lecturersFilter = new SearchFilter<User>
             {
-                Query = new List<User>()
+                OptionList = new List<User>()
                 {
                     new User(){Roles = new List<Role> { Role.Lecturer }}
                 }
@@ -79,13 +79,13 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/Disciplines/Edit/5
         public ActionResult Edit(string id)
         {
-            var disciplines = Service.Find((new SearchFilter<Discipline>() { Query = new[] { new Discipline() { Id = id } } }));
+            var disciplines = Service.Find((new SearchFilter<Discipline>() { OptionList = new[] { new Discipline() { Id = id } } }));
 
             ViewBag.Cathedras = _cathedraService.Find(SearchFilter<Cathedra>.Empty);
 
             var lecturersFilter = new SearchFilter<User>
             {
-                Query = new List<User>()
+                OptionList = new List<User>()
                 {
                     new User(){Roles = new List<Role> { Role.Lecturer }}
                 }
@@ -118,7 +118,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         {
             var disciplines = Service.FindDisciplineResponse((new SearchFilter<Discipline>()
             {
-                Query = new[] { new Discipline() { Id = id } }
+                OptionList = new[] { new Discipline() { Id = id } }
             }));
 
             return View(disciplines?.SingleOrDefault());

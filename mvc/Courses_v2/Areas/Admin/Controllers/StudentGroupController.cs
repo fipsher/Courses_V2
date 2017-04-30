@@ -26,7 +26,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         {
             var groups = Service.Find((new SearchFilter<StudentGroup>
             {
-                Query = new[] { new StudentGroup() { Id = id } }
+                OptionList = new[] { new StudentGroup() { Id = id } }
             }));
 
             return View(groups.SingleOrDefault());
@@ -57,7 +57,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/StudentGroup/Edit/5
         public ActionResult Edit(string id)
         {
-            var groups = Service.Find((new SearchFilter<StudentGroup>() { Query = new[] { new StudentGroup() { Id = id } } }));
+            var groups = Service.Find((new SearchFilter<StudentGroup>() { OptionList = new[] { new StudentGroup() { Id = id } } }));
 
             return View(groups.SingleOrDefault());
         }
@@ -86,7 +86,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         {
             var groups = Service.Find((new SearchFilter<StudentGroup>()
             {
-                Query = new[] { new StudentGroup() { Id = id } }
+                OptionList = new[] { new StudentGroup() { Id = id } }
             }));
 
             return View(groups?.SingleOrDefault());

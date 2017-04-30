@@ -31,11 +31,11 @@ namespace Courses_v2.Areas.Student.Controllers
         {
             var user = _userService.Find(new SearchFilter<User>()
             {
-                Query = new[] { new User { Id = _userId } }
+                OptionList = new[] { new User { Id = _userId } }
             }).SingleOrDefault();
             var disciplines = Service.FindDisciplineResponse(new SearchFilter<Discipline>
             {
-                Query = user.ChoosenDisciplineIds.Select(id => new Discipline { Id = id })
+                OptionList = user.DisciplineIds.Select(id => new Discipline { Id = id })
             });
             return View(disciplines);
         }

@@ -16,6 +16,6 @@ namespace Core.Entities
         public string PhoneNumber { get; set; }
         public List<Role> Roles { get; set; }
 
-        public List<string> ChoosenDisciplineIds { get; set; }
+        public List<string> DisciplineIds { get; set; }
     }
 }

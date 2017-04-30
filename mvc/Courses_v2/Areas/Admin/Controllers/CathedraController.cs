@@ -26,7 +26,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         {
             var catherdas = Service.Find((new SearchFilter<Cathedra>
             {
-                Query = new[] { new Cathedra() { Id = id } }
+                OptionList = new[] { new Cathedra() { Id = id } }
             }));
 
             return View(catherdas.SingleOrDefault());
@@ -57,7 +57,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/Cathedra/Edit/5
         public ActionResult Edit(string id)
         {
-            var disciplines = Service.Find((new SearchFilter<Cathedra>() { Query = new[] { new Cathedra() { Id = id } } }));
+            var disciplines = Service.Find((new SearchFilter<Cathedra>() { OptionList = new[] { new Cathedra() { Id = id } } }));
 
             return View(disciplines.SingleOrDefault());
         }
@@ -86,7 +86,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         {
             var disciplines = Service.Find((new SearchFilter<Cathedra>()
             {
-                Query = new[] { new Cathedra() { Id = id } }
+                OptionList = new[] { new Cathedra() { Id = id } }
             }));
 
             return View(disciplines?.SingleOrDefault());

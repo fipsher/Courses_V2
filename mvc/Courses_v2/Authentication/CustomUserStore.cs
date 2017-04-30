@@ -26,7 +26,7 @@ namespace Courses_v2.Authentication
         {
             var user = Service.Find(new Core.Helpers.SearchFilter<User>
             {
-                Query = new[] { new User { Id = userId } }
+                OptionList = new[] { new User { Id = userId } }
             }).SingleOrDefault();
 
             return Task.FromResult((ApplicationUser)user);
@@ -90,7 +90,7 @@ namespace Courses_v2.Authentication
         {
             var user = Service.Find(new Core.Helpers.SearchFilter<User>
             {
-                Query = new[] { new User { Email = email } }
+                OptionList = new[] { new User { Email = email } }
             }).SingleOrDefault();
             return Task.FromResult((ApplicationUser)user);
         }

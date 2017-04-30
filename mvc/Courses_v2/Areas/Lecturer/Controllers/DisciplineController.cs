@@ -28,7 +28,7 @@ namespace Courses_v2.Areas.Lecturer.Controllers
         {
             var discipline = Service.Find((new SearchFilter<Discipline>
             {
-                Query = new[] { new Discipline() { Id = id } }
+                OptionList = new[] { new Discipline() { Id = id } }
             })).SingleOrDefault();
             if (CheckLecturerAccess(discipline))
             {
@@ -43,7 +43,7 @@ namespace Courses_v2.Areas.Lecturer.Controllers
             // same logic
             var discipline = Service.Find(new SearchFilter<Discipline>()
             {
-                Query = new[] { new Discipline() { Id = id } }
+                OptionList = new[] { new Discipline() { Id = id } }
             }).SingleOrDefault();
             if (CheckLecturerAccess(discipline))
             {
