@@ -51,12 +51,6 @@ namespace LightCaseClient.Support
     // An implementation of ISerializerAdapter based on the JavaScriptSerializer
     public class JavaScriptSerializerAdapter : ISerializerAdapter
     {
-        //private JsonSerializer serializer;
-        //public JavaScriptSerializerAdapter()
-        //{
-        //    serializer = new JsonSerializer();
-        //}
-
         public string Serialize(object obj) => JsonConvert.SerializeObject(obj);
 
         public T Deserialize<T>(string input) => JsonConvert.DeserializeObject<T>(input);

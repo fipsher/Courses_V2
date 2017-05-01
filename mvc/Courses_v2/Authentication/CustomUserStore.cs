@@ -26,7 +26,7 @@ namespace Courses_v2.Authentication
         {
             var user = Service.Find(new Core.Helpers.SearchFilter<User>
             {
-                OptionList = new[] { new User { Id = userId } }
+                OptionList = new[] { new User { Email = userId } }
             }).SingleOrDefault();
 
             return Task.FromResult((ApplicationUser)user);

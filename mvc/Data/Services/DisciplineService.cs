@@ -15,10 +15,13 @@ namespace Data.Services
     {
         private readonly IRepository<Cathedra> _cathedraRepo;
         private readonly IRepository<User> _userRepo;
+        private readonly IRepository<Setting> _settingRepo;
+
         public DisciplineService(IRepositoryBootstrapper repositoryStrategy) : base(repositoryStrategy)
         {
             _cathedraRepo = (IRepository<Cathedra>)repositoryStrategy[typeof(Cathedra)];
             _userRepo = (IRepository<User>)repositoryStrategy[typeof(User)];
+            _settingRepo = (IRepository<Setting>)repositoryStrategy[typeof(Setting)];
         }
 
         public List<DisciplineResponce> FindDisciplineResponse(SearchFilter<Discipline> filter, bool includingSubscriberCathedras = false, bool includingStudents = false)
@@ -112,8 +115,13 @@ namespace Data.Services
             {
                 OptionList = new[] { new Discipline() { Id = disciplineId } }
             }).SingleOrDefault();
-
-            student.RegisteredDisciplines?.Remove(student.RegisteredDisciplines?.SingleOrDefault(rd => rd.DisciplineId == disciplineId));
+            var registerDiscipline = student.RegisteredDisciplines.SingleOrDefault(rd => rd.DisciplineId == disciplineId);
+            //_settingRepo.Find(new SearchFilter<Setting>
+            //{
+            //    OptionList = new[] {new Setting { Id = } }
+            //});
+            //if (DateTime.UtcNow >= Iwe)
+            student.RegisteredDisciplines.Remove(registerDiscipline);
             discipline.StudentIds?.Remove(studentId);
             try
             {
