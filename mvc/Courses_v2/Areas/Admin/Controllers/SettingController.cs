@@ -4,12 +4,13 @@ using System.Web.Mvc;
 using Core.Interfaces.Services;
 using Core.Helpers;
 using System.Collections.Generic;
+using Core.Interfaces;
 
 namespace Courses_v2.Areas.Admin.Controllers
 {
     public class SettingController : BaseController<Setting, ISettingService>
     {
-        public SettingController(ISettingService service) : base(service)
+        public SettingController(IServiceFactory serviceFactory) : base(serviceFactory.SettingService)
         {
         }
 

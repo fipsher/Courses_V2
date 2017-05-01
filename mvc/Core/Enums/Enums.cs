@@ -12,7 +12,9 @@
         {
             Student = 0,
             Lecturer = 1,
-            Moderator = 2
+            Moderator = 2,
+            Admin = 2
+
         }
     }
 }

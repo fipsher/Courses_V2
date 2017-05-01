@@ -20,6 +20,7 @@ namespace Data
             kernel.Bind<ISettingService>().To<SettingService>();
 
             kernel.Bind<IRepositoryBootstrapper>().To<RepositoryBootstrapper>();
+            kernel.Bind<IServiceFactory>().To<ServiceFactory>();
         }
     }
 }

@@ -1,11 +1,12 @@
-﻿using Core.Helpers;
+﻿using Core.Entities;
+using Core.Helpers;
 using Core.Interfaces;
 using LightCaseClient;
 using System.Collections.Generic;
 
 namespace Data.Repositories
 {
-    public class Repository<TEntity> : IRepository, IRepository<TEntity> where TEntity : class, IEntity
+    public class Repository<TEntity> : IRepository, IRepository<TEntity> where TEntity : Entity, new()
     {
         protected string BaseUrl { get; private set; }
         public Repository(string webApiUrl)

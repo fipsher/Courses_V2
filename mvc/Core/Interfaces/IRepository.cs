@@ -1,11 +1,10 @@
-﻿using Core.Helpers;
+﻿using Core.Entities;
+using Core.Helpers;
 using System.Collections.Generic;
 
 namespace Core.Interfaces
 {
-    public interface IRepository { }
-
-    public interface IRepository<TEntity> : IRepository where TEntity : class, IEntity
+    public interface IRepository<TEntity> : IRepository where TEntity : Entity, new ()
     {
         List<TEntity> Find(SearchFilter<TEntity> filter);
 
@@ -15,4 +14,6 @@ namespace Core.Interfaces
 
         void Update(TEntity entity);
     }
+
+    public interface IRepository{}
 }

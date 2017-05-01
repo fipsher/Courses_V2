@@ -1,10 +1,11 @@
-﻿using Core.Helpers;
+﻿using Core.Entities;
+using Core.Helpers;
 using Core.Interfaces;
 using System.Collections.Generic;
 
 namespace Data.Services
 {
-    internal abstract class BaseService<TEntity> : IService<TEntity> where TEntity : class, IEntity
+    internal abstract class BaseService<TEntity> : IService<TEntity> where TEntity : Entity, new ()
     { 
         protected IRepository<TEntity> Repository;
         protected IRepositoryBootstrapper RepositoryResolver;

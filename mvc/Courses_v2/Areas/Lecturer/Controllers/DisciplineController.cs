@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using Core.Helpers;
+using Core.Interfaces;
 using Core.Interfaces.Services;
 using Courses_v2.Controllers;
 using System.Linq;
@@ -10,9 +11,8 @@ namespace Courses_v2.Areas.Lecturer.Controllers
     // will be added some base discipline ctrl
     public class DisciplineController : BaseController<Discipline, IDisciplineService>
     {
-        public DisciplineController(IDisciplineService _disciplineService) : base(_disciplineService)
+        public DisciplineController(IServiceFactory serviceFactory) : base(serviceFactory.DisciplineService)
         {
-            Service = _disciplineService;
         }
 
         // GET: Admin/Disciplines

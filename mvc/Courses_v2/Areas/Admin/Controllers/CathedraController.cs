@@ -4,12 +4,13 @@ using System.Web.Mvc;
 using Core.Interfaces.Services;
 using Core.Helpers;
 using System.Linq;
+using Core.Interfaces;
 
 namespace Courses_v2.Areas.Admin.Controllers
 {
     public class CathedraController : BaseController<Cathedra, ICathedraService>
     {
-        public CathedraController(ICathedraService service) : base(service)
+        public CathedraController(IServiceFactory serviceFactory) : base(serviceFactory.CathedraService)
         {
         }
 

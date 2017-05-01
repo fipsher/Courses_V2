@@ -66,11 +66,13 @@
     <Compile Include="Entities\Setting.cs" />
     <Compile Include="Entities\StudentGroup.cs" />
     <Compile Include="Enums\Enums.cs" />
+    <Compile Include="Helpers\FilterHelper.cs" />
     <Compile Include="Helpers\SearchFilter.cs" />
     <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IRepositoryBootstrapper.cs" />
+    <Compile Include="Interfaces\IServiceFactory.cs" />
     <Compile Include="Interfaces\IWebApplicationConfig.cs" />
     <Compile Include="Interfaces\Services\ICathedraService.cs" />
     <Compile Include="Interfaces\Services\IDisciplineService.cs" />

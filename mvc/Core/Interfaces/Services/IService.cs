@@ -1,9 +1,10 @@
-﻿using Core.Helpers;
+﻿using Core.Entities;
+using Core.Helpers;
 using System.Collections.Generic;
 
 namespace Core.Interfaces
 {
-    public interface IService<TEntity> where TEntity : class, IEntity
+    public interface IService<TEntity> where TEntity : Entity, new ()
     {
         List<TEntity> Find(SearchFilter<TEntity> filter);
 

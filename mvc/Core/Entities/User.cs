@@ -6,7 +6,7 @@ using static Core.Enums.Enums;
 
 namespace Core.Entities
 {
-    public class User : Entity, IUser
+    public class User : Entity
     {
         [DisplayName("Логін")]
         public string Login { get; }
@@ -26,5 +26,9 @@ namespace Core.Entities
 
         [DisplayName("Дисципліни")]
         public List<string> DisciplineIds { get; set; }
+
+        //додано
+        public int Course { get; set; }
+
     }
 }

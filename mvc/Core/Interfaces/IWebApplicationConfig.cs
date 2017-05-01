@@ -3,5 +3,6 @@
     public interface IWebApplicationConfig
     {
          string WebApiUrl { get; }
+         int GroupAbstractLimit { get; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using Core.Helpers;
+using Core.Interfaces;
 using Core.Interfaces.Services;
 using Courses_v2.Controllers;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Courses_v2.Areas.Admin.Controllers
 {
     public class UserController : BaseController<User, IUserService>
     {
-        public UserController(IUserService service) : base(service)
+        public UserController(IServiceFactory serviceFactory) : base(serviceFactory.UserService)
         {
         }
 

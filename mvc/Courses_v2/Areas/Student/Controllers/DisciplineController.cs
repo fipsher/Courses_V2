@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using Core.Helpers;
+using Core.Interfaces;
 using Core.Interfaces.Services;
 using Courses_v2.Controllers;
 using System.Linq;
@@ -13,11 +14,10 @@ namespace Courses_v2.Areas.Student.Controllers
         private readonly IUserService _userService;
         private readonly ICathedraService _cathedraService;
 
-        public DisciplineController(IDisciplineService disciplineService, IUserService userService, ICathedraService cathedraService) : base(disciplineService)
+        public DisciplineController(IServiceFactory serviceFactory) : base(serviceFactory.DisciplineService)
         {
-            Service = disciplineService;
-            _userService = userService;
-            _cathedraService = cathedraService;
+            _userService = serviceFactory.UserService;
+            _cathedraService = serviceFactory.CathedraService;
         }
 
         public ActionResult Index(SearchFilter<Discipline> filter = null)

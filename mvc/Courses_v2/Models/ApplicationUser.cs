@@ -7,7 +7,7 @@ using static Core.Enums.Enums;
 
 namespace Courses_v2.Models
 {
-    public class ApplicationUser : User
+    public class ApplicationUser : User, IUser
     {
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
