@@ -93,7 +93,7 @@ namespace Data.Services
                 {
                     discipline.StudentIds.Add(studentId);
                     student.RegisteredDisciplines.Add(new DisciplineRegister { DisciplineId = disciplineId, DateTime = DateTime.UtcNow });
-                    this.Add(discipline);
+                    this.Update(discipline);
                     _userRepo.Update(student);
                     result = true;
                 }
