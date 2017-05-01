@@ -7,6 +7,7 @@ using System.Linq;
 using Core.Responces;
 using static Core.Enums.Enums;
 using Core;
+using System;
 
 namespace Data.Services
 {
@@ -84,14 +85,14 @@ namespace Data.Services
             {
                 var disciplines = Find(new SearchFilter<Discipline>()
                 {
-                    OptionList = student.DisciplineIds.Select(id => new Discipline { Id = id })
+                    OptionList = student.RegisteredDisciplines.Select(rd => new Discipline { Id = rd.DisciplineId })
                 });
                 if (disciplines.Count(d => d.DisciplineType == DisciplineType.Socio) < Constants.AmountSocioDisciplines &&
                     disciplines.Count(d => d.DisciplineType == DisciplineType.Special) < Constants.AmountSpecialDisciplines &&
-                    !student.DisciplineIds.Contains(disciplineId))
+                    !student.RegisteredDisciplines.Any(rd => rd.DisciplineId == disciplineId))
                 {
                     discipline.StudentIds.Add(studentId);
-                    student.DisciplineIds.Add(disciplineId);
+                    student.RegisteredDisciplines.Add(new DisciplineRegister { DisciplineId = disciplineId, DateTime = DateTime.UtcNow });
                     this.Add(discipline);
                     _userRepo.Update(student);
                     result = true;
@@ -112,8 +113,17 @@ namespace Data.Services
                 OptionList = new[] { new Discipline() { Id = disciplineId } }
             }).SingleOrDefault();
 
-            student.DisciplineIds?.Remove(disciplineId);
+            student.RegisteredDisciplines?.Remove(student.RegisteredDisciplines?.SingleOrDefault(rd => rd.DisciplineId == disciplineId));
             discipline.StudentIds?.Remove(studentId);
+            try
+            {
+                _userRepo.Update(student);
+                Update(discipline);
+            }
+            catch
+            {
+                return false;
+            }
             return true;
         }
     }

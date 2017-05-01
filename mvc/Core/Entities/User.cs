@@ -23,12 +23,15 @@ namespace Core.Entities
         public string PhoneNumber { get; set; }
         [DisplayName("Ролі")]
         public List<Role> Roles { get; set; }
-
         [DisplayName("Дисципліни")]
-        public List<string> DisciplineIds { get; set; }
-
-        //додано
+        public List<DisciplineRegister> RegisteredDisciplines { get; set; }
+        [DisplayName("Курс")]
         public int Course { get; set; }
+    }
 
+    public class DisciplineRegister
+    {
+        public string DisciplineId { get; set; }
+        public DateTime DateTime { get; set; }
     }
 }

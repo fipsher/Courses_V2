@@ -45,7 +45,7 @@ namespace Courses_v2.Areas.Student.Controllers
             }).SingleOrDefault();
             var disciplines = Service.FindDisciplineResponse(new SearchFilter<Discipline>
             {
-                OptionList = user.DisciplineIds.Select(id => new Discipline { Id = id })
+                OptionList = user.RegisteredDisciplines.Select(rd => new Discipline { Id = rd.DisciplineId })
             });
             return View(disciplines);
         }
