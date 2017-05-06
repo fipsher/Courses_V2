@@ -11,14 +11,14 @@ namespace Courses_v2.Areas.Lecturer.Controllers
     // will be added some base discipline ctrl
     public class DisciplineController : BaseController<Discipline, IDisciplineService>
     {
-        public DisciplineController(IServiceFactory serviceFactory) : base(serviceFactory.DisciplineService)
+        public DisciplineController(IServiceFactory serviceFactory) : base(serviceFactory, serviceFactory.DisciplineService)
         {
         }
 
         // GET: Admin/Disciplines
         public ActionResult Index(SearchFilter<Discipline> filter = null)
         {
-            filter = filter ?? SearchFilter<Discipline>.Default;
+            filter = filter == null || filter.OptionList == null ? SearchFilter<Discipline>.Empty : filter;
             var disciplines = Service.FindDisciplineResponse(filter);
             return View(disciplines);
         }

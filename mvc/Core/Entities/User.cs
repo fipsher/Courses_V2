@@ -18,7 +18,7 @@ namespace Core.Entities
         public string Email { get; set; }
         [DisplayName("Пароль")]
         public string Password { get; set; }
-        [DisplayName("Номер лелефону")]
+        [DisplayName("Номер телефону")]
         public string PhoneNumber { get; set; }
         [DisplayName("Ролі")]
         public List<Role> Roles { get; set; }
@@ -32,5 +32,6 @@ namespace Core.Entities
     {
         public string DisciplineId { get; set; }
         public DateTime DateTime { get; set; }
+        public DisciplineType DisciplineType { get; set; }
     }
 }

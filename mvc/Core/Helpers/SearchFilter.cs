@@ -23,8 +23,7 @@ namespace Core.Helpers
             return result;
         }
 
-        public static SearchFilter<TEntity> Default => new SearchFilter<TEntity> { Take = 10, Skip = 0 };
-        public static SearchFilter<TEntity> Empty => new SearchFilter<TEntity>();
+        public static SearchFilter<TEntity> Empty => new SearchFilter<TEntity> { Take = 10, Skip = 0, OptionList = new List<TEntity>() { new TEntity()} };
         public static SearchFilter<TEntity> FilterById(string id)
         {
             return new SearchFilter<TEntity>

@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Create";
+    var groupSelectList = new SelectList(ViewBag.StudentGroups, "Value", "Text");
+
 }
 
 <h2>Create</h2>
@@ -18,7 +20,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.GroupId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.GroupId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.GroupId, groupSelectList, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.GroupId, "", new { @class = "text-danger" })
             </div>
         </div>

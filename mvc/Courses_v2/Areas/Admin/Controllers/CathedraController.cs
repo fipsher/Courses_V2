@@ -10,14 +10,14 @@ namespace Courses_v2.Areas.Admin.Controllers
 {
     public class CathedraController : BaseController<Cathedra, ICathedraService>
     {
-        public CathedraController(IServiceFactory serviceFactory) : base(serviceFactory.CathedraService)
+        public CathedraController(IServiceFactory serviceFactory) : base(serviceFactory, serviceFactory.CathedraService)
         {
         }
 
         // GET: Admin/Cathedra
         public ActionResult Index(SearchFilter<Cathedra> filter = null)
         {
-            filter = filter ?? SearchFilter<Cathedra>.Default;
+            filter = filter == null || filter.OptionList == null ? SearchFilter<Cathedra>.Empty : filter;
             var catherdas = Service.Find(filter);
             return View(catherdas);
         }

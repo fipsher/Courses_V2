@@ -10,15 +10,14 @@ namespace Courses_v2.Areas.Admin.Controllers
 {
     public class UserController : BaseController<User, IUserService>
     {
-        public UserController(IServiceFactory serviceFactory) : base(serviceFactory.UserService)
+        public UserController(IServiceFactory serviceFactory) : base(serviceFactory, serviceFactory.UserService)
         {
         }
 
         // GET: Admin/User
-        [HttpPost]
         public ActionResult Index(SearchFilter<User> filter = null)
         {
-            filter = filter ?? SearchFilter<User>.Default;
+            filter = filter == null || filter.OptionList == null ? SearchFilter<User>.Empty : filter;
             var users = Service.Find(filter);
             return View(users);
         }
@@ -35,7 +34,12 @@ namespace Courses_v2.Areas.Admin.Controllers
         }
 
         // GET: Admin/User/Create
-        public ActionResult Create() => View();
+        public ActionResult Create()
+        {
+            ViewBag.StudentGroups = ServiceFactory.StudentGroupService.Find(SearchFilter<StudentGroup>.Empty);
+
+            return View();
+        }
 
         // POST: Admin/User/Create
         [HttpPost]

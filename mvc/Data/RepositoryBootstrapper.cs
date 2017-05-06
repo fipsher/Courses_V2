@@ -15,6 +15,8 @@ namespace Data
             RepositoryResolver.Add(typeof(User), new Repository<User>(webApiUrl));
             RepositoryResolver.Add(typeof(Discipline), new Repository<Discipline>(webApiUrl));
             RepositoryResolver.Add(typeof(Cathedra), new Repository<Cathedra>(webApiUrl));
+            RepositoryResolver.Add(typeof(Setting), new Repository<Setting>(webApiUrl));
+            RepositoryResolver.Add(typeof(StudentGroup), new Repository<StudentGroup>(webApiUrl));
         }
 
         public RepositoryBootstrapper(IWebApplicationConfig webConfig)

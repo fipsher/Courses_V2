@@ -10,14 +10,14 @@ namespace Courses_v2.Areas.Admin.Controllers
 {
     public class SettingController : BaseController<Setting, ISettingService>
     {
-        public SettingController(IServiceFactory serviceFactory) : base(serviceFactory.SettingService)
+        public SettingController(IServiceFactory serviceFactory) : base(serviceFactory, serviceFactory.SettingService)
         {
         }
 
         // GET: Admin/Setting
         public ActionResult Index()
         {
-            var settings = Service.Find(SearchFilter<Setting>.Default);
+            var settings = Service.Find(SearchFilter<Setting>.Empty);
 
             return View(settings);
         }

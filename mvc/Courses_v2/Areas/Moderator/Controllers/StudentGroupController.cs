@@ -10,14 +10,14 @@ namespace Courses_v2.Areas.Moderator.Controllers
 {
     public class StudentGroupController : BaseController<StudentGroup, IStudentGroupService>
     {
-        public StudentGroupController(IServiceFactory serviceFactory) : base(serviceFactory.StudentGroupService)
+        public StudentGroupController(IServiceFactory serviceFactory) : base(serviceFactory, serviceFactory.StudentGroupService)
         {
         }
 
         // GET: Admin/StudentGroup
         public ActionResult Index(SearchFilter<StudentGroup> filter = null)
         {
-            filter = filter ?? SearchFilter<StudentGroup>.Default;
+            filter = filter == null || filter.OptionList == null ? SearchFilter<StudentGroup>.Empty : filter;
             var groups = Service.Find(filter);
             return View(groups);
         }

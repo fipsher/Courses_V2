@@ -14,7 +14,7 @@ namespace Courses_v2.Areas.Student.Controllers
         private readonly IUserService _userService;
         private readonly ICathedraService _cathedraService;
 
-        public DisciplineController(IServiceFactory serviceFactory) : base(serviceFactory.DisciplineService)
+        public DisciplineController(IServiceFactory serviceFactory) : base(serviceFactory, serviceFactory.DisciplineService)
         {
             _userService = serviceFactory.UserService;
             _cathedraService = serviceFactory.CathedraService;
@@ -22,7 +22,7 @@ namespace Courses_v2.Areas.Student.Controllers
 
         public ActionResult Index(SearchFilter<Discipline> filter = null)
         {
-            filter = filter ?? SearchFilter<Discipline>.Default;
+            filter = filter == null || filter.OptionList == null ? SearchFilter<Discipline>.Empty : filter;
             var disciplines = Service.FindDisciplineResponse(filter);
             return View(disciplines);
         }
