@@ -16,13 +16,23 @@ namespace Courses_v2.Areas.Admin.Controllers
         }
 
         // GET: Admin/User
-        public ActionResult Index(SearchFilter<User> filter = null)
+        public ActionResult Index()
         {
-            filter = filter == null || filter.OptionList == null ? SearchFilter<User>.Empty : filter;
-            var users = Service.Find(filter);
+            var users = Service.Find(SearchFilter<User>.Default);
             return View(users);
         }
+        // GET: Admin/User
+        [HttpPost]
+        public ActionResult Index(User filter = null)
+        {
+            filter = filter ?? new User();
+            var searchFilter = SearchFilter<User>.Default;
 
+            searchFilter.OptionList = FilterHelper.UserFilter(filter);
+
+            var users = Service.Find(searchFilter);
+            return View(users);
+        }
         // GET: Admin/User/Details/5
         public ActionResult Details(string id)
         {

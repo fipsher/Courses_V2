@@ -9,26 +9,33 @@ namespace Core.Entities
     public class User : Entity
     {
         [DisplayName("Логін")]
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Поле обов'язкове до заповнення")]
         public string Login { get; }
 
         [DisplayName("Група")]
         public string GroupId { get; set; }
+
         [DisplayName("Ім'я")]
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Поле обов'язкове до заповнення")]
         public string UserName { get; set; }
+
         [DisplayName("Пошта")]
         public string Email { get; set; }
+
         [DisplayName("Пароль")]
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Поле обов'язкове до заповнення")]
         public string Password { get; set; }
+
         [DisplayName("Номер телефону")]
         public string PhoneNumber { get; set; }
+
         [DisplayName("Ролі")]
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Поле обов'язкове до заповнення")]
         public List<Role> Roles { get; set; }
+
         [DisplayName("Дисципліни")]
         public List<DisciplineRegister> RegisteredDisciplines { get; set; }
+
         [DisplayName("Курс")]
         public int Course { get; set; }
     }
