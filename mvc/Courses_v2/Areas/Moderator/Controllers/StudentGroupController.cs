@@ -17,7 +17,7 @@ namespace Courses_v2.Areas.Moderator.Controllers
         // GET: Admin/StudentGroup
         public ActionResult Index(SearchFilter<StudentGroup> filter = null)
         {
-            filter = filter == null || filter.OptionList == null ? SearchFilter<StudentGroup>.Empty : filter;
+            filter = filter == null || filter.OptionList == null ? SearchFilter<StudentGroup>.Default : filter;
             var groups = Service.Find(filter);
             return View(groups);
         }

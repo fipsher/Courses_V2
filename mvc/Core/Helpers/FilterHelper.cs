@@ -23,6 +23,11 @@ namespace Core.Helpers
         {
             new User { Roles = new List<Role> { Role.Moderator } }
         };
+
+        public static List<User> UserFilter(User user) => new List<User>
+        {
+            user
+        };
         #endregion
     }
 }

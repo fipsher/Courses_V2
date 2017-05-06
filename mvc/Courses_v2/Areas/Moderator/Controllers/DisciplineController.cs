@@ -24,7 +24,7 @@ namespace Courses_v2.Areas.Moderator.Controllers
         // GET: Admin/Disciplines
         public ActionResult Index(SearchFilter<Discipline> filter = null)
         {
-            filter = filter == null || filter.OptionList == null ? SearchFilter<Discipline>.Empty : filter;
+            filter = filter == null || filter.OptionList == null ? SearchFilter<Discipline>.Default : filter;
             var disciplines = Service.FindDisciplineResponse(filter);
             return View(disciplines);
         }
