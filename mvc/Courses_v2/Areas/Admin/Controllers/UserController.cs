@@ -3,6 +3,7 @@ using Core.Helpers;
 using Core.Interfaces;
 using Core.Interfaces.Services;
 using Courses_v2.Controllers;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -36,7 +37,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/User/Create
         public ActionResult Create()
         {
-            ViewBag.StudentGroups = ServiceFactory.StudentGroupService.Find(SearchFilter<StudentGroup>.Empty);
+            ViewBag.StudentGroups = new List<StudentGroup>();//ServiceFactory.StudentGroupService.Find(SearchFilter<StudentGroup>.Empty);
 
             return View();
         }
