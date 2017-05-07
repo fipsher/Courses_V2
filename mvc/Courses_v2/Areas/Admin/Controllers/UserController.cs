@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Courses_v2.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UserController : BaseController<User, IUserService>
     {
         public UserController(IServiceFactory serviceFactory) : base(serviceFactory, serviceFactory.UserService)

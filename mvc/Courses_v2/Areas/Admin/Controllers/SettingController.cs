@@ -8,6 +8,7 @@ using Core.Interfaces;
 
 namespace Courses_v2.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SettingController : BaseController<Setting, ISettingService>
     {
         public SettingController(IServiceFactory serviceFactory) : base(serviceFactory, serviceFactory.SettingService)

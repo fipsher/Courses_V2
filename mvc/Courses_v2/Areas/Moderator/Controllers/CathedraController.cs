@@ -8,6 +8,7 @@ using Core.Interfaces;
 
 namespace Courses_v2.Areas.Moderator.Controllers
 {
+    [Authorize(Roles = "Moderator")]
     public class CathedraController : BaseController<Cathedra, ICathedraService>
     {
         public CathedraController(IServiceFactory serviceFactory) : base(serviceFactory, serviceFactory.CathedraService)

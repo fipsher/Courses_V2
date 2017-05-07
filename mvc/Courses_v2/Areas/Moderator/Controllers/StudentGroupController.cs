@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace Courses_v2.Areas.Moderator.Controllers
 {
+    [Authorize(Roles = "Moderator")]
     public class StudentGroupController : BaseController<StudentGroup, IStudentGroupService>
     {
         public StudentGroupController(IServiceFactory serviceFactory) : base(serviceFactory, serviceFactory.StudentGroupService)
