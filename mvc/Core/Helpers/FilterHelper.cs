@@ -1,9 +1,5 @@
 ﻿using Core.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Core.Enums.Enums;
 
 namespace Core.Helpers
@@ -24,9 +20,9 @@ namespace Core.Helpers
             new User { Roles = new List<Role> { Role.Moderator } }
         };
 
-        public static List<User> UserFilter(User user) => new List<User>
+        public static List<T> OptionListByEntity<T>(T entity) where T: Entity => new List<T>
         {
-            user
+            entity
         };
         #endregion
     }

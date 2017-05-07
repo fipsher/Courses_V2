@@ -40,7 +40,7 @@ namespace Courses_v2.Areas.Admin.Controllers
                 {
                     // insert setting validation
                     // user Strings.PropName to validate it
-                    Service.UpdateMany(settings);
+                    //Service.UpdateMany(settings);
                     return RedirectToAction("Index");
                 }
             }

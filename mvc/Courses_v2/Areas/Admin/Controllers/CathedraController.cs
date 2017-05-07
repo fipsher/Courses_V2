@@ -15,11 +15,22 @@ namespace Courses_v2.Areas.Admin.Controllers
         }
 
         // GET: Admin/Cathedra
-        public ActionResult Index(SearchFilter<Cathedra> filter = null)
+        public ActionResult Index()
         {
-            filter = filter == null || filter.OptionList == null ? SearchFilter<Cathedra>.Default : filter;
-            var catherdas = Service.Find(filter);
-            return View(catherdas);
+            var cathedras = Service.Find(SearchFilter<Cathedra>.Default);
+            return View(cathedras);
+        }
+        // Post: Admin/Cathedra
+        [HttpPost]
+        public ActionResult Index(Cathedra filter = null)
+        {
+            filter = filter ?? new Cathedra();
+            var searchFilter = SearchFilter<Cathedra>.Default;
+
+            searchFilter.OptionList = FilterHelper.OptionListByEntity<Cathedra>(filter);
+
+            var cathedras = Service.Find(searchFilter);
+            return View(cathedras);
         }
 
         // GET: Admin/Cathedra/Details/5
@@ -58,7 +69,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/Cathedra/Edit/5
         public ActionResult Edit(string id)
         {
-            var disciplines = Service.Find((new SearchFilter<Cathedra>() { OptionList = new[] { new Cathedra() { Id = id } } }));
+            var disciplines = Service.Find(SearchFilter<Cathedra>.FilterById(id));
 
             return View(disciplines.SingleOrDefault());
         }
@@ -71,7 +82,7 @@ namespace Courses_v2.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Service.Update(cathedra);
+                    Service.Update(id, cathedra);
                     return RedirectToAction("Index");
                 }
             }

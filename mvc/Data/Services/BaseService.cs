@@ -22,7 +22,7 @@ namespace Data.Services
 
         public virtual void Delete(string id) => Repository.Delete(id);
 
-        public virtual void Update(TEntity entity) => Repository.Update(entity);
+        public virtual void Update(string id, TEntity entity) => Repository.Update(id, entity);
 
     }
 }

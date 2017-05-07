@@ -32,7 +32,7 @@ namespace Courses_v2.Authentication
             return Task.FromResult((ApplicationUser)user);
         }
         public Task<ApplicationUser> FindByNameAsync(string userName) => FindByIdAsync(userName);
-        public Task UpdateAsync(ApplicationUser user) => Task.Run(() => Service.Update(user));
+        public Task UpdateAsync(ApplicationUser user) => Task.Run(() => Service.Update(user.Id, user));
         public void Dispose() { }
 
         //IUserLockoutStore
@@ -51,7 +51,7 @@ namespace Courses_v2.Authentication
         public Task SetPasswordHashAsync(ApplicationUser user, string passwordHash) => Task.Run(() =>
         {
             user.Password = passwordHash;
-            Service.Update(user);
+            Service.Update(user.Id, user);
         });
         public Task<string> GetPasswordHashAsync(ApplicationUser user) => Task.FromResult(user.Password);
         public Task<bool> HasPasswordAsync(ApplicationUser user) => Task.FromResult(!string.IsNullOrEmpty(user.Password));
@@ -67,7 +67,7 @@ namespace Courses_v2.Authentication
         public Task SetPhoneNumberAsync(ApplicationUser user, string phoneNumber) => Task.Run(() =>
         {
             user.PhoneNumber = phoneNumber;
-            Service.Update(user);
+            Service.Update(user.Id, user);
         });
         public Task<string> GetPhoneNumberAsync(ApplicationUser user) => Task.FromResult(user.PhoneNumber);
         public Task<bool> GetPhoneNumberConfirmedAsync(ApplicationUser user) => Task.FromResult(true);
@@ -81,7 +81,7 @@ namespace Courses_v2.Authentication
         public Task SetEmailAsync(ApplicationUser user, string email) => Task.Run(() =>
         {
             user.Email = email;
-            Service.Update(user);
+            Service.Update(user.Id, user);
         });
         public Task<string> GetEmailAsync(ApplicationUser user) => Task.FromResult(user.Email);
         public Task<bool> GetEmailConfirmedAsync(ApplicationUser user) => Task.FromResult(true);

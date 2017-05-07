@@ -21,14 +21,14 @@ namespace Courses_v2.Areas.Admin.Controllers
             var users = Service.Find(SearchFilter<User>.Default);
             return View(users);
         }
-        // GET: Admin/User
+        // Post: Admin/User
         [HttpPost]
         public ActionResult Index(User filter = null)
         {
             filter = filter ?? new User();
             var searchFilter = SearchFilter<User>.Default;
 
-            searchFilter.OptionList = FilterHelper.UserFilter(filter);
+            searchFilter.OptionList = FilterHelper.OptionListByEntity<User>(filter);
 
             var users = Service.Find(searchFilter);
             return View(users);
@@ -87,7 +87,7 @@ namespace Courses_v2.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Service.Update(user);
+                    Service.Update(id, user);
                     return RedirectToAction("Index");
                 }
             }

@@ -71,7 +71,7 @@ namespace Courses_v2.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Service.Update(studentGroup);
+                    Service.Update(id, studentGroup);
                     return RedirectToAction("Index");
                 }
             }

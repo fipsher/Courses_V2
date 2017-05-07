@@ -11,12 +11,12 @@ namespace Data.Services
         {
         }
 
-        public void UpdateMany(IEnumerable<Setting> settings)
-        {
-            foreach (var setting in settings)
-            {
-                Repository.Update(setting);
-            }
-        }
+        //public void UpdateMany(IEnumerable<Setting> settings)
+        //{
+        //    foreach (var setting in settings)
+        //    {
+        //        Repository.Update(setting);
+        //    }
+        //}
     }
 }

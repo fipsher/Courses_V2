@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using MongoDB.Bson;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -39,14 +40,26 @@ namespace Core
                 foreach (var prop in entity.GetType().GetProperties())
                 {
                     var value = prop.GetValue(entity, null);
+
                     if (value != null && !_exceptions.Contains(prop.Name))
                     {
-                        localResult.Add(prop.Name, value);
+                        if (prop.Name == "Id")
+                        {
+                            if (ObjectId.TryParse(value.ToString(), out ObjectId parseResult))
+                            {
+                                localResult.Add("_id", parseResult);
+                            }
+                        }
+                        else
+                        {
+                            localResult.Add(prop.Name, value);
+                        }
                     }
+
                 }
                 result.Add(localResult);
             }
-            
+
             return result;
         }
     }

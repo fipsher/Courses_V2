@@ -2,6 +2,7 @@
 using Core.Helpers;
 using Core.Interfaces;
 using LightCaseClient;
+using MongoDB.Bson;
 using System.Collections.Generic;
 
 namespace Data.Repositories
@@ -14,10 +15,10 @@ namespace Data.Repositories
             BaseUrl = webApiUrl + typeof(TEntity).Name.ToLower();
         }
 
-        public virtual void Add(TEntity entity) => GenericProxies.RestPostNonQuery($"{BaseUrl}/add", entity);
+        public virtual void Add(TEntity entity) => GenericProxies.RestPut($"{BaseUrl}/add", entity);
         public virtual void Delete(string id) => GenericProxies.RestPostNonQuery($"{BaseUrl}/delete", id);
         public virtual List<TEntity> Find(SearchFilter<TEntity> filter) => GenericProxies.RestPost<List<TEntity>, Dictionary<string, object>>($"{BaseUrl}/find", filter.PrepareForRequest());
-        public virtual void Update(TEntity entity) => GenericProxies.RestPostNonQuery($"{BaseUrl}/update", entity);
+        public virtual void Update(string id, TEntity entity) => GenericProxies.RestPostNonQuery($"{BaseUrl}/update", new { id = ObjectId.Parse(entity.Id), update = entity });
     }
 
 }

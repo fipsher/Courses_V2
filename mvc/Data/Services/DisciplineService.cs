@@ -96,8 +96,8 @@ namespace Data.Services
                 {
                     discipline.StudentIds.Add(studentId);
                     student.RegisteredDisciplines.Add(new DisciplineRegister { DisciplineId = disciplineId, DateTime = DateTime.UtcNow });
-                    this.Update(discipline);
-                    _userRepo.Update(student);
+                    this.Update(disciplineId, discipline);
+                    _userRepo.Update(studentId, student);
                     result = true;
                 }
             }
@@ -125,8 +125,8 @@ namespace Data.Services
             discipline.StudentIds?.Remove(studentId);
             try
             {
-                _userRepo.Update(student);
-                Update(discipline);
+                _userRepo.Update(studentId, student);
+                Update(disciplineId, discipline);
             }
             catch
             {

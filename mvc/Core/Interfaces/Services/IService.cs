@@ -12,6 +12,6 @@ namespace Core.Interfaces
 
         void Delete(string id);
 
-        void Update(TEntity entity);
+        void Update(string id, TEntity entity);
     }
 }

@@ -71,7 +71,7 @@ namespace Courses_v2.Areas.Moderator.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Service.Update(cathedra);
+                    Service.Update(id, cathedra);
                     return RedirectToAction("Index");
                 }
             }

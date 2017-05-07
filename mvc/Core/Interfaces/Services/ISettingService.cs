@@ -5,6 +5,6 @@ namespace Core.Interfaces.Services
 {
     public interface ISettingService : IService<Setting>
     {
-        void UpdateMany(IEnumerable<Setting> settings);
+        //void UpdateMany(IEnumerable<Setting> settings);
     }
 }
