@@ -82,7 +82,7 @@ namespace Courses_v2.Areas.Lecturer.Controllers
             }
             catch
             {
-                return RedirectToAction("InternalServer", "Error", new { area = "" });
+                throw;
             }
             return View();
         }

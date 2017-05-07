@@ -68,7 +68,7 @@ namespace Courses_v2.Areas.Moderator.Controllers
             }
             catch
             {
-                return RedirectToAction("InternalServer", "Error", new { area = "" });
+                throw;
             }
             ViewBag.Cathedras = ServiceFactory.CathedraService.Find(SearchFilter<Cathedra>.Empty)
                                     .Select(x => new SelectListItem
@@ -142,7 +142,7 @@ namespace Courses_v2.Areas.Moderator.Controllers
             }
             catch
             {
-                return RedirectToAction("InternalServer", "Error", new { area = "" });
+                throw;
             }
         }
 

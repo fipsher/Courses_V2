@@ -67,7 +67,7 @@ namespace Courses_v2.Areas.Admin.Controllers
             }
             catch
             {
-                return RedirectToAction("InternalServer", "Error", new { area = "" });
+                throw;
             }
             ViewBag.StudentGroups = new List<StudentGroup>();//ServiceFactory.StudentGroupService.Find(SearchFilter<StudentGroup>.Empty);
 
@@ -96,7 +96,7 @@ namespace Courses_v2.Areas.Admin.Controllers
             }
             catch
             {
-                return RedirectToAction("InternalServer", "Error", new { area = "" });
+                throw;
             }
             var users = Service.Find((new SearchFilter<User>() { OptionList = new[] { new User() { Id = id } } }));
 
@@ -125,7 +125,7 @@ namespace Courses_v2.Areas.Admin.Controllers
             }
             catch
             {
-                return RedirectToAction("InternalServer", "Error", new { area = "" });
+                throw;
             }
         }
     }

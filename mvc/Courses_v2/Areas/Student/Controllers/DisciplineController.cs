@@ -66,7 +66,7 @@ namespace Courses_v2.Areas.Student.Controllers
             }
             catch
             {
-                return RedirectToAction("InternalServer", "Error", new { area = "" });
+                throw;
             }
         }
     }
