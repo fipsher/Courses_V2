@@ -20,11 +20,11 @@ namespace Core.Entities
 
         [DisplayName("Тип дисципліни")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Поле обов'язкове до заповнення")]
-        public DisciplineType DisciplineType { get; set; }
+        public DisciplineType? DisciplineType { get; set; }
 
         [DisplayName("Семестр")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Поле обов'язкове до заповнення")]
-        public int Semester { get; set; }
+        public int? Semester { get; set; }
 
         [DisplayName("Опис")]
         public string Description { get; set; }

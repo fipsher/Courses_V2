@@ -5,7 +5,28 @@
 }
 
 <h2>Index</h2>
+@using (Html.BeginForm("Index", "Discipline", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-xs-3">
+                <input type="text" name="Name" id="Name" placeholder="Назва" class="form-control form-group" />
+                <input type="text" name="Semester" id="Semester" placeholder="Семестр" class="form-control form-group" />
+            </div>
 
+            <div class="col-xs-4">
+                <select class="form-control" data-val="true" id="DisciplineType" multiple="multiple" name="DisciplineType">
+                    <option value="0">Socio</option>
+                    <option value="1">Special</option>
+                </select>
+            </div>
+            <div class="col-xs-2">
+                <input type="submit" value="Filter" class="btn btn-default submit">
+                <input type="button" value="Clear" class="btn btn-default clear">
+            </div>
+        </div>
+    </div>
+}
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>

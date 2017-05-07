@@ -3,6 +3,7 @@ using Core.Helpers;
 using Core.Interfaces;
 using Core.Interfaces.Services;
 using Courses_v2.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -12,24 +13,30 @@ namespace Courses_v2.Areas.Moderator.Controllers
 {
     public class DisciplineController : BaseController<Discipline, IDisciplineService>
     {
-        private readonly IUserService _userService;
-        private readonly ICathedraService _cathedraService;
-
         public DisciplineController(IServiceFactory serviceFactory) : base(serviceFactory, serviceFactory.DisciplineService)
         {
-            _userService = serviceFactory.UserService;
-            _cathedraService = serviceFactory.CathedraService;
         }
 
-        // GET: Admin/Disciplines
-        public ActionResult Index(SearchFilter<Discipline> filter = null)
+        // GET: Moderator/Disciplines
+        public ActionResult Index()
         {
-            filter = filter == null || filter.OptionList == null ? SearchFilter<Discipline>.Default : filter;
-            var disciplines = Service.FindDisciplineResponse(filter);
+            var disciplines = Service.FindDisciplineResponse(SearchFilter<Discipline>.Default);
+            return View(disciplines);
+        }
+        // Post: Moderator/Disciplines
+        [HttpPost]
+        public ActionResult Index(Discipline filter = null)
+        {
+            filter = filter ?? new Discipline();
+            var searchFilter = SearchFilter<Discipline>.Default;
+
+            searchFilter.OptionList = FilterHelper.OptionListByEntity<Discipline>(filter);
+
+            var disciplines = Service.FindDisciplineResponse(searchFilter);
             return View(disciplines);
         }
 
-        // GET: Admin/Disciplines/Details/5
+        // GET: Moderator/Disciplines/Details/5
         public ActionResult Details(string id)
         {
             var disciplines = Service.FindDisciplineResponse((new SearchFilter<Discipline>
@@ -40,33 +47,13 @@ namespace Courses_v2.Areas.Moderator.Controllers
             return View(disciplines.SingleOrDefault());
         }
 
-        // GET: Admin/Disciplines/Create
+        // GET: Moderator/Disciplines/Create
         public ActionResult Create()
         {
-            ViewBag.Cathedras = _cathedraService.Find(SearchFilter<Cathedra>.Empty)
-                                                .Select(x => new SelectListItem
-                                                {
-                                                    Text = x.Name,
-                                                    Value = x.Id
-                                                }); ;
-
-            var lecturersFilter = new SearchFilter<User>
-                                        {
-                                            OptionList = new List<User>()
-                                            {
-                                                new User(){Roles = new List<Role> { Role.Lecturer }}
-                                            }
-                                        };
-            ViewBag.Lecturers = _userService.Find(lecturersFilter)
-                                            .Select(x => new SelectListItem
-                                            {
-                                                Text = x.UserName,
-                                                Value = x.Id
-                                            });
-
+            SetViewBag();
             return View();
         }
-        // POST: Admin/Disciplines/Create
+        // POST: Moderator/Disciplines/Create
         [HttpPost]
         public ActionResult Create(Discipline discipline)
         {
@@ -80,39 +67,40 @@ namespace Courses_v2.Areas.Moderator.Controllers
             }
             catch
             {
-                //
+                return RedirectToAction("InternalServer", "Error", new { area = "" });
             }
-            return View();
-
-        }
-
-        // GET: Admin/Disciplines/Edit/5
-        public ActionResult Edit(string id)
-        {
-            var disciplines = Service.Find((new SearchFilter<Discipline>() { OptionList = new[] { new Discipline() { Id = id } } }));
-
-            ViewBag.Cathedras = _cathedraService.Find(SearchFilter<Cathedra>.Empty)
-                                                .Select(x => new SelectListItem
-                                                {
-                                                    Text = x.Name, Value = x.Id
-                                                }); ;
+            ViewBag.Cathedras = ServiceFactory.CathedraService.Find(SearchFilter<Cathedra>.Empty)
+                                    .Select(x => new SelectListItem
+                                    {
+                                        Text = x.Name,
+                                        Value = x.Id
+                                    }); ;
 
             var lecturersFilter = new SearchFilter<User>
             {
                 OptionList = new List<User>()
-                {
-                    new User(){Roles = new List<Role> { Role.Lecturer }}
-                }
+                                            {
+                                                new User(){Roles = new List<Role> { Role.Lecturer }}
+                                            }
             };
-            ViewBag.Lecturers = _userService.Find(lecturersFilter)
+            ViewBag.Lecturers = ServiceFactory.UserService.Find(lecturersFilter)
                                             .Select(x => new SelectListItem
                                             {
-                                                Text = x.UserName, Value = x.Id
+                                                Text = x.UserName,
+                                                Value = x.Id
                                             });
+            return View();
 
+        }
+
+        // GET: Moderator/Disciplines/Edit/5
+        public ActionResult Edit(string id)
+        {
+            var disciplines = Service.Find((new SearchFilter<Discipline>() { OptionList = new[] { new Discipline() { Id = id } } }));
+            SetViewBag();
             return View(disciplines.SingleOrDefault());
         }
-        // POST: Admin/Disciplines/Edit/5
+        // POST: Moderator/Disciplines/Edit/5
         [HttpPost]
         public ActionResult Edit(string id, Discipline discipline)
         {
@@ -120,7 +108,7 @@ namespace Courses_v2.Areas.Moderator.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Service.Add(discipline);
+                    Service.Update(id, discipline);
                     return RedirectToAction("Index");
                 }
             }
@@ -128,10 +116,11 @@ namespace Courses_v2.Areas.Moderator.Controllers
             {
                 //
             }
+            SetViewBag();
             return View();
         }
 
-        // GET: Admin/Disciplines/Delete/5
+        // GET: Moderator/Disciplines/Delete/5
         public ActionResult Delete(string id)
         {
             var disciplines = Service.FindDisciplineResponse((new SearchFilter<Discipline>()
@@ -141,7 +130,7 @@ namespace Courses_v2.Areas.Moderator.Controllers
 
             return View(disciplines?.SingleOrDefault());
         }
-        // POST: Admin/Disciplines/Delete/5
+        // POST: Moderator/Disciplines/Delete/5
         [HttpPost]
         public ActionResult Delete(string id, Discipline discipline)
         {
@@ -152,8 +141,29 @@ namespace Courses_v2.Areas.Moderator.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction("InternalServer", "Error", new { area = "" });
             }
+        }
+
+        private void SetViewBag()
+        {
+            ViewBag.Cathedras = ServiceFactory.CathedraService.Find(SearchFilter<Cathedra>.Empty)
+                                    .Select(x => new SelectListItem
+                                    {
+                                        Text = x.Name,
+                                        Value = x.Id
+                                    }); ;
+
+            var lecturersFilter = new SearchFilter<User>
+            {
+                OptionList = FilterHelper.LecturerOptionList
+            };
+            ViewBag.Lecturers = ServiceFactory.UserService.Find(lecturersFilter)
+                                            .Select(x => new SelectListItem
+                                            {
+                                                Text = x.UserName,
+                                                Value = x.Id
+                                            });
         }
     }
 }

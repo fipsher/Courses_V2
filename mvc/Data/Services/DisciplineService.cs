@@ -34,15 +34,9 @@ namespace Data.Services
                 List<Cathedra> subscriberCathedras = new List<Cathedra>();
                 List<User> students = new List<User>();
 
-                var lecturer = _userRepo.Find(new SearchFilter<User>
-                {
-                    OptionList = new[] { new User() { Id = d.LecturerId } }
-                })?.SingleOrDefault();
+                var lecturer = _userRepo.Find(SearchFilter<User>.FilterById(d.LecturerId))?.SingleOrDefault();
 
-                var providerCathedra = _cathedraRepo.Find(new SearchFilter<Cathedra>
-                {
-                    OptionList = new[] { new Cathedra() { Id = d.ProviderCathedraId } }
-                })?.SingleOrDefault();
+                var providerCathedra = _cathedraRepo.Find(SearchFilter<Cathedra>.FilterById(d.ProviderCathedraId))?.SingleOrDefault();
 
                 if (includingSubscriberCathedras)
                 {

@@ -66,8 +66,10 @@ namespace Courses_v2.Areas.Admin.Controllers
             }
             catch
             {
-                //
+                return RedirectToAction("InternalServer", "Error", new { area = "" });
             }
+            ViewBag.StudentGroups = new List<StudentGroup>();//ServiceFactory.StudentGroupService.Find(SearchFilter<StudentGroup>.Empty);
+
             return View();
         }
 
@@ -93,9 +95,11 @@ namespace Courses_v2.Areas.Admin.Controllers
             }
             catch
             {
-                //
+                return RedirectToAction("InternalServer", "Error", new { area = "" });
             }
-            return View();
+            var users = Service.Find((new SearchFilter<User>() { OptionList = new[] { new User() { Id = id } } }));
+
+            return View(users.SingleOrDefault());
         }
 
         // GET: Admin/User/Delete/5
@@ -120,7 +124,7 @@ namespace Courses_v2.Areas.Admin.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction("InternalServer", "Error", new { area = "" });
             }
         }
     }

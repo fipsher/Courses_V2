@@ -19,8 +19,8 @@ namespace Core.Responces
         public string Name { get; set; }
         public Cathedra ProviderCathedra { get; set; }
         public List<Cathedra> SubscriberCathedras { get; set; }
-        public DisciplineType DisciplineType { get; set; }
-        public int Semester { get; set; }
+        public DisciplineType? DisciplineType { get; set; }
+        public int? Semester { get; set; }
         public string Description { get; set; }
         public User Lecturer { get; set; }
 

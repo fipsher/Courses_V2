@@ -61,7 +61,7 @@ namespace Courses_v2.Areas.Admin.Controllers
             }
             catch
             {
-                //
+                return RedirectToAction("InternalServer", "Error", new { area = "" });
             }
             return View();
         }
@@ -88,7 +88,7 @@ namespace Courses_v2.Areas.Admin.Controllers
             }
             catch
             {
-                //
+                return RedirectToAction("InternalServer", "Error", new { area = "" });
             }
             return View();
         }
@@ -115,7 +115,7 @@ namespace Courses_v2.Areas.Admin.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction("InternalServer", "Error", new { area = "" });
             }
         }
     }

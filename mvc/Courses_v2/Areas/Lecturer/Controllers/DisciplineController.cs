@@ -15,12 +15,23 @@ namespace Courses_v2.Areas.Lecturer.Controllers
         {
         }
 
-        // GET: Admin/Disciplines
-        public ActionResult Index(SearchFilter<Discipline> filter = null)
+        // GET: Lecturer/Discipline
+        public ActionResult Index()
         {
-            filter = filter == null || filter.OptionList == null ? SearchFilter<Discipline>.Default : filter;
-            var disciplines = Service.FindDisciplineResponse(filter);
-            return View(disciplines);
+            var cathedras = Service.Find(SearchFilter<Discipline>.Default);
+            return View(cathedras);
+        }
+        // Post: Lecturer/Discipline
+        [HttpPost]
+        public ActionResult Index(Discipline filter = null)
+        {
+            filter = filter ?? new Discipline();
+            var searchFilter = SearchFilter<Discipline>.Default;
+
+            searchFilter.OptionList = FilterHelper.OptionListByEntity<Discipline>(filter);
+
+            var cathedras = Service.Find(searchFilter);
+            return View(cathedras);
         }
 
         // GET: Admin/Disciplines/Details/5
@@ -62,14 +73,14 @@ namespace Courses_v2.Areas.Lecturer.Controllers
                 {
                     if (CheckLecturerAccess(discipline))
                     {
-                        Service.Add(discipline);
+                        Service.Update(id, discipline);
                     }
                     return RedirectToAction("Index");
                 }
             }
             catch
             {
-                //
+                return RedirectToAction("InternalServer", "Error", new { area = "" });
             }
             return View();
         }

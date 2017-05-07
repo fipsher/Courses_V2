@@ -32,7 +32,7 @@ namespace Courses_v2.Areas.Admin.Controllers
 
         // POST: Admin/Setting/Edit/5
         [HttpPost]
-        public ActionResult Edit(List<Setting> settings)
+        public ActionResult Edit(string id, Setting settings)
         {
             try
             {
@@ -40,13 +40,13 @@ namespace Courses_v2.Areas.Admin.Controllers
                 {
                     // insert setting validation
                     // user Strings.PropName to validate it
-                    //Service.UpdateMany(settings);
+                    Service.Update(id, settings);
                     return RedirectToAction("Index");
                 }
             }
             catch
             {
-                //
+                return RedirectToAction("InternalServer", "Error", new { area = "" });
             }
             return View();
         }

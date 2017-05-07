@@ -15,11 +15,22 @@ namespace Courses_v2.Areas.Admin.Controllers
         }
 
         // GET: Admin/StudentGroup
-        public ActionResult Index(SearchFilter<StudentGroup> filter = null)
+        public ActionResult Index()
         {
-            filter = filter == null || filter.OptionList == null ? SearchFilter<StudentGroup>.Default : filter;
-            var groups = Service.Find(filter);
-            return View(groups);
+            var users = Service.Find(SearchFilter<StudentGroup>.Default);
+            return View(users);
+        }
+        // Post: Admin/StudentGroup
+        [HttpPost]
+        public ActionResult Index(StudentGroup filter = null)
+        {
+            filter = filter ?? new StudentGroup();
+            var searchFilter = SearchFilter<StudentGroup>.Default;
+
+            searchFilter.OptionList = FilterHelper.OptionListByEntity<StudentGroup>(filter);
+
+            var users = Service.Find(searchFilter);
+            return View(users);
         }
 
         // GET: Admin/StudentGroup/Details/5
@@ -50,7 +61,7 @@ namespace Courses_v2.Areas.Admin.Controllers
             }
             catch
             {
-                //
+                return RedirectToAction("InternalServer", "Error", new { area = "" });
             }
             return View();
         }
@@ -77,7 +88,7 @@ namespace Courses_v2.Areas.Admin.Controllers
             }
             catch
             {
-                //
+                return RedirectToAction("InternalServer", "Error", new { area = "" });
             }
             return View();
         }
@@ -104,7 +115,7 @@ namespace Courses_v2.Areas.Admin.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction("InternalServer", "Error", new { area = "" });
             }
         }
     }

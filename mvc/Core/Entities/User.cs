@@ -8,10 +8,6 @@ namespace Core.Entities
 {
     public class User : Entity
     {
-        [DisplayName("Логін")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Поле обов'язкове до заповнення")]
-        public string Login { get; }
-
         [DisplayName("Група")]
         public string GroupId { get; set; }
 
@@ -37,7 +33,12 @@ namespace Core.Entities
         public List<DisciplineRegister> RegisteredDisciplines { get; set; }
 
         [DisplayName("Курс")]
-        public int Course { get; set; }
+        [Range(0, 6, ErrorMessage = "Min = 0, Max = 6")]
+        public int? Course { get; set; }
+
+        [DisplayName("Логін")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Поле обов'язкове до заповнення")]
+        public string Login { get; set; }
     }
 
     public class DisciplineRegister
