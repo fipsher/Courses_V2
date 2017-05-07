@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using Core.Interfaces.Services;
 using Courses_v2.Models;
+using Core.Helpers;
 
 namespace Courses_v2.Authentication
 {
@@ -24,15 +25,20 @@ namespace Courses_v2.Authentication
         public Task DeleteAsync(ApplicationUser user) => Task.Run(() => Service.Delete(user.Id));
         public Task<ApplicationUser> FindByIdAsync(string userId)
         {
-            var user = Service.Find(new Core.Helpers.SearchFilter<User>
+            var user = Service.Find(SearchFilter<User>.FilterById(userId)).SingleOrDefault();
+
+            return Task.FromResult(user != null ? new ApplicationUser(user) : null);
+        }
+        public Task<ApplicationUser> FindByNameAsync(string userName)
+        {
+            var user = Service.Find(new SearchFilter<User>
             {
-                OptionList = new[] { new User { Email = userId } }
+                OptionList = new[] { new User { Email = userName } }
             }).SingleOrDefault();
 
-            return Task.FromResult((ApplicationUser)user);
+            return Task.FromResult(user != null ? new ApplicationUser(user) : null);
         }
-        public Task<ApplicationUser> FindByNameAsync(string userName) => FindByIdAsync(userName);
-        public Task UpdateAsync(ApplicationUser user) => Task.Run(() => Service.Update(user.Id, user));
+    public Task UpdateAsync(ApplicationUser user) => Task.Run(() => Service.Update(user.Id, user));
         public void Dispose() { }
 
         //IUserLockoutStore
@@ -92,7 +98,7 @@ namespace Courses_v2.Authentication
             {
                 OptionList = new[] { new User { Email = email } }
             }).SingleOrDefault();
-            return Task.FromResult((ApplicationUser)user);
+            return Task.FromResult(user != null ? new ApplicationUser(user) : null);
         }
     }
 }
