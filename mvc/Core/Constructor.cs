@@ -28,7 +28,6 @@ namespace Core
 
     class Builder : IBuilder
     {
-        private string[] _ignore = new[] { "Course" };
 
         private string[] _objectId = new[] { "ProviderCathedraId" };
 
@@ -45,7 +44,7 @@ namespace Core
                 {
                     var value = prop.GetValue(entity, null);
 
-                    if (value != null && !_ignore.Contains(prop.Name))
+                    if (value != null)
                     {
                         if (prop.Name == "Id")
                         {

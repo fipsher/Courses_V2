@@ -211,6 +211,7 @@
     <Compile Include="Areas\Moderator\Controllers\CathedraController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Lecturer\Controllers\DisciplineController.cs" />
+    <Compile Include="Areas\Moderator\Controllers\CathedraDependencyController.cs" />
     <Compile Include="Areas\Moderator\Controllers\DisciplineController.cs" />
     <Compile Include="Areas\Moderator\Controllers\StudentGroupController.cs" />
     <Compile Include="Areas\Lecturer\LecturerAreaRegistration.cs" />
@@ -324,6 +325,7 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Lecturer\Models\" />
     <Folder Include="Areas\Moderator\Models\" />
+    <Folder Include="Areas\Moderator\Views\CathedraDependency\" />
     <Folder Include="Areas\Student\Models\" />
     <Folder Include="Areas\Watcher\Controllers\" />
     <Folder Include="Areas\Watcher\Models\" />

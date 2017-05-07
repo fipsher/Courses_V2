@@ -128,5 +128,17 @@ namespace Data.Services
             }
             return true;
         }
+
+        public override void Add(Discipline entity)
+        {
+            var cathedra = _cathedraRepo.Find(SearchFilter<Cathedra>.FilterById(entity.ProviderCathedraId)).SingleOrDefault();
+            var subscribers = cathedra.CathedraSubscribers
+                                      .Where(cs => cs.Semestr == entity.Semester)
+                                      .Select(cs => cs.CathedraId)
+                                      .ToList();
+
+            entity.SubscriberCathedraIds = subscribers;
+            base.Add(entity);
+        }
     }
 }

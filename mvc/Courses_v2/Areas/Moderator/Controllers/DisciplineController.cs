@@ -70,26 +70,7 @@ namespace Courses_v2.Areas.Moderator.Controllers
             {
                 throw;
             }
-            ViewBag.Cathedras = ServiceFactory.CathedraService.Find(SearchFilter<Cathedra>.Empty)
-                                    .Select(x => new SelectListItem
-                                    {
-                                        Text = x.Name,
-                                        Value = x.Id
-                                    }); ;
-
-            var lecturersFilter = new SearchFilter<User>
-            {
-                OptionList = new List<User>()
-                                            {
-                                                new User(){Roles = new List<Role> { Role.Lecturer }}
-                                            }
-            };
-            ViewBag.Lecturers = ServiceFactory.UserService.Find(lecturersFilter)
-                                            .Select(x => new SelectListItem
-                                            {
-                                                Text = x.UserName,
-                                                Value = x.Id
-                                            });
+            SetViewBag();
             return View();
 
         }
