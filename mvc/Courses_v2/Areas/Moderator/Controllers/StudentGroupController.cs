@@ -14,7 +14,7 @@ namespace Courses_v2.Areas.Moderator.Controllers
         {
         }
 
-        // GET: Admin/StudentGroup
+        // GET: Moderator/StudentGroup
         public ActionResult Index(SearchFilter<StudentGroup> filter = null)
         {
             filter = filter == null || filter.OptionList == null ? SearchFilter<StudentGroup>.Default : filter;
@@ -22,7 +22,7 @@ namespace Courses_v2.Areas.Moderator.Controllers
             return View(groups);
         }
 
-        // GET: Admin/StudentGroup/Details/5
+        // GET: Moderator/StudentGroup/Details/5
         public ActionResult Details(string id)
         {
             var groups = Service.Find((new SearchFilter<StudentGroup>
@@ -33,10 +33,10 @@ namespace Courses_v2.Areas.Moderator.Controllers
             return View(groups.SingleOrDefault());
         }
 
-        // GET: Admin/StudentGroup/Create
+        // GET: Moderator/StudentGroup/Create
         public ActionResult Create() => View();
 
-        // POST: Admin/StudentGroup/Create
+        // POST: Moderator/StudentGroup/Create
         [HttpPost]
         public ActionResult Create(StudentGroup studentGroup)
         {
@@ -55,7 +55,7 @@ namespace Courses_v2.Areas.Moderator.Controllers
             return View();
         }
 
-        // GET: Admin/StudentGroup/Edit/5
+        // GET: Moderator/StudentGroup/Edit/5
         public ActionResult Edit(string id)
         {
             var groups = Service.Find((new SearchFilter<StudentGroup>() { OptionList = new[] { new StudentGroup() { Id = id } } }));
@@ -63,7 +63,7 @@ namespace Courses_v2.Areas.Moderator.Controllers
             return View(groups.SingleOrDefault());
         }
 
-        // POST: Admin/StudentGroup/Edit/5
+        // POST: Moderator/StudentGroup/Edit/5
         [HttpPost]
         public ActionResult Edit(string id, StudentGroup studentGroup)
         {
@@ -82,7 +82,7 @@ namespace Courses_v2.Areas.Moderator.Controllers
             return View();
         }
 
-        // GET: Admin/StudentGroup/Delete/5
+        // GET: Moderator/StudentGroup/Delete/5
         public ActionResult Delete(string id)
         {
             var groups = Service.Find((new SearchFilter<StudentGroup>()
@@ -93,7 +93,7 @@ namespace Courses_v2.Areas.Moderator.Controllers
             return View(groups?.SingleOrDefault());
         }
 
-        // POST: Admin/StudentGroup/Delete/5
+        // POST: Moderator/StudentGroup/Delete/5
         [HttpPost]
         public ActionResult Delete(string id, StudentGroup studentGroup)
         {

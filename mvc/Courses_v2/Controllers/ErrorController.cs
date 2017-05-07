@@ -11,5 +11,7 @@ namespace Courses_v2.Controllers
         public ActionResult InternalServer() => View();
 
         public ActionResult NotFound() => View();
+
+        public ActionResult AccessDenied() => View();
     }
 }

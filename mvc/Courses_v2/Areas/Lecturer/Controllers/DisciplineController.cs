@@ -45,7 +45,7 @@ namespace Courses_v2.Areas.Lecturer.Controllers
             {
                 return View(discipline);
             }
-            return RedirectToAction("Index");// is better to redirect to Access denied 
+            return RedirectToAction("AccessDenied", "Error", new { area = "" });
         }
 
         // GET: Admin/Disciplines/Edit/5
@@ -60,7 +60,7 @@ namespace Courses_v2.Areas.Lecturer.Controllers
             {
                 return View(discipline);
             }
-            return RedirectToAction("Index");// is better to redirect to Access denied 
+            return RedirectToAction("AccessDenied", "Error", new { area = "" });
         }
         // POST: Admin/Disciplines/Edit/5
         [HttpPost]
@@ -74,8 +74,9 @@ namespace Courses_v2.Areas.Lecturer.Controllers
                     if (CheckLecturerAccess(discipline))
                     {
                         Service.Update(id, discipline);
+                        return RedirectToAction("Index");
                     }
-                    return RedirectToAction("Index");
+                    return RedirectToAction("AccessDenied", "Error", new { area = "" });
                 }
             }
             catch

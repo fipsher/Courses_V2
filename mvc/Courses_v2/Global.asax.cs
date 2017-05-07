@@ -18,30 +18,34 @@ namespace Courses_v2
 
         protected void Application_EndRequest()
         {
-            if (Context.Response.StatusCode == 404)
+            switch (Context.Response.StatusCode)
             {
-                Response.Clear();
+                case 404:
+                    Redirect(string.Empty, "Error", "NotFound");
+                    break;
 
-                var rd = new RouteData();
-                rd.DataTokens["area"] = ""; // In case controller is in another area
-                rd.Values["controller"] = "Error";
-                rd.Values["action"] = "NotFound";
+                case 500:
+                    Redirect(string.Empty, "Error", "InternalServer");
+                    break;
 
-                IController c = new ErrorController();
-                c.Execute(new RequestContext(new HttpContextWrapper(Context), rd));
+                case 401:
+                    Redirect(string.Empty, "Error", "AccessDenied");
+                    break;
             }
-            if (Context.Response.StatusCode == 500)
-            {
-                Response.Clear();
 
-                var rd = new RouteData();
-                rd.DataTokens["area"] = ""; // In case controller is in another area
-                rd.Values["controller"] = "Error";
-                rd.Values["action"] = "InternalServer";
+        }
 
-                IController c = new ErrorController();
-                c.Execute(new RequestContext(new HttpContextWrapper(Context), rd));
-            }
+        private void Redirect(string area, string controller, string action)
+        {
+            Response.Clear();
+
+            var rd = new RouteData();
+            rd.DataTokens["area"] = area; // In case controller is in another area
+            rd.Values["controller"] = controller;
+            rd.Values["action"] = action;
+
+            IController c = new ErrorController();
+            c.Execute(new RequestContext(new HttpContextWrapper(Context), rd));
         }
     }
 }

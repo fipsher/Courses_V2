@@ -208,11 +208,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Controllers\CathedraController.cs" />
-    <Compile Include="Areas\Admin\Controllers\StudentGroupController.cs" />
+    <Compile Include="Areas\Moderator\Controllers\CathedraController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Lecturer\Controllers\DisciplineController.cs" />
-    <Compile Include="Areas\Moderator\Controllers\CathedraController.cs" />
     <Compile Include="Areas\Moderator\Controllers\DisciplineController.cs" />
     <Compile Include="Areas\Moderator\Controllers\StudentGroupController.cs" />
     <Compile Include="Areas\Lecturer\LecturerAreaRegistration.cs" />
@@ -252,16 +250,6 @@
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Areas\Admin\Views\Cathedra\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Cathedra\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Cathedra\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Cathedra\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Cathedra\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\StudentGroup\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\StudentGroup\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\StudentGroup\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\StudentGroup\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\StudentGroup\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\User\Details.cshtml" />
     <Content Include="Areas\Admin\Views\User\Create.cshtml" />
     <Content Include="Areas\Admin\Views\User\Edit.cshtml" />
@@ -274,17 +262,12 @@
     <Content Include="Areas\Moderator\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Moderator\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Moderator\Views\web.config" />
-    <Content Include="Areas\Admin\Views\Discipline\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Discipline\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Discipline\Delete.cshtml" />
     <Content Include="Areas\Moderator\Views\Cathedra\Create.cshtml" />
     <Content Include="Areas\Moderator\Views\Cathedra\Delete.cshtml" />
     <Content Include="Areas\Moderator\Views\Cathedra\Details.cshtml" />
     <Content Include="Areas\Moderator\Views\Cathedra\Edit.cshtml" />
     <Content Include="Areas\Moderator\Views\Cathedra\Index.cshtml" />
     <Content Include="Areas\Moderator\Views\Setting\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Discipline\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Discipline\Create.cshtml" />
     <Content Include="Areas\Student\Views\web.config" />
     <Content Include="Areas\Student\Views\Discipline\Index.cshtml" />
     <Content Include="Areas\Student\Views\_ViewStart.cshtml" />
@@ -333,6 +316,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Error\InternalServer.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\AccessDenied.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

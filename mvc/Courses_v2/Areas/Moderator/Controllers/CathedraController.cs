@@ -14,15 +14,26 @@ namespace Courses_v2.Areas.Moderator.Controllers
         {
         }
 
-        // GET: Admin/Cathedra
-        public ActionResult Index(SearchFilter<Cathedra> filter = null)
+        // GET: Moderator/Cathedra
+        public ActionResult Index()
         {
-            filter = filter == null || filter.OptionList == null ? SearchFilter<Cathedra>.Default : filter;
-            var catherdas = Service.Find(filter);
-            return View(catherdas);
+            var cathedras = Service.Find(SearchFilter<Cathedra>.Default);
+            return View(cathedras);
+        }
+        // Post: Moderator/Cathedra
+        [HttpPost]
+        public ActionResult Index(Cathedra filter = null)
+        {
+            filter = filter ?? new Cathedra();
+            var searchFilter = SearchFilter<Cathedra>.Default;
+
+            searchFilter.OptionList = FilterHelper.OptionListByEntity<Cathedra>(filter);
+
+            var cathedras = Service.Find(searchFilter);
+            return View(cathedras);
         }
 
-        // GET: Admin/Cathedra/Details/5
+        // GET: Moderator/Cathedra/Details/5
         public ActionResult Details(string id)
         {
             var catherdas = Service.Find((new SearchFilter<Cathedra>
@@ -33,10 +44,10 @@ namespace Courses_v2.Areas.Moderator.Controllers
             return View(catherdas.SingleOrDefault());
         }
 
-        // GET: Admin/Cathedra/Create
+        // GET: Moderator/Cathedra/Create
         public ActionResult Create() => View();
 
-        // POST: Admin/Cathedra/Create
+        // POST: Moderator/Cathedra/Create
         [HttpPost]
         public ActionResult Create(Cathedra cathedra)
         {
@@ -55,15 +66,15 @@ namespace Courses_v2.Areas.Moderator.Controllers
             return View();
         }
 
-        // GET: Admin/Cathedra/Edit/5
+        // GET: Moderator/Cathedra/Edit/5
         public ActionResult Edit(string id)
         {
-            var disciplines = Service.Find((new SearchFilter<Cathedra>() { OptionList = new[] { new Cathedra() { Id = id } } }));
+            var disciplines = Service.Find(SearchFilter<Cathedra>.FilterById(id));
 
             return View(disciplines.SingleOrDefault());
         }
 
-        // POST: Admin/Cathedra/Edit/5
+        // POST: Moderator/Cathedra/Edit/5
         [HttpPost]
         public ActionResult Edit(string id, Cathedra cathedra)
         {
@@ -82,7 +93,7 @@ namespace Courses_v2.Areas.Moderator.Controllers
             return View();
         }
 
-        // GET: Admin/Cathedra/Delete/5
+        // GET: Moderator/Cathedra/Delete/5
         public ActionResult Delete(string id)
         {
             var disciplines = Service.Find((new SearchFilter<Cathedra>()
@@ -93,7 +104,7 @@ namespace Courses_v2.Areas.Moderator.Controllers
             return View(disciplines?.SingleOrDefault());
         }
 
-        // POST: Admin/Cathedra/Delete/5
+        // POST: Moderator/Cathedra/Delete/5
         [HttpPost]
         public ActionResult Delete(string id, Cathedra cathedra)
         {
