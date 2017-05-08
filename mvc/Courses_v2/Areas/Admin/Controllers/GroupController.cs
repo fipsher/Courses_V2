@@ -18,7 +18,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/User
         public ActionResult Index()
         {
-            var users = Service.FindStudentGroupResponce(SearchFilter<Group>.Default);
+            var users = Service.FindGroupResponce(SearchFilter<Group>.Default);
             return View(users.ToList());
         }
         // Post: Admin/User
@@ -30,17 +30,14 @@ namespace Courses_v2.Areas.Admin.Controllers
 
             searchFilter.OptionList = FilterHelper.OptionListByEntity<Group>(filter);
 
-            var users = Service.FindStudentGroupResponce(searchFilter);
+            var users = Service.FindGroupResponce(searchFilter);
             return View(users.ToList());
         }
 
         // GET: Admin/group/Details/5
         public ActionResult Details(string id)
         {
-            var groups = Service.Find((new SearchFilter<Group>
-            {
-                OptionList = new[] { new Group() { Id = id } }
-            }));
+            var groups = Service.FindGroupResponce(SearchFilter<Group>.FilterById(id));
 
             return View(groups.SingleOrDefault());
         }

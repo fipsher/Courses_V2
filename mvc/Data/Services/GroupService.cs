@@ -17,7 +17,7 @@ namespace Data.Services
             _cathedraRepo = (IRepository<Cathedra>)repositoryBootstrapper[typeof(Cathedra)];
         }
 
-        public IEnumerable<GroupResponce> FindStudentGroupResponce(SearchFilter<Group> filter)
+        public IEnumerable<GroupResponce> FindGroupResponce(SearchFilter<Group> filter)
         {
             IEnumerable<GroupResponce> result = new List<GroupResponce>();
             List<Cathedra> cathedras = new List<Cathedra>();

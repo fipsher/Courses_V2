@@ -7,6 +7,6 @@ namespace Core.Interfaces.Services
 {
     public interface IGroupService : IService<Group>
     {
-        IEnumerable<GroupResponce> FindStudentGroupResponce(SearchFilter<Group> filter);
+        IEnumerable<GroupResponce> FindGroupResponce(SearchFilter<Group> filter);
     }
 }
