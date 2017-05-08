@@ -2,6 +2,7 @@
 using Core.Helpers;
 using Core.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Data.Services
 {
@@ -16,7 +17,7 @@ namespace Data.Services
             Repository = (IRepository<TEntity>)repositoryBootstrapper[typeof(TEntity)];//fix
         }
 
-        public virtual List<TEntity> Find(SearchFilter<TEntity> filter) => Repository.Find(filter);
+        public virtual List<TEntity> Find(SearchFilter<TEntity> filter) => filter.OptionList.Count() != 0 ? Repository.Find(filter) : new List<TEntity>();
 
         public virtual void Add(TEntity entity) => Repository.Add(entity);
 

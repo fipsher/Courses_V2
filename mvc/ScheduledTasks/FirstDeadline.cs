@@ -135,7 +135,7 @@ namespace ScheduledTAsks
                         //fill this group with not registered student
                         while (stdAdded < stdAmountToAdd)
                         {
-                            _serviceFactory.DisciplineService.RegisterStudent(notRegisteredStd.First().Id, t.DisciplineId);
+                            _serviceFactory.DisciplineService.TryRegisterStudent(notRegisteredStd.First().Id, t.DisciplineId);
                             notRegisteredStd.Remove(notRegisteredStd.First());
                             stdAdded++;
                         }

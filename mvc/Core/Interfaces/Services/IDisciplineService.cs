@@ -9,7 +9,7 @@ namespace Core.Interfaces.Services
     {
         List<DisciplineResponce> FindDisciplineResponse(SearchFilter<Discipline> filter, bool includingSubscriberCathedras = false, bool includingStudents = false);
 
-        bool RegisterStudent(string studentId, string disciplineId);
+        bool TryRegisterStudent(string studentId, string disciplineId);
         bool UnregisterStudent(string studentId, string disciplineId);
     }
 }

@@ -10,7 +10,7 @@ namespace Courses_v2.Controllers
         protected TService Service;
         protected IServiceFactory ServiceFactory;
 
-        public string _userId;
+        private string _userId;
         public string UserId
         {
             get

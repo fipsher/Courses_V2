@@ -270,7 +270,7 @@
     <Content Include="Areas\Admin\Views\Cathedra\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Cathedra\Index.cshtml" />
     <Content Include="Areas\Student\Views\web.config" />
-    <Content Include="Areas\Student\Views\Discipline\Index.cshtml" />
+    <Content Include="Areas\Student\Views\Discipline\SocioDisciplines.cshtml" />
     <Content Include="Areas\Student\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Student\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Student\Views\Discipline\MyDisciplines.cshtml" />
@@ -289,6 +289,9 @@
     <Content Include="Areas\Admin\Views\Group\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Group\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Group\Details.cshtml" />
+    <Content Include="Areas\Student\Views\Discipline\SpecialDisciplines.cshtml" />
+    <Content Include="Areas\Student\Views\Discipline\Register.cshtml" />
+    <Content Include="Areas\Student\Views\Discipline\Unregister.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

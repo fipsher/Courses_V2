@@ -6,6 +6,7 @@
 @{
     ViewBag.Title = "Дисципліни";
     User user = ViewBag.User;
+    List<Discipline> userDisciplines = ViewBag.UserDisciplines;
 }
 
 <h2>Index</h2>
@@ -43,15 +44,21 @@
         </td>
         <td>
             @Html.ActionLink("Details", "Details", new { id = item.Id }) 
-
+            @{
+                var userSocioDisciplines = userDisciplines.Where(ud => ud.DisciplineType == Enums.DisciplineType.Socio);
+            }
             @if (item.DisciplineType == Enums.DisciplineType.Socio &&
-                 user.Disciplines.Count(d => d.DisciplineType == Enums.DisciplineType.Socio) < Constants.AmountSocioDisciplines)
+                 userSocioDisciplines.Count() < Constants.AmountSocioDisciplines)
             {
 
-                if (!user.Disciplines.Select(d => d.Semestr).Contains(item.Semester.Value))
+                if (!userSocioDisciplines.Select(d => d.Semester).Contains(item.Semester.Value))
                 {
                     @:| @Html.ActionLink("Register", "Register", new { id = item.Id })
                 }
+            }
+            @if (userSocioDisciplines.Any(usd => usd.Id == item.Id))
+            {
+                @:| @Html.ActionLink("Unregister", "Unregister", new { id = item.Id })
             }
         </td>
     </tr>

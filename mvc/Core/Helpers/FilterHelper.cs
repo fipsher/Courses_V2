@@ -6,6 +6,11 @@ namespace Core.Helpers
 {
     public class FilterHelper
     {
+        public static List<T> OptionListByEntity<T>(T entity) where T : Entity => new List<T>
+        {
+            entity
+        };
+
         #region Users
         public static List<User> StudentOptionList => new List<User>
         {
@@ -19,10 +24,19 @@ namespace Core.Helpers
         {
             new User { Roles = new List<Role> { Role.Moderator } }
         };
+        #endregion
 
-        public static List<T> OptionListByEntity<T>(T entity) where T: Entity => new List<T>
+
+        #region Discipline
+        public static List<Discipline> SocialDisciplines(int? course) => new List<Discipline>
         {
-            entity
+            new Discipline { DisciplineType = DisciplineType.Socio, Semester = course * 2 + 1},
+            new Discipline { DisciplineType = DisciplineType.Socio, Semester = course * 2 + 2 }
+        };
+        public static List<Discipline> SpecialDisciplines(int? course) => new List<Discipline>
+        {
+            new Discipline { DisciplineType = DisciplineType.Special, Semester = course * 2 + 1 },
+            new Discipline { DisciplineType = DisciplineType.Special, Semester = course * 2 + 2 }
         };
         #endregion
     }

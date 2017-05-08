@@ -1,4 +1,5 @@
-﻿using Core.Entities;
+﻿using Core;
+using Core.Entities;
 using Core.Helpers;
 using Core.Interfaces;
 using Core.Interfaces.Services;
@@ -17,17 +18,33 @@ namespace Courses_v2.Areas.Student.Controllers
         {
         }
 
-        public ActionResult Index(int pageIndex = 0)
+        public ActionResult SocioDisciplines(int pageIndex = 0)
         {
+            var user = ServiceFactory.UserService.Find(SearchFilter<User>.FilterById(UserId)).SingleOrDefault();
+
             var filter = SearchFilter<Discipline>.Default;
             filter.Skip = pageIndex * filter.Take;
+            filter.OptionList = FilterHelper.SocialDisciplines(user.Course);
+
             var disciplines = Service.FindDisciplineResponse(filter);
-            var user = ServiceFactory.UserService.Find(SearchFilter<User>.FilterById(UserId)).SingleOrDefault();
             
-            ViewBag.User = user;
+            SetDataToViewBag(user);
             return View(disciplines);
         }
 
+        public ActionResult SpecialDisciplines(int pageIndex = 0)
+        {
+            var user = ServiceFactory.UserService.Find(SearchFilter<User>.FilterById(UserId)).SingleOrDefault();
+
+            var filter = SearchFilter<Discipline>.Default;
+            filter.Skip = pageIndex * filter.Take;
+            filter.OptionList = FilterHelper.SpecialDisciplines(user.Course);
+
+            var disciplines = Service.FindDisciplineResponse(filter);
+
+            SetDataToViewBag(user);
+            return View(disciplines);
+        }
         public ActionResult Details(string id)
         {
             var disciplines = Service.FindDisciplineResponse((new SearchFilter<Discipline>
@@ -47,7 +64,7 @@ namespace Courses_v2.Areas.Student.Controllers
 
         public ActionResult Register(string id)
         {
-            var result = Service.RegisterStudent(_userId, id);
+            var result = Service.TryRegisterStudent(UserId, id);
             ViewBag.RegisterResult = result ? "Успішно зареєстровано" : "Упс, щось не так";
             return View();
         }
@@ -56,13 +73,27 @@ namespace Courses_v2.Areas.Student.Controllers
         {
             try
             {
-                Service.UnregisterStudent(_userId, id);
-                return RedirectToAction("Index");
+                Service.UnregisterStudent(UserId, id);
+                return View();
             }
             catch
             {
                 throw;
             }
         }
+
+
+        #region Helpers
+        private void SetDataToViewBag(User user)
+        {
+            ViewBag.User = user;
+            ViewBag.UserDisciplines = Service.Find(SearchFilter<Discipline>.FilterByIds(user.DisciplineIds));
+
+            //var settings = ServiceFactory.SettingService.Find(SearchFilter<Setting>.Empty);
+            //ViewBag.Start = settings.SingleOrDefault(s => s.Name == Constants.StartDate);
+            //ViewBag.First = settings.SingleOrDefault(s => s.Name == Constants.FirstDeadline);
+            //ViewBag.Second = settings.SingleOrDefault(s => s.Name == Constants.SecondDeadline);
+        }
+        #endregion
     }
 }

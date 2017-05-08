@@ -58,29 +58,36 @@ namespace Data.Services
             return result;
         }
 
-        public bool RegisterStudent(string studentId, string disciplineId)
+        public bool TryRegisterStudent(string studentId, string disciplineId)
         {
             var result = false;
-            var student = _userRepo.Find(new SearchFilter<User>()
-            {
-                OptionList = new[] { new User() { Id = studentId } }
-            }).SingleOrDefault();
+            var student = _userRepo.Find(SearchFilter<User>.FilterById(studentId)).SingleOrDefault();
 
-            var discipline = Find(new SearchFilter<Discipline>()
-            {
-                OptionList = new[] { new Discipline() { Id = disciplineId } }
-            }).SingleOrDefault();
+            var discipline = Find(SearchFilter<Discipline>.FilterById(disciplineId)).SingleOrDefault();
 
             if (student.Roles.Contains(Role.Student))
             {
                 var disciplines = Find(SearchFilter<Discipline>.FilterByIds(student.DisciplineIds));
 
-                if (disciplines.Count(d => d.DisciplineType == DisciplineType.Socio) < Constants.AmountSocioDisciplines &&
-                    disciplines.Count(d => d.DisciplineType == DisciplineType.Special) < Constants.AmountSpecialDisciplines &&
+                var registerLimt = discipline.DisciplineType == DisciplineType.Socio 
+                                                        ? Constants.AmountSocioDisciplines 
+                                                        : Constants.AmountSpecialDisciplines;
+
+                if (disciplines.Count(d => d.DisciplineType == discipline.DisciplineType) < registerLimt &&
                     !student.DisciplineIds.Any(id => id == disciplineId))
                 {
+                    if (discipline.StudentIds == null)
+                    {
+                        discipline.StudentIds = new List<string>();
+                    }
                     discipline.StudentIds.Add(studentId);
+
+                    if (student.DisciplineIds == null)
+                    {
+                        student.DisciplineIds = new List<string>();
+                    }
                     student.DisciplineIds.Add(disciplineId);
+
                     this.Update(disciplineId, discipline);
                     _userRepo.Update(studentId, student);
                     result = true;
@@ -91,22 +98,11 @@ namespace Data.Services
 
         public bool UnregisterStudent(string studentId, string disciplineId)
         {
-            var student = _userRepo.Find(new SearchFilter<User>()
-            {
-                OptionList = new[] { new User() { Id = studentId } }
-            }).SingleOrDefault();
+            var student = _userRepo.Find(SearchFilter<User>.FilterById(studentId)).SingleOrDefault();
+            var discipline = Find(SearchFilter<Discipline>.FilterById(disciplineId)).SingleOrDefault();
 
-            var discipline = Find(new SearchFilter<Discipline>()
-            {
-                OptionList = new[] { new Discipline() { Id = disciplineId } }
-            }).SingleOrDefault();
-            var registerDiscipline = student.DisciplineIds.SingleOrDefault(id => id == disciplineId);
-            //_settingRepo.Find(new SearchFilter<Setting>
-            //{
-            //    OptionList = new[] {new Setting { Id = } }
-            //});
-            //if (DateTime.UtcNow >= Iwe)
-            student.DisciplineIds.Remove(registerDiscipline);
+            //add date validation
+            student.DisciplineIds.Remove(disciplineId);
             discipline.StudentIds?.Remove(studentId);
             try
             {
@@ -119,17 +115,5 @@ namespace Data.Services
             }
             return true;
         }
-
-        //public override void Add(Discipline entity)
-        //{
-        //    var cathedra = _cathedraRepo.Find(SearchFilter<Cathedra>.FilterById(entity.ProviderCathedraId)).SingleOrDefault();
-        //    var subscribers = cathedra.CathedraSubscribers
-        //                              .Where(cs => cs.Semestr == entity.Semester)
-        //                              .Select(cs => cs.CathedraId)
-        //                              .ToList();
-
-        //    entity.SubscriberCathedraIds = subscribers;
-        //    base.Add(entity);
-        //}
     }
 }
