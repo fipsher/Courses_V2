@@ -75,14 +75,14 @@ namespace Data.Services
             {
                 var disciplines = Find(new SearchFilter<Discipline>()
                 {
-                    OptionList = student.Disciplines.Select(rd => new Discipline { Id = rd.DisciplineId })
+                    OptionList = student.DisciplineIds.Select(rd => new Discipline { Id = rd.DisciplineId })
                 });
                 if (disciplines.Count(d => d.DisciplineType == DisciplineType.Socio) < Constants.AmountSocioDisciplines &&
                     disciplines.Count(d => d.DisciplineType == DisciplineType.Special) < Constants.AmountSpecialDisciplines &&
-                    !student.Disciplines.Any(rd => rd.DisciplineId == disciplineId))
+                    !student.DisciplineIds.Any(rd => rd.DisciplineId == disciplineId))
                 {
                     discipline.StudentIds.Add(studentId);
-                    student.Disciplines.Add(new DisciplineRegister { DisciplineId = disciplineId, DateTime = DateTime.UtcNow });
+                    student.DisciplineIds.Add(new DisciplineRegister { DisciplineId = disciplineId, DateTime = DateTime.UtcNow });
                     this.Update(disciplineId, discipline);
                     _userRepo.Update(studentId, student);
                     result = true;
@@ -102,13 +102,13 @@ namespace Data.Services
             {
                 OptionList = new[] { new Discipline() { Id = disciplineId } }
             }).SingleOrDefault();
-            var registerDiscipline = student.Disciplines.SingleOrDefault(rd => rd.DisciplineId == disciplineId);
+            var registerDiscipline = student.DisciplineIds.SingleOrDefault(rd => rd.DisciplineId == disciplineId);
             //_settingRepo.Find(new SearchFilter<Setting>
             //{
             //    OptionList = new[] {new Setting { Id = } }
             //});
             //if (DateTime.UtcNow >= Iwe)
-            student.Disciplines.Remove(registerDiscipline);
+            student.DisciplineIds.Remove(registerDiscipline);
             discipline.StudentIds?.Remove(studentId);
             try
             {

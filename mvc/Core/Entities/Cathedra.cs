@@ -11,13 +11,12 @@ namespace Core.Entities
         [Required(AllowEmptyStrings = false, ErrorMessage = "Поле обов'язкове до заповнення")]
         public string Name{ get; set; }
 
-        // TODO: ask Andrew Roman 
-        public List<CathedraSubscribers> CathedraSubscribers { get; set; }
+        public List<DisciplineSubscribers> CathedraSubscribers { get; set; }
     }
 
-    public class CathedraSubscribers
+    public class DisciplineSubscribers
     {
-        public string CathedraId { get; set; }
+        public string DisciplineId { get; set; }
         public int Semestr { get; set; }
     }
 }

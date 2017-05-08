@@ -42,7 +42,7 @@ namespace Courses_v2.Areas.Student.Controllers
         {
             var user = ServiceFactory.UserService.Find(SearchFilter<User>.FilterById(UserId)).SingleOrDefault();
             var disciplines = Service.FindDisciplineResponse(
-                                      SearchFilter<Discipline>.FilterByIds(user.Disciplines
+                                      SearchFilter<Discipline>.FilterByIds(user.DisciplineIds
                                                                                .Select(rd => rd.DisciplineId)));
             return View(disciplines);
         }
