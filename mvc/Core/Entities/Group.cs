@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Core.Entities
 {
-    public class StudentGroup : Entity
+    public class Group : Entity
     {
         [DisplayName("Назва")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Поле обов'язкове до заповнення")]
@@ -17,6 +17,10 @@ namespace Core.Entities
 
         [DisplayName("Семестр")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Поле обов'язкове до заповнення")]
-        public int Semester { get; set; }
+        public int Course { get; set; }
+
+        //[DisplayName("Кількість не ...")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Поле обов'язкове до заповнення")]
+        //public int AmountOfNonSocialDisciplines { get; set; }
     }
 }

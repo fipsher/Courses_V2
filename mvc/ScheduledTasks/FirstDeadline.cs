@@ -57,7 +57,7 @@ namespace ScheduledTAsks
             }).ToList();
 
             //find std id that registered only once
-            var onceRegisteredStd = students.Where(s => s.RegisteredDisciplines?.Count == 1).ToList();
+            var onceRegisteredStd = students.Where(s => s.Disciplines?.Count == 1).ToList();
 
             foreach (var t in studIdsInDiscipline)
             {
@@ -119,8 +119,8 @@ namespace ScheduledTAsks
             }).ToList();
 
             //find std id that is notregistered
-            var notRegisteredStd = students.Where(s => s.RegisteredDisciplines == null ||
-                                                       s.RegisteredDisciplines.Count == 0).ToList();
+            var notRegisteredStd = students.Where(s => s.Disciplines == null ||
+                                                       s.Disciplines.Count == 0).ToList();
 
             foreach (var t in studIdsInDiscipline)
             {

@@ -48,7 +48,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/User/Create
         public ActionResult Create()
         {
-            ViewBag.StudentGroups = new List<StudentGroup>();//ServiceFactory.StudentGroupService.Find(SearchFilter<StudentGroup>.Empty);
+            ViewBag.StudentGroups = new List<Group>();//ServiceFactory.StudentGroupService.Find(SearchFilter<StudentGroup>.Empty);
 
             return View();
         }
@@ -69,7 +69,7 @@ namespace Courses_v2.Areas.Admin.Controllers
             {
                 throw;
             }
-            ViewBag.StudentGroups = new List<StudentGroup>();//ServiceFactory.StudentGroupService.Find(SearchFilter<StudentGroup>.Empty);
+            ViewBag.StudentGroups = new List<Group>();//ServiceFactory.StudentGroupService.Find(SearchFilter<StudentGroup>.Empty);
 
             return View();
         }
@@ -77,6 +77,8 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/User/Edit/5
         public ActionResult Edit(string id)
         {
+            ViewBag.StudentGroups = new List<Group>();//ServiceFactory.StudentGroupService.Find(SearchFilter<StudentGroup>.Empty);
+
             var users = Service.Find((new SearchFilter<User>() { OptionList = new[] { new User() { Id = id } } }));
 
             return View(users.SingleOrDefault());

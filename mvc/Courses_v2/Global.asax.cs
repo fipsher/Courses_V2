@@ -18,6 +18,7 @@ namespace Courses_v2
 
         protected void Application_EndRequest()
         {
+#if !DEBUG
             switch (Context.Response.StatusCode)
             {
                 case 404:
@@ -32,7 +33,7 @@ namespace Courses_v2
                     Redirect(string.Empty, "Error", "AccessDenied");
                     break;
             }
-
+#endif
         }
 
         private void Redirect(string area, string controller, string action)

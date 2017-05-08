@@ -7,6 +7,6 @@ namespace Core.Interfaces
         ICathedraService CathedraService { get; }
         IDisciplineService DisciplineService { get; }
         ISettingService SettingService { get; }
-        IStudentGroupService StudentGroupService{get;}
+        IGroupService GroupService{get;}
     }
 }

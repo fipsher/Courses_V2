@@ -2,7 +2,7 @@
 
 namespace Core.Interfaces.Services
 {
-    public interface IStudentGroupService : IService<StudentGroup>
+    public interface IGroupService : IService<Group>
     {
     }
 }

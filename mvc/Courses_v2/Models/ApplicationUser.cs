@@ -18,7 +18,7 @@ namespace Courses_v2.Models
             this.Login = user.Login;
             this.Password = user.Password;
             this.PhoneNumber = user.PhoneNumber;
-            this.RegisteredDisciplines = user.RegisteredDisciplines;
+            this.Disciplines = user.Disciplines;
             this.Roles = user.Roles;
             this.UserName = user.UserName;
         }

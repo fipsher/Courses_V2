@@ -12,7 +12,7 @@ namespace Data
         private ICathedraService _cathedraService { get; set; }
         private IDisciplineService _disciplineService { get; set; }
         private ISettingService _settingService { get; set; }
-        private IStudentGroupService _studentGroupService { get; set; }
+        private IGroupService _groupService { get; set; }
 
         public ServiceFactory(IRepositoryBootstrapper bootstrapper)
         {
@@ -23,6 +23,6 @@ namespace Data
         public ICathedraService CathedraService { get => _cathedraService ?? (_cathedraService = new CathedraService(_bootstrapper)); }
         public IDisciplineService DisciplineService { get => _disciplineService ?? (_disciplineService = new DisciplineService(_bootstrapper)); }
         public ISettingService SettingService { get => _settingService ?? (_settingService = new SettingService(_bootstrapper)); }
-        public IStudentGroupService StudentGroupService { get => _studentGroupService ?? (_studentGroupService = new StudentGroupService(_bootstrapper)); }
+        public IGroupService GroupService { get => _groupService ?? (_groupService = new GroupService(_bootstrapper)); }
     }
 }

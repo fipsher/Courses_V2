@@ -3,27 +3,45 @@ using Core.Helpers;
 using Core.Interfaces;
 using Core.Interfaces.Services;
 using Courses_v2.Controllers;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using static Core.Enums.Enums;
 
 namespace Courses_v2.Areas.Student.Controllers
 {
+    //[Authorize(Roles = "Student")]
     public class DisciplineController : BaseController<Discipline, IDisciplineService>
     {
-        private readonly IUserService _userService;
-        private readonly ICathedraService _cathedraService;
-
         public DisciplineController(IServiceFactory serviceFactory) : base(serviceFactory, serviceFactory.DisciplineService)
         {
-            _userService = serviceFactory.UserService;
-            _cathedraService = serviceFactory.CathedraService;
         }
 
-        public ActionResult Index(SearchFilter<Discipline> filter = null)
+        public ActionResult Index(int pageIndex = 0)
         {
-            filter = filter == null || filter.OptionList == null ? SearchFilter<Discipline>.Default : filter;
+            var filter = SearchFilter<Discipline>.Default;
+            filter.Skip = pageIndex * filter.Take;
             var disciplines = Service.FindDisciplineResponse(filter);
+            disciplines.First().Semester = 3;
+            //var user = ServiceFactory.UserService.Find(SearchFilter<User>.FilterById(UserId)).SingleOrDefault();
+            var user = new User
+            {
+                UserName = "Andrew Zvarych",
+                Email = "fipsher@gmail.com",
+                Password = "Ryba5656.",
+                PhoneNumber = "+380630740274",
+                Login = "AndrewThe",
+                Disciplines = new List<DisciplineRegister>
+                {
+                    new DisciplineRegister
+                    {
+                        DisciplineId = "590eec864784582014cf68b4",
+                        DisciplineType = DisciplineType.Socio,
+                        Semestr = 3
+                    }
+                }
+            };
+            ViewBag.User = user;
             return View(disciplines);
         }
 
@@ -39,14 +57,10 @@ namespace Courses_v2.Areas.Student.Controllers
 
         public ActionResult MyDisciplines()
         {
-            var user = _userService.Find(new SearchFilter<User>()
-            {
-                OptionList = new[] { new User { Id = _userId } }
-            }).SingleOrDefault();
-            var disciplines = Service.FindDisciplineResponse(new SearchFilter<Discipline>
-            {
-                OptionList = user.RegisteredDisciplines.Select(rd => new Discipline { Id = rd.DisciplineId })
-            });
+            var user = ServiceFactory.UserService.Find(SearchFilter<User>.FilterById(UserId)).SingleOrDefault();
+            var disciplines = Service.FindDisciplineResponse(
+                                      SearchFilter<Discipline>.FilterByIds(user.Disciplines
+                                                                               .Select(rd => rd.DisciplineId)));
             return View(disciplines);
         }
 

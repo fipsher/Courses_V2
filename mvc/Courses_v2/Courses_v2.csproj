@@ -208,12 +208,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\GroupController.cs" />
     <Compile Include="Areas\Moderator\Controllers\CathedraController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Lecturer\Controllers\DisciplineController.cs" />
     <Compile Include="Areas\Moderator\Controllers\CathedraDependencyController.cs" />
     <Compile Include="Areas\Moderator\Controllers\DisciplineController.cs" />
-    <Compile Include="Areas\Moderator\Controllers\StudentGroupController.cs" />
     <Compile Include="Areas\Lecturer\LecturerAreaRegistration.cs" />
     <Compile Include="Areas\Moderator\ModeratorAreaRegistration.cs" />
     <Compile Include="Areas\Student\AdminAreaRegistration.cs" />
@@ -268,7 +268,6 @@
     <Content Include="Areas\Moderator\Views\Cathedra\Details.cshtml" />
     <Content Include="Areas\Moderator\Views\Cathedra\Edit.cshtml" />
     <Content Include="Areas\Moderator\Views\Cathedra\Index.cshtml" />
-    <Content Include="Areas\Moderator\Views\Setting\Edit.cshtml" />
     <Content Include="Areas\Student\Views\web.config" />
     <Content Include="Areas\Student\Views\Discipline\Index.cshtml" />
     <Content Include="Areas\Student\Views\_ViewStart.cshtml" />
@@ -284,6 +283,11 @@
     <Content Include="Areas\Moderator\Views\Discipline\Edit.cshtml" />
     <Content Include="Areas\Moderator\Views\Discipline\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Setting\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Group\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Group\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Group\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Group\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Group\Delete.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -305,7 +309,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -319,6 +323,10 @@
     <Content Include="Views\Error\InternalServer.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
+    <Content Include="Views\Shared\_ModeratorLayout.cshtml" />
+    <Content Include="Views\Shared\_LecturerLayout.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <None Include="Views\Shared\_StudentLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

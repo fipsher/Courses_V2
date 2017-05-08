@@ -33,7 +33,7 @@ namespace Courses_v2.Authentication
         {
             var user = Service.Find(new SearchFilter<User>
             {
-                OptionList = new[] { new User { Email = userName } }
+                OptionList = new[] { new User { Login = userName } }
             }).SingleOrDefault();
 
             return Task.FromResult(user != null ? new ApplicationUser(user) : null);

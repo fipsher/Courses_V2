@@ -38,13 +38,6 @@ namespace Data.Services
 
                 var providerCathedra = _cathedraRepo.Find(SearchFilter<Cathedra>.FilterById(d.ProviderCathedraId))?.SingleOrDefault();
 
-                if (includingSubscriberCathedras)
-                {
-                    subscriberCathedras = _cathedraRepo.Find(new SearchFilter<Cathedra>
-                    {
-                        OptionList = d.SubscriberCathedraIds.Select(id => new Cathedra() { Id = id })
-                    });
-                }
 
                 if (includingStudents)
                 {
@@ -82,14 +75,14 @@ namespace Data.Services
             {
                 var disciplines = Find(new SearchFilter<Discipline>()
                 {
-                    OptionList = student.RegisteredDisciplines.Select(rd => new Discipline { Id = rd.DisciplineId })
+                    OptionList = student.Disciplines.Select(rd => new Discipline { Id = rd.DisciplineId })
                 });
                 if (disciplines.Count(d => d.DisciplineType == DisciplineType.Socio) < Constants.AmountSocioDisciplines &&
                     disciplines.Count(d => d.DisciplineType == DisciplineType.Special) < Constants.AmountSpecialDisciplines &&
-                    !student.RegisteredDisciplines.Any(rd => rd.DisciplineId == disciplineId))
+                    !student.Disciplines.Any(rd => rd.DisciplineId == disciplineId))
                 {
                     discipline.StudentIds.Add(studentId);
-                    student.RegisteredDisciplines.Add(new DisciplineRegister { DisciplineId = disciplineId, DateTime = DateTime.UtcNow });
+                    student.Disciplines.Add(new DisciplineRegister { DisciplineId = disciplineId, DateTime = DateTime.UtcNow });
                     this.Update(disciplineId, discipline);
                     _userRepo.Update(studentId, student);
                     result = true;
@@ -109,13 +102,13 @@ namespace Data.Services
             {
                 OptionList = new[] { new Discipline() { Id = disciplineId } }
             }).SingleOrDefault();
-            var registerDiscipline = student.RegisteredDisciplines.SingleOrDefault(rd => rd.DisciplineId == disciplineId);
+            var registerDiscipline = student.Disciplines.SingleOrDefault(rd => rd.DisciplineId == disciplineId);
             //_settingRepo.Find(new SearchFilter<Setting>
             //{
             //    OptionList = new[] {new Setting { Id = } }
             //});
             //if (DateTime.UtcNow >= Iwe)
-            student.RegisteredDisciplines.Remove(registerDiscipline);
+            student.Disciplines.Remove(registerDiscipline);
             discipline.StudentIds?.Remove(studentId);
             try
             {
@@ -129,16 +122,16 @@ namespace Data.Services
             return true;
         }
 
-        public override void Add(Discipline entity)
-        {
-            var cathedra = _cathedraRepo.Find(SearchFilter<Cathedra>.FilterById(entity.ProviderCathedraId)).SingleOrDefault();
-            var subscribers = cathedra.CathedraSubscribers
-                                      .Where(cs => cs.Semestr == entity.Semester)
-                                      .Select(cs => cs.CathedraId)
-                                      .ToList();
+        //public override void Add(Discipline entity)
+        //{
+        //    var cathedra = _cathedraRepo.Find(SearchFilter<Cathedra>.FilterById(entity.ProviderCathedraId)).SingleOrDefault();
+        //    var subscribers = cathedra.CathedraSubscribers
+        //                              .Where(cs => cs.Semestr == entity.Semester)
+        //                              .Select(cs => cs.CathedraId)
+        //                              .ToList();
 
-            entity.SubscriberCathedraIds = subscribers;
-            base.Add(entity);
-        }
+        //    entity.SubscriberCathedraIds = subscribers;
+        //    base.Add(entity);
+        //}
     }
 }

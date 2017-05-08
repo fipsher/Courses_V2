@@ -6,13 +6,7 @@
 <style>
 
 </style>
-<script>
-    $(document).ready(function () {
-        $('.clear').click(function () {
-            $('[type=text]').val(undefined);
-        });
-    })
-</script>
+
 <h2>Список людей</h2>
 @using (Html.BeginForm("Index", "User", FormMethod.Post))
 {
@@ -36,7 +30,6 @@
             </div>
             <div class="col-xs-2">
                 <input type="submit" value="Filter" class="btn btn-default submit">
-                <input type="button" value="Clear" class="btn btn-default clear">
             </div>
         </div>
     </div>

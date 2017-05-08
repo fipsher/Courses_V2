@@ -33,7 +33,7 @@ namespace Core.Helpers
                 }
             };
         }
-        public static SearchFilter<TEntity> FilterByIds(List<string> ids) => new SearchFilter<TEntity>
+        public static SearchFilter<TEntity> FilterByIds(IEnumerable<string> ids) => new SearchFilter<TEntity>
         {
             OptionList = ids.Select(id => new TEntity { Id = id })
         };

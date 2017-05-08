@@ -30,10 +30,10 @@ namespace Core.Entities
         public List<Role> Roles { get; set; }
 
         [DisplayName("Дисципліни")]
-        public List<DisciplineRegister> RegisteredDisciplines { get; set; }
+        public List<DisciplineRegister> Disciplines { get; set; }
 
-        [DisplayName("Курс")]
-        [Range(0, 6, ErrorMessage = "Min = 0, Max = 6")]
+        //[DisplayName("Курс")]
+        //[Range(0, Constants.MaxCourse, ErrorMessage = "Min = 0, Max = 6")]
         public int? Course { get; set; }
 
         [DisplayName("Логін")]
@@ -44,6 +44,7 @@ namespace Core.Entities
     public class DisciplineRegister
     {
         public string DisciplineId { get; set; }
+        public int Semestr { get; set; }
         public DateTime DateTime { get; set; }
         public DisciplineType DisciplineType { get; set; }
     }

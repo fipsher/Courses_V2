@@ -98,8 +98,8 @@
     <Compile Include="Services\DisciplineService.cs" />
     <Compile Include="RepositoryBootstrapper.cs" />
     <Compile Include="ServiceFactory.cs" />
+    <Compile Include="Services\GroupService.cs" />
     <Compile Include="Services\SettingService.cs" />
-    <Compile Include="Services\StudentGroupService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
