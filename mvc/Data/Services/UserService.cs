@@ -30,6 +30,5 @@ namespace Data.Services
             }
             return !loginExist;
         }
-        public override void Add(User entity) => throw new Exception("Please use AddWithCheck method");
     }
 }

@@ -15,11 +15,9 @@
 <h2>Create</h2>
 <script>
     $(document).ready(function () {
-        $('.user-group').hide();
-
         $('#Roles').change(function () {
             var array = $(this).val();
-            if (array.includes('0')) {
+            if (array.includes('0') || array == '0' ) {
                 $('.user-group').show();
             } else {
                 $('.user-group').hide();
@@ -79,18 +77,19 @@
                 @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="form-group user-group">
-            @Html.LabelFor(model => model.GroupId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.GroupId, groupSelectList, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.GroupId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.Roles, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Roles, roleSelectList, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Roles, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group user-group">
+            @Html.LabelFor(model => model.GroupId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.GroupId, groupSelectList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.GroupId, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
