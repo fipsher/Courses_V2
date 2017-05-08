@@ -1,16 +1,22 @@
 ﻿using Core.Entities;
+using System.ComponentModel;
 
 namespace Core.Responces
 {
-    class StudentGroupResponce
+    public class GroupResponce
     {
-        public StudentGroupResponce(Group group)
+        public GroupResponce(Group group)
         {
             Id = group.Id;
-            Semester = group.Course;
+            Course = group.Course;
+            Name = group.Name;
         }
         public string Id { get; set; }
+        [DisplayName("Назва")]
+        public string Name { get; set; }
+        [DisplayName("Кафедра")]
         public Cathedra Cathedra { get; set; }
-        public int Semester { get; set; }
+        [DisplayName("Курс")]
+        public int? Course { get; set; }
     }
 }

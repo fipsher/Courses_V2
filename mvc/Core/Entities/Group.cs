@@ -15,9 +15,9 @@ namespace Core.Entities
         [Required(AllowEmptyStrings = false, ErrorMessage = "Поле обов'язкове до заповнення")]
         public string CathedraId { get; set; }
 
-        [DisplayName("Семестр")]
+        [DisplayName("Курс")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Поле обов'язкове до заповнення")]
-        public int Course { get; set; }
+        public int? Course { get; set; }
 
         //[DisplayName("Кількість не ...")]
         //[Required(AllowEmptyStrings = false, ErrorMessage = "Поле обов'язкове до заповнення")]

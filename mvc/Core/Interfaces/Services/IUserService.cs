@@ -5,5 +5,6 @@ namespace Core.Interfaces.Services
 {
     public interface IUserService : IService<User>
     {
+        bool TryAdd(User entity);
     }
 }

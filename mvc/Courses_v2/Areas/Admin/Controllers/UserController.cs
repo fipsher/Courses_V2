@@ -3,7 +3,6 @@ using Core.Helpers;
 using Core.Interfaces;
 using Core.Interfaces.Services;
 using Courses_v2.Controllers;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -48,7 +47,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/User/Create
         public ActionResult Create()
         {
-            ViewBag.StudentGroups = new List<Group>();//ServiceFactory.StudentGroupService.Find(SearchFilter<StudentGroup>.Empty);
+            ViewBag.StudentGroups = ServiceFactory.GroupService.Find(SearchFilter<Group>.Empty);
 
             return View();
         }
@@ -61,15 +60,18 @@ namespace Courses_v2.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Service.Add(user);
-                    return RedirectToAction("Index");
+                    if (Service.TryAdd(user))
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    ViewBag.LoginExists = "Юзер з таким логіном вже існує";
                 }
             }
             catch
             {
                 throw;
             }
-            ViewBag.StudentGroups = new List<Group>();//ServiceFactory.StudentGroupService.Find(SearchFilter<StudentGroup>.Empty);
+            ViewBag.StudentGroups = ServiceFactory.GroupService.Find(SearchFilter<Group>.Empty);
 
             return View();
         }
@@ -77,7 +79,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/User/Edit/5
         public ActionResult Edit(string id)
         {
-            ViewBag.StudentGroups = new List<Group>();//ServiceFactory.StudentGroupService.Find(SearchFilter<StudentGroup>.Empty);
+            ViewBag.StudentGroups = ServiceFactory.GroupService.Find(SearchFilter<Group>.Empty);
 
             var users = Service.Find((new SearchFilter<User>() { OptionList = new[] { new User() { Id = id } } }));
 

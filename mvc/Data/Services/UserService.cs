@@ -2,6 +2,7 @@
 using Core.Helpers;
 using Core.Interfaces;
 using Core.Interfaces.Services;
+using System;
 using System.Linq;
 
 namespace Data.Services
@@ -14,12 +15,21 @@ namespace Data.Services
         {
             _groupService = (IRepository<Group>)repositoryStrategy[typeof(Group)];
         }
-
-        public override void Add(User entity)
+        
+        public bool TryAdd(User entity)
         {
-            var group = _groupService.Find(SearchFilter<Group>.FilterById(entity.GroupId)).SingleOrDefault();
-
-            entity.Course = group.Course;
+            var loginExist = Find(new SearchFilter<User>
+            {
+                OptionList = new[] { new User { Login = entity.Login } }
+            }).Any();
+            if (!loginExist)
+            {
+                var group = _groupService.Find(SearchFilter<Group>.FilterById(entity.GroupId)).SingleOrDefault();
+                entity.Course = group.Course;
+                Add(entity);
+            }
+            return !loginExist;
         }
+        public override void Add(User entity) => throw new Exception("Please use AddWithCheck method");
     }
 }

@@ -31,7 +31,7 @@ namespace Data.Services
             disciplines.ForEach(d =>
             {
                 var disciplineResponce = new DisciplineResponce(d);
-                List<Cathedra> subscriberCathedras = new List<Cathedra>();
+                //List<Cathedra> subscriberCathedras = new List<Cathedra>();
                 List<User> students = new List<User>();
 
                 var lecturer = _userRepo.Find(SearchFilter<User>.FilterById(d.LecturerId))?.SingleOrDefault();
@@ -49,7 +49,7 @@ namespace Data.Services
 
                 disciplineResponce.Lecturer = lecturer;
                 disciplineResponce.ProviderCathedra = providerCathedra;
-                disciplineResponce.SubscriberCathedras = subscriberCathedras;
+                //disciplineResponce.SubscriberCathedras = subscriberCathedras;
                 disciplineResponce.Students = students;
 
                 result.Add(disciplineResponce);

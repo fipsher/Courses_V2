@@ -18,8 +18,8 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/User
         public ActionResult Index()
         {
-            var users = Service.Find(SearchFilter<Group>.Default);
-            return View(users);
+            var users = Service.FindStudentGroupResponce(SearchFilter<Group>.Default);
+            return View(users.ToList());
         }
         // Post: Admin/User
         [HttpPost]
@@ -30,8 +30,8 @@ namespace Courses_v2.Areas.Admin.Controllers
 
             searchFilter.OptionList = FilterHelper.OptionListByEntity<Group>(filter);
 
-            var users = Service.Find(searchFilter);
-            return View(users);
+            var users = Service.FindStudentGroupResponce(searchFilter);
+            return View(users.ToList());
         }
 
         // GET: Admin/group/Details/5
@@ -67,6 +67,7 @@ namespace Courses_v2.Areas.Admin.Controllers
             {
                 throw;
             }
+            ViewBag.Cathedras = ServiceFactory.CathedraService.Find(SearchFilter<Cathedra>.Empty);
             return View();
         }
 
@@ -74,6 +75,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         public ActionResult Edit(string id)
         {
             var groups = Service.Find((new SearchFilter<Group>() { OptionList = new[] { new Group() { Id = id } } }));
+            ViewBag.Cathedras = ServiceFactory.CathedraService.Find(SearchFilter<Cathedra>.Empty);
 
             return View(groups.SingleOrDefault());
         }
@@ -94,6 +96,7 @@ namespace Courses_v2.Areas.Admin.Controllers
             {
                 throw;
             }
+            ViewBag.Cathedras = ServiceFactory.CathedraService.Find(SearchFilter<Cathedra>.Empty);
             return View();
         }
 

@@ -6,22 +6,22 @@ using Core.Helpers;
 using System.Linq;
 using Core.Interfaces;
 
-namespace Courses_v2.Areas.Moderator.Controllers
+namespace Courses_v2.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Moderator")]
+    [Authorize(Roles = "Admin")]
     public class CathedraController : BaseController<Cathedra, ICathedraService>
     {
         public CathedraController(IServiceFactory serviceFactory) : base(serviceFactory, serviceFactory.CathedraService)
         {
         }
 
-        // GET: Moderator/Cathedra
+        // GET: Admin/Cathedra
         public ActionResult Index()
         {
             var cathedras = Service.Find(SearchFilter<Cathedra>.Default);
             return View(cathedras);
         }
-        // Post: Moderator/Cathedra
+        // Post: Admin/Cathedra
         [HttpPost]
         public ActionResult Index(Cathedra filter = null)
         {
@@ -34,7 +34,7 @@ namespace Courses_v2.Areas.Moderator.Controllers
             return View(cathedras);
         }
 
-        // GET: Moderator/Cathedra/Details/5
+        // GET: Admin/Cathedra/Details/5
         public ActionResult Details(string id)
         {
             var catherdas = Service.Find((new SearchFilter<Cathedra>
@@ -45,10 +45,10 @@ namespace Courses_v2.Areas.Moderator.Controllers
             return View(catherdas.SingleOrDefault());
         }
 
-        // GET: Moderator/Cathedra/Create
+        // GET: Admin/Cathedra/Create
         public ActionResult Create() => View();
 
-        // POST: Moderator/Cathedra/Create
+        // POST: Admin/Cathedra/Create
         [HttpPost]
         public ActionResult Create(Cathedra cathedra)
         {
@@ -67,7 +67,7 @@ namespace Courses_v2.Areas.Moderator.Controllers
             return View();
         }
 
-        // GET: Moderator/Cathedra/Edit/5
+        // GET: Admin/Cathedra/Edit/5
         public ActionResult Edit(string id)
         {
             var disciplines = Service.Find(SearchFilter<Cathedra>.FilterById(id));
@@ -75,7 +75,7 @@ namespace Courses_v2.Areas.Moderator.Controllers
             return View(disciplines.SingleOrDefault());
         }
 
-        // POST: Moderator/Cathedra/Edit/5
+        // POST: Admin/Cathedra/Edit/5
         [HttpPost]
         public ActionResult Edit(string id, Cathedra cathedra)
         {
@@ -94,7 +94,7 @@ namespace Courses_v2.Areas.Moderator.Controllers
             return View();
         }
 
-        // GET: Moderator/Cathedra/Delete/5
+        // GET: Admin/Cathedra/Delete/5
         public ActionResult Delete(string id)
         {
             var disciplines = Service.Find((new SearchFilter<Cathedra>()
@@ -105,7 +105,7 @@ namespace Courses_v2.Areas.Moderator.Controllers
             return View(disciplines?.SingleOrDefault());
         }
 
-        // POST: Moderator/Cathedra/Delete/5
+        // POST: Admin/Cathedra/Delete/5
         [HttpPost]
         public ActionResult Delete(string id, Cathedra cathedra)
         {
