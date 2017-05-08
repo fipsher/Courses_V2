@@ -18,7 +18,7 @@ namespace Courses_v2.Areas.Moderator.Controllers
             _serviceFactory = serviceFactory;
         }
 
-        public ActionResult Setup(string cathedraId, int semestr)
+        public ActionResult Setup(string cathedraId, int semester)
         {
             var cathedras = _serviceFactory.CathedraService.Find(SearchFilter<Cathedra>.Empty);
             ViewBag.Cathedras = cathedras;

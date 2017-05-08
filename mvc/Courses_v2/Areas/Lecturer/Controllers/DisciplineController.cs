@@ -8,7 +8,6 @@ using System.Web.Mvc;
 
 namespace Courses_v2.Areas.Lecturer.Controllers
 {
-    // will be added some base discipline ctrl
     [Authorize(Roles = "Lecturer")]
     public class DisciplineController : BaseController<Discipline, IDisciplineService>
     {

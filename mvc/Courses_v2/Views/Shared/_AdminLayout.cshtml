@@ -1,48 +1,13 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var settings = new { area = "Admin" };
+}
 
-    @{ 
-        var adminSettings = new { area = "Admin" };
-    }
-</head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Юзери", "Index", "User", adminSettings, new { })</li>
-                    <li>@Html.ActionLink("Кафедри", "Index", "Cathedra", adminSettings, new { })</li>
-                    <li>@Html.ActionLink("Групи", "Index", "Group", adminSettings, new { })</li>
-                    <li>@Html.ActionLink("Настройки", "Index", "Setting", adminSettings, new { })</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
-
-    @RenderSection("scripts", required: false)
-</body>
-</html>
+@section Navigation{
+    <li>@Html.ActionLink("Юзери", "Index", "User", settings, new { })</li>
+    <li>@Html.ActionLink("Кафедри", "Index", "Cathedra", settings, new { })</li>
+    <li>@Html.ActionLink("Групи", "Index", "Group", settings, new { })</li>
+    <li>@Html.ActionLink("Настройки", "Index", "Setting", settings, new { })</li>
+}
+@RenderBody()

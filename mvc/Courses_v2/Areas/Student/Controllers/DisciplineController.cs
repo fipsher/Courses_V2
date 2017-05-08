@@ -10,7 +10,7 @@ using static Core.Enums.Enums;
 
 namespace Courses_v2.Areas.Student.Controllers
 {
-    //[Authorize(Roles = "Student")]
+    [Authorize(Roles = "Student")]
     public class DisciplineController : BaseController<Discipline, IDisciplineService>
     {
         public DisciplineController(IServiceFactory serviceFactory) : base(serviceFactory, serviceFactory.DisciplineService)
@@ -22,25 +22,8 @@ namespace Courses_v2.Areas.Student.Controllers
             var filter = SearchFilter<Discipline>.Default;
             filter.Skip = pageIndex * filter.Take;
             var disciplines = Service.FindDisciplineResponse(filter);
-            disciplines.First().Semester = 3;
-            //var user = ServiceFactory.UserService.Find(SearchFilter<User>.FilterById(UserId)).SingleOrDefault();
-            var user = new User
-            {
-                UserName = "Andrew Zvarych",
-                Email = "fipsher@gmail.com",
-                Password = "Ryba5656.",
-                PhoneNumber = "+380630740274",
-                Login = "AndrewThe",
-                Disciplines = new List<DisciplineRegister>
-                {
-                    new DisciplineRegister
-                    {
-                        DisciplineId = "590eec864784582014cf68b4",
-                        DisciplineType = DisciplineType.Socio,
-                        Semestr = 3
-                    }
-                }
-            };
+            var user = ServiceFactory.UserService.Find(SearchFilter<User>.FilterById(UserId)).SingleOrDefault();
+            
             ViewBag.User = user;
             return View(disciplines);
         }
