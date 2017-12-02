@@ -24,7 +24,7 @@ namespace Data.Services
             var groups = Find(filter);
 
             var cathedraIds = groups.Select(g => g.CathedraId).Distinct().ToList();
-            if (cathedraIds != null)
+            if (cathedraIds != null && cathedraIds.Any())
             {
                 cathedras = _cathedraRepo.Find(SearchFilter<Cathedra>.FilterByIds(cathedraIds));
             }

@@ -11,7 +11,7 @@ using static Core.Enums.Enums;
 
 namespace Courses_v2.Areas.Moderator.Controllers
 {
-    [Authorize(Roles = "Moderator")]
+    [Authorize(Roles = "Moderator, Admin")]
     public class DisciplineController : BaseController<Discipline, IDisciplineService>
     {
         public DisciplineController(IServiceFactory serviceFactory) : base(serviceFactory, serviceFactory.DisciplineService)

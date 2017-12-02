@@ -2,11 +2,13 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     var settings = new { area = "Admin" };
+    var moderSettings = new { area = "Moderator" };
 }
 
 @section Navigation{
     <li>@Html.ActionLink("Юзери", "Index", "User", settings, new { })</li>
     <li>@Html.ActionLink("Кафедри", "Index", "Cathedra", settings, new { })</li>
+    <li>@Html.ActionLink("Дисципліни", "Index", "Discipline", moderSettings, new { })</li>
     <li>@Html.ActionLink("Групи", "Index", "Group", settings, new { })</li>
     <li>@Html.ActionLink("Настройки", "Index", "Setting", settings, new { })</li>
 }

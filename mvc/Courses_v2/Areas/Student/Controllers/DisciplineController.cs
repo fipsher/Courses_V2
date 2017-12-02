@@ -87,7 +87,9 @@ namespace Courses_v2.Areas.Student.Controllers
         private void SetDataToViewBag(User user)
         {
             ViewBag.User = user;
-            ViewBag.UserDisciplines = Service.Find(SearchFilter<Discipline>.FilterByIds(user.DisciplineIds));
+            ViewBag.UserDisciplines = user.DisciplineIds != null
+                ? Service.Find(SearchFilter<Discipline>.FilterByIds(user.DisciplineIds))
+                : new List<Discipline>();
 
             //var settings = ServiceFactory.SettingService.Find(SearchFilter<Setting>.Empty);
             //ViewBag.Start = settings.SingleOrDefault(s => s.Name == Constants.StartDate);
