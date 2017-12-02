@@ -1,7 +1,9 @@
 ﻿
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using static Core.Enums.Enums;
 
 namespace Core.Entities
 {
@@ -22,5 +24,17 @@ namespace Core.Entities
         //[DisplayName("Кількість не ...")]
         //[Required(AllowEmptyStrings = false, ErrorMessage = "Поле обов'язкове до заповнення")]
         //public int AmountOfNonSocialDisciplines { get; set; }
+
+        public List<string> DisciplineSubscriptions { get; set; }
+
+        public DisciplineConfiguration DisciplineConfiguration { get; set; }
+
+    }
+
+    public class DisciplineConfiguration
+    {
+        public int RequiredAmount { get; set; }
+        public DisciplineType DisciplineType { get; set; }
+        public int Semester { get; set; }
     }
 }

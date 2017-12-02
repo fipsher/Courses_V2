@@ -30,7 +30,7 @@ namespace Core.Entities
         public List<Role> Roles { get; set; }
 
         [DisplayName("Дисципліни")]
-        public List<string> DisciplineIds { get; set; }
+        public List<DisciplineModel> Disciplines { get; set; }
 
         //[DisplayName("Курс")]
         //[Range(0, Constants.MaxCourse, ErrorMessage = "Min = 0, Max = 6")]
@@ -39,5 +39,11 @@ namespace Core.Entities
         [DisplayName("Логін")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Поле обов'язкове до заповнення")]
         public string Login { get; set; }
+    }
+
+    public class DisciplineModel
+    {
+        public string Id { get; set; }
+        public bool Locked { get; set; }
     }
 }

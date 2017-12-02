@@ -29,6 +29,6 @@ namespace Core.Entities
         [DisplayName("Лектор")]
         public string LecturerId { get; set; }
 
-        public List<string> StudentIds { get; set; }
+        public bool IsAvailable { get; set; }
     }
 }
