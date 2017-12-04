@@ -58,7 +58,7 @@ namespace Courses_v2.Areas.Student.Controllers
         public ActionResult MyDisciplines()
         {
             var user = ServiceFactory.UserService.Find(SearchFilter<User>.FilterById(UserId)).SingleOrDefault();
-            var disciplines = Service.FindDisciplineResponse(SearchFilter<Discipline>.FilterByIds(user.DisciplineIds));
+            var disciplines = Service.FindDisciplineResponse(SearchFilter<Discipline>.FilterByIds(user.Disciplines.Select(el => el.Id)));
             return View(disciplines);
         }
 
@@ -87,8 +87,8 @@ namespace Courses_v2.Areas.Student.Controllers
         private void SetDataToViewBag(User user)
         {
             ViewBag.User = user;
-            ViewBag.UserDisciplines = user.DisciplineIds != null
-                ? Service.Find(SearchFilter<Discipline>.FilterByIds(user.DisciplineIds))
+            ViewBag.UserDisciplines = user.Disciplines != null && user.Disciplines.Any()
+                ? Service.Find(SearchFilter<Discipline>.FilterByIds(user.Disciplines.Select(el => el.Id)))
                 : new List<Discipline>();
 
             //var settings = ServiceFactory.SettingService.Find(SearchFilter<Setting>.Empty);

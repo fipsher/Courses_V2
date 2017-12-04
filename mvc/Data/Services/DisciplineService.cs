@@ -38,14 +38,14 @@ namespace Data.Services
 
                 var providerCathedra = _cathedraRepo.Find(SearchFilter<Cathedra>.FilterById(d.ProviderCathedraId))?.SingleOrDefault();
 
-
-                if (includingStudents)
-                {
-                    students = _userRepo.Find(new SearchFilter<User>
-                    {
-                        OptionList = d.StudentIds.Select(id => new User() { Id = id })
-                    });
-                }
+                // todo: fix
+                //if (includingStudents)
+                //{
+                //    students = _userRepo.Find(new SearchFilter<User>
+                //    {
+                //        OptionList = d.StudentIds.Select(id => new User() { Id = id })
+                //    });
+                //}
 
                 disciplineResponce.Lecturer = lecturer;
                 disciplineResponce.ProviderCathedra = providerCathedra;
@@ -67,26 +67,21 @@ namespace Data.Services
 
             if (student.Roles.Contains(Role.Student))
             {
-                var disciplines = Find(SearchFilter<Discipline>.FilterByIds(student.DisciplineIds));
+                var studentDiscIds = student.Disciplines.Select(el => el.Id);
+                var disciplines = Find(SearchFilter<Discipline>.FilterByIds(studentDiscIds));
 
                 var registerLimt = discipline.DisciplineType == DisciplineType.Socio 
                                                         ? Constants.AmountSocioDisciplines 
                                                         : Constants.AmountSpecialDisciplines;
 
                 if (disciplines.Count(d => d.DisciplineType == discipline.DisciplineType) < registerLimt &&
-                    !student.DisciplineIds.Any(id => id == disciplineId))
+                    !student.Disciplines.Any(el => el.Id == disciplineId))
                 {
-                    if (discipline.StudentIds == null)
+                    if (student.Disciplines == null)
                     {
-                        discipline.StudentIds = new List<string>();
+                        student.Disciplines = new List<DisciplineModel>();
                     }
-                    discipline.StudentIds.Add(studentId);
-
-                    if (student.DisciplineIds == null)
-                    {
-                        student.DisciplineIds = new List<string>();
-                    }
-                    student.DisciplineIds.Add(disciplineId);
+                    student.Disciplines.Add(new DisciplineModel { Id = disciplineId });
 
                     this.Update(disciplineId, discipline);
                     _userRepo.Update(studentId, student);
@@ -102,8 +97,9 @@ namespace Data.Services
             var discipline = Find(SearchFilter<Discipline>.FilterById(disciplineId)).SingleOrDefault();
 
             //add date validation
-            student.DisciplineIds.Remove(disciplineId);
-            discipline.StudentIds?.Remove(studentId);
+            student.Disciplines.Remove(
+                student.Disciplines.SingleOrDefault(el => el.Id == disciplineId)
+                );
             try
             {
                 _userRepo.Update(studentId, student);
