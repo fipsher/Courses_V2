@@ -24,8 +24,11 @@ namespace Data.Services
             }).Any();
             if (!loginExist)
             {
-                var group = _groupService.Find(SearchFilter<Group>.FilterById(entity.GroupId)).SingleOrDefault();
-                entity.Course = group.Course;
+                if (entity.Roles.Any(el => el == Core.Enums.Enums.Role.Student))
+                {
+                    var group = _groupService.Find(SearchFilter<Group>.FilterById(entity.GroupId)).SingleOrDefault();
+                    entity.Course = group.Course;
+                }
                 Add(entity);
             }
             return !loginExist;

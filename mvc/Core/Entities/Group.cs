@@ -27,7 +27,7 @@ namespace Core.Entities
 
         public List<string> DisciplineSubscriptions { get; set; }
 
-        public DisciplineConfiguration DisciplineConfiguration { get; set; }
+        public List<DisciplineConfiguration> DisciplineConfiguration { get; set; }
 
     }
 

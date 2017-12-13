@@ -51,9 +51,15 @@ namespace LightCaseClient.Support
     // An implementation of ISerializerAdapter based on the JavaScriptSerializer
     public class JavaScriptSerializerAdapter : ISerializerAdapter
     {
-        public string Serialize(object obj) => JsonConvert.SerializeObject(obj);
+        public string Serialize(object obj) => JsonConvert.SerializeObject(obj, Formatting.None, new JsonSerializerSettings
+        {
+            NullValueHandling = NullValueHandling.Ignore
+        });
 
-        public T Deserialize<T>(string input) => JsonConvert.DeserializeObject<T>(input);
+        public T Deserialize<T>(string input) => JsonConvert.DeserializeObject<T>(input, new JsonSerializerSettings
+        {
+            NullValueHandling = NullValueHandling.Ignore
+        });
     }
 
     // The configuration class defines how the rest call is made.

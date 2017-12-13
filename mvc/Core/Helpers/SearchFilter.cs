@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,8 +7,11 @@ namespace Core.Helpers
 {
     public class SearchFilter<TEntity> where TEntity :  Entity, new()
     {
+        [JsonProperty("optionList")]
         public IEnumerable<TEntity> OptionList { get; set; }
+        [JsonProperty("take")]
         public int Take { get; set; }
+        [JsonProperty("skip")]
         public int Skip { get; set; }
 
         public Dictionary<string, object> PrepareForRequest()
