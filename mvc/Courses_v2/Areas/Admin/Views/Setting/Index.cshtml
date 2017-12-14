@@ -1,37 +1,104 @@
 ﻿@model IEnumerable<Core.Entities.Setting>
+@using Core;
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Дедлайни";
+    var first = Model.SingleOrDefault(el => el.Name == Constants.StartDate);
+    var second = Model.SingleOrDefault(el => el.Name == Constants.FirstDeadline);
+    var third = Model.SingleOrDefault(el => el.Name == Constants.SecondDeadline);
 }
 
-<h2>Index</h2>
+<script>
+    $(document).ready(function () {
+        $('.setting-save').click(function () {
+            var form = $(this).closest('tr').find('form');
+            var data = {
+                id: form.find('[name="id"]').val(),
+                setting: {
+                    Id: form.find('[name="id"]').val(),
+                    Name: form.find('[name="Name"]').val(),
+                    Value: form.find('[name="Value"]').val()
+                }
+            };
+            $.ajax({
+                type: "POST",
+                url: "/Admin/Setting/Edit",
+                data: data,
+                success: function (result) {
+                    if (!result.isSuccess) {
+                        $('.alert.alert-danger').text(result.message);
+                        $('.alert.alert-danger').show();
+                    }
+                },
+            });
+        });
+    })
+</script>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Value)
-        </th>
-        <th></th>
-    </tr>
+<div class="form-group">
+    <div class="row">
+        <div class="alert alert-danger" style="display:none"></div>
+    </div>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Value)
+            </th>
+            <th>
+            </th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Value)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id })
-        </td>
-    </tr>
-}
+        <tr>
+            <td>
+                Старт
+            </td>
+            <td>
+                @using (Html.BeginForm("Edit", "Setting"))
+                {
+                    <input type="hidden" value="@(first?.Id)" name="id" />
+                    <input type="hidden" value="@(Constants.StartDate)" name="Name" />
+                    <input type="date" value="@(first?.Value?.ToString("yyyy-MM-dd"))" name="Value"  class="form-control"/>
+                }
+            </td>
+            <td>
+                <input type="submit" value="Save" class="btn btn-default setting-save" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Перший дедлайн
+            </td>
+            <td>
+                @using (Html.BeginForm("Edit", "Setting"))
+                {
+                    <input type="hidden" value="@(second?.Id)" name="id" />
+                    <input type="hidden" value="@(Constants.FirstDeadline)" name="Name" />
+                    <input type="date" value="@(second?.Value?.ToString("yyyy-MM-dd"))" name="Value" class="form-control" />
+                }
+            </td>
+            <td>
+                <input type="submit" value="Save" class="btn btn-default setting-save" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Другий дедлайн
+            </td>
+            <td>
+                @using (Html.BeginForm("Edit", "Setting"))
+                {
+                    <input type="hidden" value="@(third?.Id)" name="id" />
+                    <input type="hidden" value="@(Constants.SecondDeadline)" name="Name" />
+                    <input type="date" value="@(third?.Value?.ToString("yyyy-MM-dd"))" name="Value" class="form-control" />
+                }
+            </td>
+            <td>
+                <input type="submit" value="Save" class="btn btn-default setting-save" />
+            </td>
+        </tr>
+    </table>
 
-</table>
+</div>
