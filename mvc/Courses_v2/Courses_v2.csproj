@@ -214,11 +214,10 @@
     <Compile Include="Areas\Admin\Controllers\CathedraController.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Areas\Admin\Models\AssignDisciplineModel.cs" />
     <Compile Include="Areas\Lecturer\Controllers\DisciplineController.cs" />
-    <Compile Include="Areas\Moderator\Controllers\CathedraDependencyController.cs" />
-    <Compile Include="Areas\Moderator\Controllers\DisciplineController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DisciplineController.cs" />
     <Compile Include="Areas\Lecturer\LecturerAreaRegistration.cs" />
-    <Compile Include="Areas\Moderator\ModeratorAreaRegistration.cs" />
     <Compile Include="Areas\Student\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Student\Controllers\DisciplineController.cs" />
     <Compile Include="Authentication\CustomUserStore.cs" />
@@ -259,8 +258,6 @@
     <Content Include="Areas\Lecturer\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Lecturer\Views\Discipline\Index.cshtml" />
     <Content Include="Areas\Lecturer\Views\web.config" />
-    <Content Include="Areas\Moderator\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Moderator\Views\web.config" />
     <Content Include="Areas\Admin\Views\Cathedra\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Cathedra\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Cathedra\Details.cshtml" />
@@ -275,11 +272,11 @@
     <Content Include="Areas\Lecturer\Views\Discipline\Edit.cshtml" />
     <Content Include="Areas\Lecturer\Views\Discipline\Details.cshtml" />
     <Content Include="Areas\Admin\Views\User\Index.cshtml" />
-    <Content Include="Areas\Moderator\Views\Discipline\Create.cshtml" />
-    <Content Include="Areas\Moderator\Views\Discipline\Delete.cshtml" />
-    <Content Include="Areas\Moderator\Views\Discipline\Details.cshtml" />
-    <Content Include="Areas\Moderator\Views\Discipline\Edit.cshtml" />
-    <Content Include="Areas\Moderator\Views\Discipline\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Discipline\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Discipline\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Discipline\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Discipline\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Discipline\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Setting\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Group\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Group\Create.cshtml" />
@@ -289,8 +286,9 @@
     <Content Include="Areas\Student\Views\Discipline\SpecialDisciplines.cshtml" />
     <Content Include="Areas\Student\Views\Discipline\Register.cshtml" />
     <Content Include="Areas\Student\Views\Discipline\Unregister.cshtml" />
-    <Content Include="Areas\Moderator\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Group\EditDisciplines.cshtml" />
+    <Content Include="Areas\Admin\Views\Group\AddDiscipline.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -333,10 +331,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Lecturer\Models\" />
-    <Folder Include="Areas\Moderator\Models\" />
-    <Folder Include="Areas\Moderator\Views\CathedraDependency\" />
     <Folder Include="Areas\Student\Models\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Setting\" />

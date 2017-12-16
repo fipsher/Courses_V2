@@ -5,14 +5,14 @@ using static Core.Enums.Enums;
 
 namespace Core.Responces
 {
-    public class DisciplineResponce
+    public class GroupDisciplineModel
     {
-        public DisciplineResponce()
+        public GroupDisciplineModel()
         {
 
         }
 
-        public DisciplineResponce(Discipline discipline)
+        public GroupDisciplineModel(Discipline discipline)
         {
             Id = discipline.Id;
             Name = discipline.Name;
@@ -25,7 +25,7 @@ namespace Core.Responces
         [DisplayName("Назва")]
         public string Name { get; set; }
         [DisplayName("Кафедра-провайдер")]
-        public Cathedra ProviderCathedra { get; set; }
+        public string ProviderCathedra { get; set; }
         //[DisplayName("Назва")]
         //public List<Cathedra> SubscriberCathedras { get; set; }
         [DisplayName("Тип дисципліни")]
@@ -35,8 +35,6 @@ namespace Core.Responces
         [DisplayName("Опис")]
         public string Description { get; set; }
         [DisplayName("Лектор")]
-        public User Lecturer { get; set; }
-
-        public List<User> Students { get; set; }
+        public string Lecturer { get; set; }
     }
 }

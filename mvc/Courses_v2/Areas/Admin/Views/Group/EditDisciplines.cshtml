@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Core.Responces.GroupDisciplineModel>
+
+@{
+    ViewBag.Title = "Edit Disciplines";
+}
+
+<h2>EditDisciplines</h2>
+
+<p>
+    @Html.ActionLink("Додати", "AddDiscipline", new { id = ViewBag.Id })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProviderCathedra)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Semester)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Lecturer)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProviderCathedra)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Semester)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lecturer)
+            </td>
+            
+            <td>
+                @using (Html.BeginForm("DeleteFromGroup", "Group"))
+                {
+                    <input type="hidden" name="disciplineId" value="@item.Id" />
+                    <input type="hidden" name="groupId" value="@ViewBag.Id" />
+
+                    <button type="submit" class="btn-link">Вилучити</button>
+                }
+            </td>
+        </tr>
+    }
+
+</table>

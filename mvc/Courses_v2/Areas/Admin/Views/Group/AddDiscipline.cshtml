@@ -1,0 +1,35 @@
+﻿@model Courses_v2.Areas.Admin.Models.AssignDisciplineModel
+@{
+    ViewBag.Title = "AddDiscipline";
+}
+
+<h2>Додати дисципліну</h2>
+
+@using (Html.BeginForm("AssignDiscipline", "Group"))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+      
+        <div class="form-group">
+            <label class="control-label col-md-2">Дисципліна</label>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.DisciplineId, Model.DisciplineList, new { @class = "form-control" })
+            </div>
+        </div>
+
+       
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Список", "EditDisciplines", new {  id= Model.Id}) 
+</div>

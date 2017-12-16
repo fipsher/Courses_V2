@@ -9,7 +9,7 @@ using System.Linq;
 using System.Web.Mvc;
 using static Core.Enums.Enums;
 
-namespace Courses_v2.Areas.Moderator.Controllers
+namespace Courses_v2.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Moderator, Admin")]
     public class DisciplineController : BaseController<Discipline, IDisciplineService>

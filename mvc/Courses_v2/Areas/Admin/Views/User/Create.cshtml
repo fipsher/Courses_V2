@@ -1,5 +1,5 @@
 ﻿@model Core.Entities.User
-
+@using Core.Enums;
 @{
     ViewBag.Title = "Create";
     var groupSelectList = new SelectList(ViewBag.StudentGroups, "Id", "Name");
@@ -10,6 +10,15 @@
         new SelectListItem {Text = "Moderator", Value = "2" },
         new SelectListItem {Text = "Admin", Value = "3" },
     }, "Value", "Text");
+
+    if (User.IsInRole(Enums.Role.Moderator.ToString()))
+    {
+        roleSelectList = new SelectList(new List<SelectListItem>
+        {
+            new SelectListItem {Text = "Student", Value = "0" },
+            new SelectListItem {Text = "Lecturer", Value = "1" }
+        }, "Value", "Text");
+    }
 }
 
 <h2>Create</h2>
@@ -17,7 +26,7 @@
     $(document).ready(function () {
         $('#Roles').change(function () {
             var array = $(this).val();
-            if (array.includes('0') || array == '0' ) {
+            if (array.includes('0') || array == '0') {
                 $('.user-group').show();
             } else {
                 $('.user-group').hide();
@@ -35,7 +44,7 @@
         <h4>User</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        
+
         <div class="form-group">
             @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -85,6 +94,7 @@
                 @Html.ValidationMessageFor(model => model.Roles, "", new { @class = "text-danger" })
             </div>
         </div>
+
         <div class="form-group user-group">
             @Html.LabelFor(model => model.GroupId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

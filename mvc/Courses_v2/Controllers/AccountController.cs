@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Courses_v2.Models;
+using Core.Interfaces.Services;
 
 namespace Courses_v2.Controllers
 {
@@ -13,15 +14,12 @@ namespace Courses_v2.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private IUserService _userService;
 
-        public AccountController()
+        public AccountController(
+            IUserService userService)
         {
-        }
-
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
+            _userService = userService;
         }
 
         public ApplicationSignInManager SignInManager
@@ -53,6 +51,14 @@ namespace Courses_v2.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            //_userService.Add(new Core.Entities.User()
+            //{
+            //    Login = "AndrewThe",
+            //    Password = "Ryba5656.",
+            //    Email = "fipsher@gmail.com",
+            //    Roles = new System.Collections.Generic.List<Core.Enums.Enums.Role> { Core.Enums.Enums.Role.Admin },
+            //    UserName = "AnderewThe"
+            //});
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }

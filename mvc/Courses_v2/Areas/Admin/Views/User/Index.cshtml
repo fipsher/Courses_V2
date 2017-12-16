@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<Core.Entities.User>
-
+@using Core.Enums;
 @{
     ViewBag.Title = "Index";
 }
@@ -20,14 +20,26 @@
                 <input type="text" name="PhoneNumber" id="PhoneNumber" placeholder="Телефон" class="form-control form-group" />
                 <input type="text" name="Course" id="Course" placeholder="Курс" class="form-control form-group" />
             </div>
-            <div class="col-xs-4">
-                <select class="form-control" data-val="true" id="Roles" multiple="multiple" name="Roles">
-                    <option value="0">Student</option>
-                    <option value="1">Lecturer</option>
-                    <option value="2">Moderator</option>
-                    <option value="3">Admin</option>
-                </select>
-            </div>
+            @if (User.IsInRole(Enums.Role.Admin.ToString()))
+            {
+                <div class="col-xs-4">
+                    <select class="form-control" data-val="true" id="Roles" multiple="multiple" name="Roles">
+                        <option value="0">Student</option>
+                        <option value="1">Lecturer</option>
+                        <option value="2">Moderator</option>
+                        <option value="3">Admin</option>
+                    </select>
+                </div>
+            }
+            else
+            {
+                <div class="col-xs-4">
+                    <select class="form-control" data-val="true" id="Roles" multiple="multiple" name="Roles">
+                        <option value="0">Student</option>
+                        <option value="1">Lecturer</option>
+                    </select>
+                </div>
+            }
             <div class="col-xs-2">
                 <input type="submit" value="Filter" class="btn btn-default submit">
             </div>

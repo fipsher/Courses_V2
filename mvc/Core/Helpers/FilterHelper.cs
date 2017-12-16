@@ -33,10 +33,10 @@ namespace Core.Helpers
             new Discipline { DisciplineType = DisciplineType.Socio, Semester = course * 2 + 1},
             new Discipline { DisciplineType = DisciplineType.Socio, Semester = course * 2 + 2 }
         };
-        public static List<Discipline> SpecialDisciplines(int? course) => new List<Discipline>
+        public static List<Discipline> SpecialDisciplines(int? course, string name = null) => new List<Discipline>
         {
-            new Discipline { DisciplineType = DisciplineType.Special, Semester = course * 2 + 1 },
-            new Discipline { DisciplineType = DisciplineType.Special, Semester = course * 2 + 2 }
+            new Discipline { DisciplineType = DisciplineType.Special, Semester = course * 2 + 1, Name = name },
+            new Discipline { DisciplineType = DisciplineType.Special, Semester = course * 2 + 2, Name = name }
         };
         #endregion
     }

@@ -8,5 +8,9 @@ namespace Core.Interfaces.Services
     public interface IGroupService : IService<Group>
     {
         IEnumerable<GroupResponce> FindGroupResponce(SearchFilter<Group> filter);
+        IEnumerable<GroupDisciplineModel> GetGroupDisciplines(string id);
+        IEnumerable<Discipline> GetNotSubscribedDisciplines(string id, string name);
+        void AddDiscipline(string groupId, string disciplineId);
+        void RemoveDisciplineFromGroup(string groupId, string disciplineId);
     }
 }

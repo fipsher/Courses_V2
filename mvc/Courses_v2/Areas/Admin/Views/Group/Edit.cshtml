@@ -12,7 +12,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Group</h4>
         <hr />
@@ -52,6 +52,5 @@
 }
 
 <div>
-    @Html.ActionLink("Список", "Index")
+    @Html.ActionLink("Список", "Index") | @Html.ActionLink("Змінити дисципліни", "EditDisciplines", new { id = Model.Id })
 </div>
-

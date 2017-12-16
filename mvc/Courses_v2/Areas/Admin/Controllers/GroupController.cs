@@ -2,13 +2,17 @@
 using Core.Helpers;
 using Core.Interfaces;
 using Core.Interfaces.Services;
+using Core.Responces;
+using Courses_v2.Areas.Admin.Models;
 using Courses_v2.Controllers;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
 namespace Courses_v2.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Moderator")]
     public class GroupController : BaseController<Group, IGroupService>
     {
         public GroupController(IServiceFactory serviceFactory) : base(serviceFactory, serviceFactory.GroupService)
@@ -97,6 +101,58 @@ namespace Courses_v2.Areas.Admin.Controllers
             return View();
         }
 
+
+        public ActionResult EditDisciplines(string id)
+        {
+            IEnumerable<GroupDisciplineModel> disciplines = Service.GetGroupDisciplines(id);
+            ViewBag.Id = id;
+            return View(disciplines);
+        }
+
+
+        public ActionResult AddDiscipline(string id, string name)
+        {
+            IEnumerable<Discipline> disciplines = Service.GetNotSubscribedDisciplines(id, name);
+
+            var model = new AssignDisciplineModel
+            {
+                Id = id,
+                DisciplineList = new SelectList(disciplines, "Id", "Name", null)
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AssignDiscipline(string id, string disciplineId)
+        {
+            if (ModelState.IsValid)
+            {
+                Service.AddDiscipline(id, disciplineId);
+                return RedirectToAction("EditDisciplines", new { id = id });
+            }
+            IEnumerable<Discipline> disciplines = Service.GetNotSubscribedDisciplines(id, null);
+
+            var model = new AssignDisciplineModel
+            {
+                Id = id,
+                DisciplineList = new SelectList(disciplines, "Id", "Name", null),
+                DisciplineId = disciplineId
+            };
+            return View(model);
+        }
+
+        
+        [HttpPost]
+        public ActionResult DeleteFromGroup(string groupId, string disciplineId)
+        {
+            if (ModelState.IsValid)
+            {
+                Service.RemoveDisciplineFromGroup(groupId, disciplineId);
+                return RedirectToAction("EditDisciplines", new { id = groupId });
+            }
+            
+            return RedirectToAction("EditDisciplines", new { id = groupId});
+        }
         // GET: Admin/group/Delete/5
         public ActionResult Delete(string id)
         {
