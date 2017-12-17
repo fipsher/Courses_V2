@@ -51,7 +51,17 @@ namespace Courses_v2.Areas.Admin.Controllers
         public ActionResult Create()
         {
             ViewBag.Cathedras = ServiceFactory.CathedraService.Find(SearchFilter<Cathedra>.Empty);
-            return View();
+            var group = new Group
+            {
+                DisciplineConfiguration = new List<DisciplineConfiguration>
+                {
+                    new DisciplineConfiguration{DisciplineType = DisciplineType.Socio, RequiredAmount = 1, Semester = 1},
+                    new DisciplineConfiguration{DisciplineType = DisciplineType.Socio, RequiredAmount = 1, Semester =  2},
+                    new DisciplineConfiguration{DisciplineType = DisciplineType.Special, RequiredAmount = 1, Semester = 1},
+                    new DisciplineConfiguration{DisciplineType = DisciplineType.Special, RequiredAmount = 1, Semester = 2}
+                }
+            };
+            return View(group);
         }
         // POST: Admin/group/Create
         [HttpPost]
@@ -59,15 +69,18 @@ namespace Courses_v2.Areas.Admin.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (!group.DisciplineConfiguration.Any())
                 {
                     group.DisciplineConfiguration = new List<DisciplineConfiguration>
-                    {
-                        new DisciplineConfiguration{DisciplineType = DisciplineType.Socio, RequiredAmount = 1, Semester = 1},
-                        new DisciplineConfiguration{DisciplineType = DisciplineType.Socio, RequiredAmount = 1, Semester =  2},
-                        new DisciplineConfiguration{DisciplineType = DisciplineType.Special, RequiredAmount = 1, Semester = 1},
-                        new DisciplineConfiguration{DisciplineType = DisciplineType.Special, RequiredAmount = 1, Semester = 2}
-                    };
+                        {
+                            new DisciplineConfiguration{DisciplineType = DisciplineType.Socio, RequiredAmount = 1, Semester = 1},
+                            new DisciplineConfiguration{DisciplineType = DisciplineType.Socio, RequiredAmount = 1, Semester =  2},
+                            new DisciplineConfiguration{DisciplineType = DisciplineType.Special, RequiredAmount = 1, Semester = 1},
+                            new DisciplineConfiguration{DisciplineType = DisciplineType.Special, RequiredAmount = 1, Semester = 2}
+                        };
+                }
+                if (ModelState.IsValid)
+                {
                     Service.Add(group);
                     return RedirectToAction("Index");
                 }
@@ -77,16 +90,16 @@ namespace Courses_v2.Areas.Admin.Controllers
                 throw;
             }
             ViewBag.Cathedras = ServiceFactory.CathedraService.Find(SearchFilter<Cathedra>.Empty);
-            return View();
+            return View(group);
         }
 
         // GET: Admin/group/Edit/5
         public ActionResult Edit(string id)
         {
-            var groups = Service.Find((new SearchFilter<Group>() { OptionList = new[] { new Group() { Id = id } } }));
+            var group = Service.Find((new SearchFilter<Group>() { OptionList = new[] { new Group() { Id = id } } })).SingleOrDefault();
             ViewBag.Cathedras = ServiceFactory.CathedraService.Find(SearchFilter<Cathedra>.Empty);
 
-            return View(groups.SingleOrDefault());
+            return View(group);
         }
 
         // POST: Admin/group/Edit/5
@@ -95,6 +108,16 @@ namespace Courses_v2.Areas.Admin.Controllers
         {
             try
             {
+                if (!group.DisciplineConfiguration.Any())
+                {
+                    group.DisciplineConfiguration = new List<DisciplineConfiguration>
+                        {
+                            new DisciplineConfiguration{DisciplineType = DisciplineType.Socio, RequiredAmount = 1, Semester = 1},
+                            new DisciplineConfiguration{DisciplineType = DisciplineType.Socio, RequiredAmount = 1, Semester =  2},
+                            new DisciplineConfiguration{DisciplineType = DisciplineType.Special, RequiredAmount = 1, Semester = 1},
+                            new DisciplineConfiguration{DisciplineType = DisciplineType.Special, RequiredAmount = 1, Semester = 2}
+                        };
+                }
                 if (ModelState.IsValid)
                 {
                     Service.Update(id, group);
@@ -106,7 +129,7 @@ namespace Courses_v2.Areas.Admin.Controllers
                 throw;
             }
             ViewBag.Cathedras = ServiceFactory.CathedraService.Find(SearchFilter<Cathedra>.Empty);
-            return View();
+            return View(group);
         }
 
 
@@ -119,7 +142,7 @@ namespace Courses_v2.Areas.Admin.Controllers
 
 
         public ActionResult AddDiscipline(string id)
-        {          
+        {
             var disciplines = Service.GetNotSubscribedDisciplines(id)
                                      .Select(el => new { Id = el.Id, Name = $"{el.Name} (Семестр {el.Semester})" });
 
@@ -143,7 +166,7 @@ namespace Courses_v2.Areas.Admin.Controllers
             return RedirectToAction("EditDisciplines", new { id = id });
         }
 
-        
+
         [HttpPost]
         public ActionResult DeleteFromGroup(string groupId, string disciplineId)
         {
@@ -152,8 +175,8 @@ namespace Courses_v2.Areas.Admin.Controllers
                 Service.RemoveDisciplineFromGroup(groupId, disciplineId);
                 return RedirectToAction("EditDisciplines", new { id = groupId });
             }
-            
-            return RedirectToAction("EditDisciplines", new { id = groupId});
+
+            return RedirectToAction("EditDisciplines", new { id = groupId });
         }
         // GET: Admin/group/Delete/5
         public ActionResult Delete(string id)

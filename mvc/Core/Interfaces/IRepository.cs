@@ -15,5 +15,9 @@ namespace Core.Interfaces
         void Update(string id, TEntity entity);
     }
 
-    public interface IRepository{}
+    public interface IRepository
+    {
+        string BaseUrl { get; }
+        string ApiUrl { get; }
+    }
 }

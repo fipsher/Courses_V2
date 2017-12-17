@@ -4,7 +4,7 @@
 @using Core;
 @{
     ViewBag.Title = "Дисципліни";
-    var firstSemester = Model.DisciplineConfiguration.SingleOrDefault(el => el.Semester % 2 == 1  && el.DisciplineType == Model.Type);
+    var firstSemester = Model.DisciplineConfiguration.SingleOrDefault(el => el.Semester % 2 == 1 && el.DisciplineType == Model.Type);
     var secondSemester = Model.DisciplineConfiguration.SingleOrDefault(el => el.Semester % 2 == 0 && el.DisciplineType == Model.Type);
     var userSocioDisciplines = Model.SudentChoice.Where(ud => ud.DisciplineType == Model.Type);
 }
@@ -28,42 +28,43 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model.Disciplines) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Semester)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lecturer)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProviderCathedra)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) 
-          
-            @if ((item.Semester % 2 == 1
-                    && firstSemester != null
-                    && userSocioDisciplines.Count(el => el.Semester == item.Semester) < firstSemester.RequiredAmount
-                    && userSocioDisciplines.All(usd => usd.Id != item.Id))
-                ||
-                (item.Semester % 2 == 0
-                    && secondSemester != null
-                    && userSocioDisciplines.Count(el => el.Semester == item.Semester) < secondSemester.RequiredAmount
-                    && userSocioDisciplines.All(usd => usd.Id != item.Id))
-                )
-            {
-                @:| @Html.ActionLink("Register", "Register", new { id = item.Id })
-            }
-            @if (userSocioDisciplines.Any(usd => usd.Id == item.Id))
-            {
-                @:| @Html.ActionLink("Unregister", "Unregister", new { id = item.Id })
-            }
-        </td>
-    </tr>
-}
+    @foreach (var item in Model.Disciplines)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Semester)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lecturer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProviderCathedra)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.Id })
+                @if (userSocioDisciplines.Any(usd => usd.Id == item.Id))
+                {
+                    @:| @Html.ActionLink("Unregister", "Unregister", new { id = item.Id })
+                }
+                else if ((item.Semester % 2 == 1
+                       && firstSemester != null
+                       && userSocioDisciplines.Count(el => el.Semester == item.Semester) < firstSemester.RequiredAmount
+                       && userSocioDisciplines.All(usd => usd.Id != item.Id))
+                   ||
+                   (item.Semester % 2 == 0
+                       && secondSemester != null
+                       && userSocioDisciplines.Count(el => el.Semester == item.Semester) < secondSemester.RequiredAmount
+                       && userSocioDisciplines.All(usd => usd.Id != item.Id))
+                   )
+                {
+                    @:| @Html.ActionLink("Register", "Register", new { id = item.Id })
+                }
+
+            </td>
+        </tr>
+    }
 
 </table>

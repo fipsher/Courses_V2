@@ -9,9 +9,11 @@ namespace Data.Repositories
 {
     public class Repository<TEntity> : IRepository, IRepository<TEntity> where TEntity : Entity, new()
     {
-        protected string BaseUrl { get; private set; }
+        public string BaseUrl { get; private set; }
+        public string ApiUrl { get; private set; }
         public Repository(string webApiUrl)
         {
+            ApiUrl = webApiUrl;
             BaseUrl = webApiUrl + typeof(TEntity).Name.ToLower();
         }
 

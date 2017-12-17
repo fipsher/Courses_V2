@@ -8,6 +8,8 @@ using Core.Responces;
 using static Core.Enums.Enums;
 using Core;
 using System;
+using LightCaseClient;
+using Newtonsoft.Json;
 
 namespace Data.Services
 {
@@ -40,7 +42,7 @@ namespace Data.Services
                 cathedras = _cathedraRepo.Find(SearchFilter<Cathedra>.FilterByIds(cathedraIds));
             }
 
-
+            var disciplinesCount = GetDisciplinesCount(disciplines.Select(el => el.Id));
             return disciplines.Select(d => new GroupDisciplineModel
             {
                 Id = d.Id,
@@ -49,7 +51,8 @@ namespace Data.Services
                 Semester = d.Semester,
                 Description = d.Description,
                 Lecturer = lecturers.SingleOrDefault(el => el.Id == d.LecturerId)?.UserName,
-                ProviderCathedra = cathedras.SingleOrDefault(el => el.Id == d.ProviderCathedraId)?.Name
+                ProviderCathedra = cathedras.SingleOrDefault(el => el.Id == d.ProviderCathedraId)?.Name,
+                Count = disciplinesCount.SingleOrDefault(el => el.Id == d.Id)?.Count ?? 0
             }).ToList();
         }
 
@@ -105,6 +108,11 @@ namespace Data.Services
                 return false;
             }
             return true;
+        }
+
+        private List<DisciplineCount> GetDisciplinesCount(IEnumerable<string> disciplineIds)
+        {
+            return GenericProxies.RestPost<List<DisciplineCount>, IEnumerable<string>>($"{Repository.ApiUrl}/findStudentsCountForDisciplineId", disciplineIds);
         }
     }
 }
