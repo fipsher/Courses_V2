@@ -220,6 +220,7 @@
     <Compile Include="Areas\Lecturer\LecturerAreaRegistration.cs" />
     <Compile Include="Areas\Student\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Student\Controllers\DisciplineController.cs" />
+    <Compile Include="Areas\Student\Models\StudentDisciplines.cs" />
     <Compile Include="Authentication\CustomUserStore.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -332,7 +333,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Lecturer\Models\" />
-    <Folder Include="Areas\Student\Models\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Setting\" />
   </ItemGroup>

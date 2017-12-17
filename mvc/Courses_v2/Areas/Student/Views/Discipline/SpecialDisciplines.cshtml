@@ -1,69 +1,62 @@
-﻿@model IEnumerable<Core.Responces.DisciplineResponce>
+﻿@model Courses_v2.Areas.Student.Models.StudentDisciplines
 @using System.Linq;
-@using Core.Entities;
 @using Core.Enums;
 @using Core;
 @{
     ViewBag.Title = "Дисципліни";
-    User user = ViewBag.User;
-    List<Discipline> userDisciplines = ViewBag.UserDisciplines;
+    var firstSemester = Model.DisciplineConfiguration.SingleOrDefault(el => el.Semester % 2 == 1 && el.DisciplineType == Model.Type);
+    var secondSemester = Model.DisciplineConfiguration.SingleOrDefault(el => el.Semester % 2 == 0 && el.DisciplineType == Model.Type);
+    var userSpecialDisciplines = Model.SudentChoice.Where(ud => ud.DisciplineType == Model.Type);
 }
 
-<h2>Index</h2>
+<h2>Дисципліни</h2>
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            Назва
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Semester)
+            Семестр
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Lecturer)
+            Лектор
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ProviderCathedra)
+            Кафедра-провайдер
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Semester)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lecturer.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProviderCathedra.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) 
+    @foreach (var item in Model.Disciplines)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Semester)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lecturer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProviderCathedra)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.Id })
 
-            @{ 
-                var userSpecialDisciplines = userDisciplines.Where(ud => ud.DisciplineType == Enums.DisciplineType.Special);
-            }
-            @if (item.DisciplineType == Enums.DisciplineType.Special &&
-                userSpecialDisciplines.Count() < Constants.AmountSpecialDisciplines)
-            {
-
-                if (!userSpecialDisciplines.Select(d => d.Semester).Contains(item.Semester.Value))
+                @if (firstSemester != null
+                && userSpecialDisciplines.Count(el => el.Semester == item.Semester) < firstSemester.RequiredAmount)
                 {
                     @:| @Html.ActionLink("Register", "Register", new { id = item.Id })
                 }
-            }
-
-            @if (userSpecialDisciplines.Any(usd => usd.Id == item.Id))
-            {
-                @:| @Html.ActionLink("Unregister", "Unregister", new { id = item.Id })
-            }
-        </td>
-    </tr>
-}
+                @if (userSpecialDisciplines.Any(usd => usd.Id == item.Id))
+                {
+                    @:| @Html.ActionLink("Unregister", "Unregister", new { id = item.Id })
+                }
+            </td>
+        </tr>
+    }
 
 </table>

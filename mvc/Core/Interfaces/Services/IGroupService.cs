@@ -9,7 +9,7 @@ namespace Core.Interfaces.Services
     {
         IEnumerable<GroupResponce> FindGroupResponce(SearchFilter<Group> filter);
         IEnumerable<GroupDisciplineModel> GetGroupDisciplines(string id);
-        IEnumerable<Discipline> GetNotSubscribedDisciplines(string id, string name);
+        IEnumerable<Discipline> GetNotSubscribedDisciplines(string id);
         void AddDiscipline(string groupId, string disciplineId);
         void RemoveDisciplineFromGroup(string groupId, string disciplineId);
     }

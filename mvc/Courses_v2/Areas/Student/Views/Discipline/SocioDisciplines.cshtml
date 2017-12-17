@@ -1,34 +1,34 @@
-﻿@model IEnumerable<Core.Responces.DisciplineResponce>
+﻿@model Courses_v2.Areas.Student.Models.StudentDisciplines
 @using System.Linq;
-@using Core.Entities;
 @using Core.Enums;
 @using Core;
 @{
     ViewBag.Title = "Дисципліни";
-    User user = ViewBag.User;
-    List<Discipline> userDisciplines = ViewBag.UserDisciplines;
+    var firstSemester = Model.DisciplineConfiguration.SingleOrDefault(el => el.Semester % 2 == 1  && el.DisciplineType == Model.Type);
+    var secondSemester = Model.DisciplineConfiguration.SingleOrDefault(el => el.Semester % 2 == 0 && el.DisciplineType == Model.Type);
+    var userSocioDisciplines = Model.SudentChoice.Where(ud => ud.DisciplineType == Model.Type);
 }
 
-<h2>Index</h2>
+<h2>Дисципліни</h2>
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            Назва
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Semester)
+            Семестр
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Lecturer)
+            Лектор
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ProviderCathedra)
+            Кафедра-провайдер
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Disciplines) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -37,24 +37,18 @@
             @Html.DisplayFor(modelItem => item.Semester)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Lecturer.UserName)
+            @Html.DisplayFor(modelItem => item.Lecturer)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ProviderCathedra.Name)
+            @Html.DisplayFor(modelItem => item.ProviderCathedra)
         </td>
         <td>
             @Html.ActionLink("Details", "Details", new { id = item.Id }) 
-            @{
-                var userSocioDisciplines = userDisciplines.Where(ud => ud.DisciplineType == Enums.DisciplineType.Socio);
-            }
-            @if (item.DisciplineType == Enums.DisciplineType.Socio &&
-                 userSocioDisciplines.Count() < Constants.AmountSocioDisciplines)
+          
+            @if (firstSemester != null
+                && userSocioDisciplines.Count(el => el.Semester == item.Semester) < firstSemester.RequiredAmount)
             {
-
-                if (!userSocioDisciplines.Select(d => d.Semester).Contains(item.Semester.Value))
-                {
-                    @:| @Html.ActionLink("Register", "Register", new { id = item.Id })
-                }
+                @:| @Html.ActionLink("Register", "Register", new { id = item.Id })
             }
             @if (userSocioDisciplines.Any(usd => usd.Id == item.Id))
             {

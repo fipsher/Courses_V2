@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using static Core.Enums.Enums;
 
 namespace Courses_v2.Areas.Admin.Controllers
 {
@@ -60,6 +61,13 @@ namespace Courses_v2.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    group.DisciplineConfiguration = new List<DisciplineConfiguration>
+                    {
+                        new DisciplineConfiguration{DisciplineType = DisciplineType.Socio, RequiredAmount = 1, Semester = group.Course.Value * 2 + 1},
+                        new DisciplineConfiguration{DisciplineType = DisciplineType.Socio, RequiredAmount = 1, Semester = group.Course.Value * 2 + 2},
+                        new DisciplineConfiguration{DisciplineType = DisciplineType.Special, RequiredAmount = 1, Semester = group.Course.Value * 2 + 1},
+                        new DisciplineConfiguration{DisciplineType = DisciplineType.Special, RequiredAmount = 1, Semester = group.Course.Value * 2 + 2}
+                    };
                     Service.Add(group);
                     return RedirectToAction("Index");
                 }
@@ -110,9 +118,9 @@ namespace Courses_v2.Areas.Admin.Controllers
         }
 
 
-        public ActionResult AddDiscipline(string id, string name)
+        public ActionResult AddDiscipline(string id)
         {
-            var disciplines = Service.GetNotSubscribedDisciplines(id, name)
+            var disciplines = Service.GetNotSubscribedDisciplines(id)
                                      .Select(el => new { Id = el.Id, Name = $"{el.Name} (Семестр {el.Semester})" });
 
             var model = new AssignDisciplineModel
@@ -131,7 +139,7 @@ namespace Courses_v2.Areas.Admin.Controllers
                 Service.AddDiscipline(id, disciplineId);
                 return RedirectToAction("EditDisciplines", new { id = id });
             }
-            var disciplines = Service.GetNotSubscribedDisciplines(id, null)
+            var disciplines = Service.GetNotSubscribedDisciplines(id)
                                                  .Select(el => new { Id = el.Id, Name = $"{el.Name} {el.Semester}" });
             var model = new AssignDisciplineModel
             {

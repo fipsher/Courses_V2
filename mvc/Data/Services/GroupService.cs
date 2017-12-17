@@ -89,7 +89,7 @@ namespace Data.Services
             });
         }
 
-        public IEnumerable<Discipline> GetNotSubscribedDisciplines(string id, string name)
+        public IEnumerable<Discipline> GetNotSubscribedDisciplines(string id)
         {
             var group = Repository.Find(SearchFilter<Group>.FilterById(id)).SingleOrDefault();
             var assignedDisciplines =
@@ -98,7 +98,7 @@ namespace Data.Services
                          : new List<Discipline>();
 
             var filter = SearchFilter<Discipline>.Empty;
-            filter.OptionList = FilterHelper.SpecialDisciplines(group.Course, name);
+            filter.OptionList = FilterHelper.SpecialDisciplines(group.Course.Value);
             var disciplines = _disciplineRepo
                 .Find(filter)
                 .Where(el => assignedDisciplines.All(ad => ad.Id != el.Id));
