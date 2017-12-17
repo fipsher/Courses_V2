@@ -14,12 +14,14 @@ namespace Data.Services
     internal class DisciplineService : BaseService<Discipline>, IDisciplineService
     {
         private readonly IRepository<Cathedra> _cathedraRepo;
+        private readonly IRepository<Group> _groupRepo;
         private readonly IRepository<User> _userRepo;
         private readonly IRepository<Setting> _settingRepo;
 
         public DisciplineService(IRepositoryBootstrapper repositoryStrategy) : base(repositoryStrategy)
         {
             _cathedraRepo = (IRepository<Cathedra>)repositoryStrategy[typeof(Cathedra)];
+            _groupRepo = (IRepository<Group>)repositoryStrategy[typeof(Group)];
             _userRepo = (IRepository<User>)repositoryStrategy[typeof(User)];
             _settingRepo = (IRepository<Setting>)repositoryStrategy[typeof(Setting)];
         }
@@ -55,28 +57,28 @@ namespace Data.Services
         {
             var result = false;
             var student = _userRepo.Find(SearchFilter<User>.FilterById(studentId)).SingleOrDefault();
+            var group = _groupRepo.Find(SearchFilter<Group>.FilterById(student.GroupId)).SingleOrDefault();
 
             var discipline = Find(SearchFilter<Discipline>.FilterById(disciplineId)).SingleOrDefault();
 
-            if (student.Roles.Contains(Role.Student))
+            if (student.Roles.Contains(Role.Student) && discipline != null)
             {
                 var studentDiscIds = student.Disciplines.Select(el => el.Id);
-                var disciplines = Find(SearchFilter<Discipline>.FilterByIds(studentDiscIds));
+                var disciplines = studentDiscIds.Any()
+                    ? Find(SearchFilter<Discipline>.FilterByIds(studentDiscIds))
+                    : new List<Discipline>();
 
-                var registerLimt = discipline.DisciplineType == DisciplineType.Socio 
-                                                        ? Constants.AmountSocioDisciplines 
-                                                        : Constants.AmountSpecialDisciplines;
+                var registerLimt = group.DisciplineConfiguration
+                    .Single(el => el.Semester % 2 == discipline.Semester % 2
+                                        && el.DisciplineType == discipline.DisciplineType)
+                    .RequiredAmount;
 
-                if (disciplines.Count(d => d.DisciplineType == discipline.DisciplineType) < registerLimt &&
-                    !student.Disciplines.Any(el => el.Id == disciplineId))
+                if (disciplines.Count(d => d.DisciplineType == discipline.DisciplineType 
+                && discipline.Semester == d.Semester) < registerLimt &&
+                    student.Disciplines.All(el => el.Id != disciplineId))
                 {
-                    if (student.Disciplines == null)
-                    {
-                        student.Disciplines = new List<DisciplineModel>();
-                    }
                     student.Disciplines.Add(new DisciplineModel { Id = disciplineId });
 
-                    this.Update(disciplineId, discipline);
                     _userRepo.Update(studentId, student);
                     result = true;
                 }

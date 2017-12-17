@@ -9,7 +9,7 @@
     var userSocioDisciplines = Model.SudentChoice.Where(ud => ud.DisciplineType == Model.Type);
 }
 
-<h2>Дисципліни</h2>
+<h2>Соціогуманітарні Дисципліни</h2>
 
 <table class="table">
     <tr>
@@ -45,8 +45,16 @@
         <td>
             @Html.ActionLink("Details", "Details", new { id = item.Id }) 
           
-            @if (firstSemester != null
-                && userSocioDisciplines.Count(el => el.Semester == item.Semester) < firstSemester.RequiredAmount)
+            @if ((item.Semester % 2 == 1
+                    && firstSemester != null
+                    && userSocioDisciplines.Count(el => el.Semester == item.Semester) < firstSemester.RequiredAmount
+                    && userSocioDisciplines.All(usd => usd.Id != item.Id))
+                ||
+                (item.Semester % 2 == 0
+                    && secondSemester != null
+                    && userSocioDisciplines.Count(el => el.Semester == item.Semester) < secondSemester.RequiredAmount
+                    && userSocioDisciplines.All(usd => usd.Id != item.Id))
+                )
             {
                 @:| @Html.ActionLink("Register", "Register", new { id = item.Id })
             }

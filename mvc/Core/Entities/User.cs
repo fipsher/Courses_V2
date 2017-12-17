@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -43,6 +44,7 @@ namespace Core.Entities
 
     public class DisciplineModel
     {
+        [JsonProperty("_id")]
         public string Id { get; set; }
         public bool Locked { get; set; }
     }

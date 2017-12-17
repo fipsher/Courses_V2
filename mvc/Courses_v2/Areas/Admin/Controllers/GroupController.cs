@@ -63,10 +63,10 @@ namespace Courses_v2.Areas.Admin.Controllers
                 {
                     group.DisciplineConfiguration = new List<DisciplineConfiguration>
                     {
-                        new DisciplineConfiguration{DisciplineType = DisciplineType.Socio, RequiredAmount = 1, Semester = group.Course.Value * 2 + 1},
-                        new DisciplineConfiguration{DisciplineType = DisciplineType.Socio, RequiredAmount = 1, Semester = group.Course.Value * 2 + 2},
-                        new DisciplineConfiguration{DisciplineType = DisciplineType.Special, RequiredAmount = 1, Semester = group.Course.Value * 2 + 1},
-                        new DisciplineConfiguration{DisciplineType = DisciplineType.Special, RequiredAmount = 1, Semester = group.Course.Value * 2 + 2}
+                        new DisciplineConfiguration{DisciplineType = DisciplineType.Socio, RequiredAmount = 1, Semester = 1},
+                        new DisciplineConfiguration{DisciplineType = DisciplineType.Socio, RequiredAmount = 1, Semester =  2},
+                        new DisciplineConfiguration{DisciplineType = DisciplineType.Special, RequiredAmount = 1, Semester = 1},
+                        new DisciplineConfiguration{DisciplineType = DisciplineType.Special, RequiredAmount = 1, Semester = 2}
                     };
                     Service.Add(group);
                     return RedirectToAction("Index");
@@ -119,7 +119,7 @@ namespace Courses_v2.Areas.Admin.Controllers
 
 
         public ActionResult AddDiscipline(string id)
-        {
+        {          
             var disciplines = Service.GetNotSubscribedDisciplines(id)
                                      .Select(el => new { Id = el.Id, Name = $"{el.Name} (Семестр {el.Semester})" });
 
@@ -134,20 +134,13 @@ namespace Courses_v2.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult AssignDiscipline(string id, string disciplineId)
         {
-            if (ModelState.IsValid)
+            if (!string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(disciplineId))
             {
                 Service.AddDiscipline(id, disciplineId);
                 return RedirectToAction("EditDisciplines", new { id = id });
             }
-            var disciplines = Service.GetNotSubscribedDisciplines(id)
-                                                 .Select(el => new { Id = el.Id, Name = $"{el.Name} {el.Semester}" });
-            var model = new AssignDisciplineModel
-            {
-                Id = id,
-                DisciplineList = new SelectList(disciplines, "Id", "Name", null),
-                DisciplineId = disciplineId
-            };
-            return View(model);
+
+            return RedirectToAction("EditDisciplines", new { id = id });
         }
 
         

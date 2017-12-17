@@ -47,7 +47,7 @@ namespace Core.Helpers
                 Semester = course * 2 + 1
             });
 
-            filter.Concat(disciplineIds.Select(el => new Discipline
+            filter = filter.Concat(disciplineIds.Select(el => new Discipline
             {
                 DisciplineType = DisciplineType.Special,
                 Semester = course * 2 + 2

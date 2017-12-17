@@ -30,8 +30,8 @@ namespace Data.Services
             if (group.DisciplineSubscriptions == null
                 || group.DisciplineSubscriptions.All(el => el != disciplineId)
                 && discipline.DisciplineType == Enums.DisciplineType.Special
-                && (discipline.Semester == group.Course * 2
-                    || discipline.Semester == group.Course * 2 + 1))
+                && (discipline.Semester == group.Course * 2+ 1
+                    || discipline.Semester == group.Course * 2 + 2))
             {
                 group.DisciplineSubscriptions = group.DisciplineSubscriptions ?? new List<string>();
 
