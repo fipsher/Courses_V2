@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Core.Responces.DisciplineResponce>
+﻿@model IEnumerable<Core.Responces.GroupDisciplineModel>
 
 @{
     ViewBag.Title = "Index";
@@ -55,10 +55,10 @@
             @Html.DisplayFor(modelItem => item.Semester)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Lecturer.UserName)
+            @Html.DisplayFor(modelItem => item.Lecturer)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ProviderCathedra.Name)
+            @Html.DisplayFor(modelItem => item.ProviderCathedra)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

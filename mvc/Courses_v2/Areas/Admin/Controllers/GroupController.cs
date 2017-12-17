@@ -112,7 +112,8 @@ namespace Courses_v2.Areas.Admin.Controllers
 
         public ActionResult AddDiscipline(string id, string name)
         {
-            IEnumerable<Discipline> disciplines = Service.GetNotSubscribedDisciplines(id, name);
+            var disciplines = Service.GetNotSubscribedDisciplines(id, name)
+                                     .Select(el => new { Id = el.Id, Name = $"{el.Name} (Семестр {el.Semester})" });
 
             var model = new AssignDisciplineModel
             {
@@ -130,8 +131,8 @@ namespace Courses_v2.Areas.Admin.Controllers
                 Service.AddDiscipline(id, disciplineId);
                 return RedirectToAction("EditDisciplines", new { id = id });
             }
-            IEnumerable<Discipline> disciplines = Service.GetNotSubscribedDisciplines(id, null);
-
+            var disciplines = Service.GetNotSubscribedDisciplines(id, null)
+                                                 .Select(el => new { Id = el.Id, Name = $"{el.Name} {el.Semester}" });
             var model = new AssignDisciplineModel
             {
                 Id = id,

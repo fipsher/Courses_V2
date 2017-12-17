@@ -24,38 +24,31 @@ namespace Data.Services
             _settingRepo = (IRepository<Setting>)repositoryStrategy[typeof(Setting)];
         }
 
-        public List<DisciplineResponce> FindDisciplineResponse(SearchFilter<Discipline> filter, bool includingSubscriberCathedras = false, bool includingStudents = false)
+        public List<GroupDisciplineModel> FindDisciplineResponse(SearchFilter<Discipline> filter)
         {
-            var disciplines = Find(filter);
-            List<DisciplineResponce> result = new List<DisciplineResponce>();
-            disciplines.ForEach(d =>
+            var disciplines = Repository.Find(filter);
+            List<User> lecturers = new List<User>();
+            List<Cathedra> cathedras = new List<Cathedra>();
+            if (disciplines.Any())
             {
-                var disciplineResponce = new DisciplineResponce(d);
-                //List<Cathedra> subscriberCathedras = new List<Cathedra>();
-                List<User> students = new List<User>();
+                var userIds = disciplines.Select(el => el.LecturerId);
+                lecturers = _userRepo.Find(SearchFilter<User>.FilterByIds(userIds));
 
-                var lecturer = _userRepo.Find(SearchFilter<User>.FilterById(d.LecturerId))?.SingleOrDefault();
+                var cathedraIds = disciplines.Select(el => el.ProviderCathedraId);
+                cathedras = _cathedraRepo.Find(SearchFilter<Cathedra>.FilterByIds(cathedraIds));
+            }
 
-                var providerCathedra = _cathedraRepo.Find(SearchFilter<Cathedra>.FilterById(d.ProviderCathedraId))?.SingleOrDefault();
 
-                // todo: fix
-                //if (includingStudents)
-                //{
-                //    students = _userRepo.Find(new SearchFilter<User>
-                //    {
-                //        OptionList = d.StudentIds.Select(id => new User() { Id = id })
-                //    });
-                //}
-
-                disciplineResponce.Lecturer = lecturer;
-                disciplineResponce.ProviderCathedra = providerCathedra;
-                //disciplineResponce.SubscriberCathedras = subscriberCathedras;
-                disciplineResponce.Students = students;
-
-                result.Add(disciplineResponce);
-            });
-
-            return result;
+            return disciplines.Select(d => new GroupDisciplineModel
+            {
+                Id = d.Id,
+                Name = d.Name,
+                DisciplineType = d.DisciplineType,
+                Semester = d.Semester,
+                Description = d.Description,
+                Lecturer = lecturers.SingleOrDefault(el => el.Id == d.LecturerId)?.UserName,
+                ProviderCathedra = cathedras.SingleOrDefault(el => el.Id == d.ProviderCathedraId)?.Name
+            }).ToList();
         }
 
         public bool TryRegisterStudent(string studentId, string disciplineId)

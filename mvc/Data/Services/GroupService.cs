@@ -77,7 +77,7 @@ namespace Data.Services
             }
           
 
-            return disciplines.Select(d => new GroupDisciplineModel()
+            return disciplines.Select(d => new GroupDisciplineModel
             {
                 Id = d.Id,
                 Name = d.Name,

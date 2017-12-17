@@ -28,6 +28,8 @@
                     if (!result.isSuccess) {
                         $('.alert.alert-danger').text(result.message);
                         $('.alert.alert-danger').show();
+                    } else {
+                        location.reload();
                     }
                 },
             });

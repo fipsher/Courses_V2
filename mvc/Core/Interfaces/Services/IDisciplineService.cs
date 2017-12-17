@@ -7,7 +7,7 @@ namespace Core.Interfaces.Services
 {
     public interface IDisciplineService : IService<Discipline>
     {
-        List<DisciplineResponce> FindDisciplineResponse(SearchFilter<Discipline> filter, bool includingSubscriberCathedras = false, bool includingStudents = false);
+        List<GroupDisciplineModel> FindDisciplineResponse(SearchFilter<Discipline> filter);
 
         bool TryRegisterStudent(string studentId, string disciplineId);
         bool UnregisterStudent(string studentId, string disciplineId);

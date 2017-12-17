@@ -84,5 +84,23 @@ namespace LightCaseClient
 
         // Overload method
         public static void RestPut<TI>(string url, TI data) => RestPut(url, data, DefaultConfiguration);
+
+
+        // ****** Synchronous GET, no respons expected ******
+        public static void RestDelete<TI>(string url,
+            TI data, ClientConfiguration configuration)
+        {
+            var clientConfig = configuration ?? DefaultConfiguration;
+            var request = CreateRequest(url, clientConfig);
+            request.ContentType = clientConfig.ContentType;
+            request.Accept = clientConfig.Accept;
+            request.Method = "DELETE";
+
+            PostData(request, clientConfig, data);
+            request.GetResponse().Close();
+        }
+
+        // Overload method
+        public static void RestDelete<TI>(string url, TI data) => RestDelete(url, data, DefaultConfiguration);
     }
 }
