@@ -1,13 +1,12 @@
-﻿@model Core.Responces.DisciplineResponce
+﻿@model Core.Responces.GroupDisciplineModel
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Деталі</h2>
 
 <div>
-    <h4>DisciplineResponce</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -31,7 +30,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Lecturer.UserName)
+            @Html.DisplayFor(model => model.Lecturer)
         </dd>
 
         <dt>
@@ -39,7 +38,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ProviderCathedra.Name)
+            @Html.DisplayFor(model => model.ProviderCathedra)
         </dd>
 
         <dt>

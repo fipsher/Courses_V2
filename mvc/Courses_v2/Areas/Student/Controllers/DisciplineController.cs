@@ -76,12 +76,12 @@ namespace Courses_v2.Areas.Student.Controllers
         }
         public ActionResult Details(string id)
         {
-            var disciplines = Service.FindDisciplineResponse((new SearchFilter<Discipline>
+            var discipline = Service.FindDisciplineResponse((new SearchFilter<Discipline>
             {
                 OptionList = new[] { new Discipline() { Id = id } }
-            }));
+            })).SingleOrDefault();
 
-            return View(disciplines.SingleOrDefault());
+            return View(discipline);
         }
 
         public ActionResult MyDisciplines()

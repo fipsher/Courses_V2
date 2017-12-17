@@ -215,9 +215,7 @@
     <Compile Include="Areas\Admin\Controllers\SettingController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Models\AssignDisciplineModel.cs" />
-    <Compile Include="Areas\Lecturer\Controllers\DisciplineController.cs" />
     <Compile Include="Areas\Admin\Controllers\DisciplineController.cs" />
-    <Compile Include="Areas\Lecturer\LecturerAreaRegistration.cs" />
     <Compile Include="Areas\Student\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Student\Controllers\DisciplineController.cs" />
     <Compile Include="Areas\Student\Models\StudentDisciplines.cs" />
@@ -255,10 +253,6 @@
     <Content Include="Areas\Admin\Views\User\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\User\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Setting\Edit.cshtml" />
-    <Content Include="Areas\Lecturer\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Lecturer\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Lecturer\Views\Discipline\Index.cshtml" />
-    <Content Include="Areas\Lecturer\Views\web.config" />
     <Content Include="Areas\Admin\Views\Cathedra\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Cathedra\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Cathedra\Details.cshtml" />
@@ -270,8 +264,6 @@
     <Content Include="Areas\Student\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Student\Views\Discipline\MyDisciplines.cshtml" />
     <Content Include="Areas\Student\Views\Discipline\Details.cshtml" />
-    <Content Include="Areas\Lecturer\Views\Discipline\Edit.cshtml" />
-    <Content Include="Areas\Lecturer\Views\Discipline\Details.cshtml" />
     <Content Include="Areas\Admin\Views\User\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Discipline\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Discipline\Delete.cshtml" />
@@ -332,7 +324,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Lecturer\Models\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Setting\" />
   </ItemGroup>

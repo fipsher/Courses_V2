@@ -1,10 +1,10 @@
 ﻿
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var settings = new { area = "Lecturer" };
+    var settings = new { area = "Admin" };
 }
 
 @section Navigation{
-    <li>@Html.ActionLink("Дисципліни", "Index", "Discipline", settings, new { })</li>
+    <li>@Html.ActionLink("Мої дисципліни", "Index", "Discipline", settings, new { })</li>
 }
 @RenderBody()

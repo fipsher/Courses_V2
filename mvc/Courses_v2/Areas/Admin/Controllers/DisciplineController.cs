@@ -7,11 +7,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using static Core.Enums.Enums;
 
 namespace Courses_v2.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Moderator, Admin")]
+    [Authorize(Roles = "Moderator, Admin, Lecturer")]
     public class DisciplineController : BaseController<Discipline, IDisciplineService>
     {
         public DisciplineController(IServiceFactory serviceFactory) : base(serviceFactory, serviceFactory.DisciplineService)
@@ -21,7 +20,16 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Moderator/Disciplines
         public ActionResult Index()
         {
-            var disciplines = Service.FindDisciplineResponse(SearchFilter<Discipline>.Default);
+            var filter = SearchFilter<Discipline>.Default;
+            if (User.IsInRole("Lecturer"))
+            {
+                filter.OptionList = new List<Discipline>
+                {
+                     new Discipline{LecturerId = UserId}
+                };
+            }
+
+            var disciplines = Service.FindDisciplineResponse(filter);
             return View(disciplines);
         }
         // Post: Moderator/Disciplines
@@ -30,7 +38,10 @@ namespace Courses_v2.Areas.Admin.Controllers
         {
             filter = filter ?? new Discipline();
             var searchFilter = SearchFilter<Discipline>.Default;
-
+            if (User.IsInRole("Lecturer"))
+            {
+                filter.LecturerId = UserId;
+            }
             searchFilter.OptionList = FilterHelper.OptionListByEntity<Discipline>(filter);
 
             var disciplines = Service.FindDisciplineResponse(searchFilter);
@@ -43,12 +54,13 @@ namespace Courses_v2.Areas.Admin.Controllers
             var disciplines = Service.FindDisciplineResponse((new SearchFilter<Discipline>
             {
                 OptionList = new[] { new Discipline() { Id = id } }
-            }));
+            })).SingleOrDefault();
 
-            return View(disciplines.SingleOrDefault());
+            return View(disciplines);
         }
 
         // GET: Moderator/Disciplines/Create
+        [Authorize(Roles = "Moderator, Admin")]
         public ActionResult Create()
         {
             SetViewBag();
@@ -56,6 +68,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         }
         // POST: Moderator/Disciplines/Create
         [HttpPost]
+        [Authorize(Roles = "Moderator, Admin")]
         public ActionResult Create(Discipline discipline)
         {
             try
@@ -78,9 +91,14 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Moderator/Disciplines/Edit/5
         public ActionResult Edit(string id)
         {
-            var disciplines = Service.Find((new SearchFilter<Discipline>() { OptionList = new[] { new Discipline() { Id = id } } }));
+            var discipline = Service.Find((new SearchFilter<Discipline>() { OptionList = new[] { new Discipline() { Id = id } } }))
+                                     .SingleOrDefault();
+            if (User.IsInRole("Lecturer") && discipline.LecturerId != UserId)
+            {
+                throw new Exception("Not allowed");
+            }
             SetViewBag();
-            return View(disciplines.SingleOrDefault());
+            return View(discipline);
         }
         // POST: Moderator/Disciplines/Edit/5
         [HttpPost]
@@ -90,6 +108,12 @@ namespace Courses_v2.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    var existingDescipline = Service.Find((new SearchFilter<Discipline>() { OptionList = new[] { new Discipline() { Id = id } } }))
+                         .SingleOrDefault();
+                    if (User.IsInRole("Lecturer") && existingDescipline.LecturerId != UserId)
+                    {
+                        throw new Exception("Not allowed");
+                    }
                     Service.Update(id, discipline);
                     return RedirectToAction("Index");
                 }
@@ -103,6 +127,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         }
 
         // GET: Moderator/Disciplines/Delete/5
+        [Authorize(Roles = "Moderator, Admin")]
         public ActionResult Delete(string id)
         {
             var disciplines = Service.FindDisciplineResponse((new SearchFilter<Discipline>()
@@ -114,6 +139,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         }
         // POST: Moderator/Disciplines/Delete/5
         [HttpPost]
+        [Authorize(Roles = "Moderator, Admin")]
         public ActionResult Delete(string id, Discipline discipline)
         {
             try
