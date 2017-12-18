@@ -64,7 +64,7 @@ namespace Data.Services
 
             var discipline = Find(SearchFilter<Discipline>.FilterById(disciplineId)).SingleOrDefault();
 
-            if (student.Roles.Contains(Role.Student) && discipline != null)
+            if (student.Roles.Contains(Role.Student) && discipline != null && discipline.IsAvailable.Value)
             {
                 var studentDiscIds = student.Disciplines.Select(el => el.Id);
                 var disciplines = studentDiscIds.Any()

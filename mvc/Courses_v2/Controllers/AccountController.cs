@@ -6,6 +6,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Courses_v2.Models;
 using Core.Interfaces.Services;
+using System.Collections.Generic;
+using static Core.Enums.Enums;
+using Core.Entities;
 
 namespace Courses_v2.Controllers
 {
@@ -15,11 +18,15 @@ namespace Courses_v2.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private IUserService _userService;
+        private readonly IDisciplineService d;
 
         public AccountController(
-            IUserService userService)
+            IUserService userService,
+            IDisciplineService d
+            )
         {
             _userService = userService;
+            this.d = d;
         }
 
         public ApplicationSignInManager SignInManager
@@ -51,14 +58,30 @@ namespace Courses_v2.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            //_userService.Add(new Core.Entities.User()
-            //{
-            //    Login = "AndrewThe",
-            //    Password = "Ryba5656.",
-            //    Email = "fipsher@gmail.com",
-            //    Roles = new System.Collections.Generic.List<Core.Enums.Enums.Role> { Core.Enums.Enums.Role.Admin },
-            //    UserName = "AnderewThe"
-            //});
+            for (int i = 0; i < 5000; i++)
+            {
+                //_userService.Add(new Core.Entities.User()
+                //{
+                //    Login = $"student{i}",
+                //    Password = "Ryba5656.",
+                //    Email = "fipsher@gmail.com",
+                //    Roles = new List<Role> { Role.Admin },
+                //    UserName = "AnderewThe",
+                //    Course = 3,
+                //    GroupId = "29627000-e32d-11e7-b070-a7a2334df747",
+                //    PhoneNumber = "123-123-123"
+                //});
+                //d.Add(new Discipline
+                //{
+                //    DisciplineType = i  % 2 == 0 ? DisciplineType.Socio : DisciplineType.Special,
+                //    IsAvailable = true,
+                //    LecturerId = "0da24020-e32d-11e7-b070-a7a2334df747",
+                //    Name = $"Disc{i}",
+                //    Semester = 8,
+                //    ProviderCathedraId = "1a0e7cc0-e32d-11e7-b070-a7a2334df747"
+                //});
+            }
+            
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }

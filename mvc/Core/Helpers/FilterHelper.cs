@@ -29,28 +29,28 @@ namespace Core.Helpers
 
 
         #region Discipline
-        public static List<Discipline> SocialDisciplines(int course) => new List<Discipline>
+        public static List<Discipline> SocialDisciplines(int course, bool? isAvailable = null) => new List<Discipline>
         {
-            new Discipline { DisciplineType = DisciplineType.Socio, Semester = course * 2 + 1 },
-            new Discipline { DisciplineType = DisciplineType.Socio, Semester = course * 2 + 2 }
+            new Discipline { DisciplineType = DisciplineType.Socio, Semester = course * 2 + 1, IsAvailable = isAvailable },
+            new Discipline { DisciplineType = DisciplineType.Socio, Semester = course * 2 + 2, IsAvailable = isAvailable }
         };
-        public static List<Discipline> SpecialDisciplines(int course) => new List<Discipline>
+        public static List<Discipline> SpecialDisciplines(int course, bool? isAvailable = null) => new List<Discipline>
         {
-            new Discipline { DisciplineType = DisciplineType.Special, Semester = course * 2 + 1 },
-            new Discipline { DisciplineType = DisciplineType.Special, Semester = course * 2 + 2 }
+            new Discipline { DisciplineType = DisciplineType.Special, Semester = course * 2 + 1, IsAvailable = isAvailable },
+            new Discipline { DisciplineType = DisciplineType.Special, Semester = course * 2 + 2, IsAvailable = isAvailable }
         };
         public static List<Discipline> SpecialDisciplines(int course, List<string> disciplineIds)
         {
             var filter = disciplineIds.Select(el => new Discipline
             {
                 DisciplineType = DisciplineType.Special,
-                Semester = course * 2 + 1
+                Semester = course * 2 + 1,
             });
 
             filter = filter.Concat(disciplineIds.Select(el => new Discipline
             {
                 DisciplineType = DisciplineType.Special,
-                Semester = course * 2 + 2
+                Semester = course * 2 + 2,
             }));
 
             return filter.ToList();

@@ -21,7 +21,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         public ActionResult Index()
         {
             var filter = new User();
-            var searchFilter = SearchFilter<User>.Default;
+            var searchFilter = SearchFilter<User>.Empty;
 
             if (User.IsInRole(Role.Moderator.ToString()))
             {
@@ -47,7 +47,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         public ActionResult Index(User filter = null)
         {
             filter = filter ?? new User();
-            var searchFilter = SearchFilter<User>.Default;
+            var searchFilter = SearchFilter<User>.Empty;
 
             searchFilter.OptionList = FilterHelper.OptionListByEntity<User>(filter);
 

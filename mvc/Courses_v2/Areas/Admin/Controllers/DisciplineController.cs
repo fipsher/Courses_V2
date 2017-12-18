@@ -20,7 +20,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Moderator/Disciplines
         public ActionResult Index()
         {
-            var filter = SearchFilter<Discipline>.Default;
+            var filter = SearchFilter<Discipline>.Empty;
             if (User.IsInRole("Lecturer"))
             {
                 filter.OptionList = new List<Discipline>
@@ -29,7 +29,7 @@ namespace Courses_v2.Areas.Admin.Controllers
                 };
             }
 
-            var disciplines = Service.FindDisciplineResponse(filter);
+            var disciplines = Service.FindDisciplineResponse(filter).OrderBy(el => el.Count);
             return View(disciplines);
         }
         // Post: Moderator/Disciplines
@@ -37,14 +37,14 @@ namespace Courses_v2.Areas.Admin.Controllers
         public ActionResult Index(Discipline filter = null)
         {
             filter = filter ?? new Discipline();
-            var searchFilter = SearchFilter<Discipline>.Default;
+            var searchFilter = SearchFilter<Discipline>.Empty;
             if (User.IsInRole("Lecturer"))
             {
                 filter.LecturerId = UserId;
             }
             searchFilter.OptionList = FilterHelper.OptionListByEntity<Discipline>(filter);
 
-            var disciplines = Service.FindDisciplineResponse(searchFilter);
+            var disciplines = Service.FindDisciplineResponse(searchFilter).OrderBy(el => el.Count);
             return View(disciplines);
         }
 
@@ -75,6 +75,7 @@ namespace Courses_v2.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    discipline.IsAvailable = true;
                     Service.Add(discipline);
                     return RedirectToAction("Index");
                 }
