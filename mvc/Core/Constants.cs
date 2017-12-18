@@ -3,13 +3,13 @@
     public class Constants
     {
         /// <summary>
-        /// Amount of social disciplines student can take
+        /// Max discipline capacity
         /// </summary>
-        public static readonly int AmountSocioDisciplines = 2;
+        public static readonly int DisciplineMaxCapacity = 200;
         /// <summary>
-        /// Amount of special disciplines student can take
+        /// Min Discipline capacity
         /// </summary>
-        public static readonly int AmountSpecialDisciplines = 2;
+        public static readonly int DisciplineMinCapacity = 25;
         /// <summary>
         /// Program will order students of such courses: [1, MaxCourse]
         /// </summary>

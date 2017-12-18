@@ -1,15 +1,13 @@
 ﻿@model Courses_v2.Areas.Student.Models.StudentDisciplines
 @using System.Linq;
-@using Core.Enums;
+@using Core.Entities;
 @using Core;
+@using Core.Responces;
 @{
     ViewBag.Title = "Дисципліни";
-    var firstSemester = Model.DisciplineConfiguration.SingleOrDefault(el => el.Semester % 2 == 1 && el.DisciplineType == Model.Type);
-    var secondSemester = Model.DisciplineConfiguration.SingleOrDefault(el => el.Semester % 2 == 0 && el.DisciplineType == Model.Type);
-    var userSocioDisciplines = Model.SudentChoice.Where(ud => ud.DisciplineType == Model.Type);
 }
 
-<h2>Соціогуманітарні Дисципліни</h2>
+<h2>Дисципліни</h2>
 
 <table class="table">
     <tr>
@@ -24,6 +22,9 @@
         </th>
         <th>
             Кафедра-провайдер
+        </th>
+        <th>
+            Зареєстровано
         </th>
         <th></th>
     </tr>
@@ -44,21 +45,15 @@
                 @Html.DisplayFor(modelItem => item.ProviderCathedra)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Count)
+            </td>
+            <td>
                 @Html.ActionLink("Details", "Details", new { id = item.Id })
-                @if (userSocioDisciplines.Any(usd => usd.Id == item.Id))
+                @if (!item.IsLocked && item.Registered)
                 {
                     @:| @Html.ActionLink("Unregister", "Unregister", new { id = item.Id })
                 }
-                else if ((item.Semester % 2 == 1
-                       && firstSemester != null
-                       && userSocioDisciplines.Count(el => el.Semester == item.Semester) < firstSemester.RequiredAmount
-                       && userSocioDisciplines.All(usd => usd.Id != item.Id))
-                   ||
-                   (item.Semester % 2 == 0
-                       && secondSemester != null
-                       && userSocioDisciplines.Count(el => el.Semester == item.Semester) < secondSemester.RequiredAmount
-                       && userSocioDisciplines.All(usd => usd.Id != item.Id))
-                   )
+                else if (item.CanRegister)
                 {
                     @:| @Html.ActionLink("Register", "Register", new { id = item.Id })
                 }

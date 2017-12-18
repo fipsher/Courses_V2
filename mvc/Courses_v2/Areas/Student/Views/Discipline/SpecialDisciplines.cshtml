@@ -1,15 +1,16 @@
 ﻿@model Courses_v2.Areas.Student.Models.StudentDisciplines
 @using System.Linq;
-@using Core.Enums;
+@using Core.Entities;
 @using Core;
+@using Core.Responces;
 @{
     ViewBag.Title = "Дисципліни";
-    var firstSemester = Model.DisciplineConfiguration.SingleOrDefault(el => el.Semester % 2 == 1 && el.DisciplineType == Model.Type);
-    var secondSemester = Model.DisciplineConfiguration.SingleOrDefault(el => el.Semester % 2 == 0 && el.DisciplineType == Model.Type);
-    var userSpecialDisciplines = Model.SudentChoice.Where(ud => ud.DisciplineType == Model.Type);
+    DisciplineConfiguration firstSemester = Model.DisciplineConfiguration.SingleOrDefault(el => el.Semester % 2 == 1 && el.DisciplineType == Model.Type);
+    DisciplineConfiguration secondSemester = Model.DisciplineConfiguration.SingleOrDefault(el => el.Semester % 2 == 0 && el.DisciplineType == Model.Type);
+    List<Discipline> userSocioDisciplines = Model.SudentChoice.Where(ud => ud.DisciplineType == Model.Type).ToList();
 }
 
-<h2>Технічні Дисципліни</h2>
+<h2>Дисципліни</h2>
 
 <table class="table">
     <tr>
@@ -45,25 +46,62 @@
             </td>
             <td>
                 @Html.ActionLink("Details", "Details", new { id = item.Id })
-                @if (userSpecialDisciplines.Any(usd => usd.Id == item.Id))
+                @if (userSocioDisciplines.Any(usd => usd.Id == item.Id) && CheckTime())
                 {
                     @:| @Html.ActionLink("Unregister", "Unregister", new { id = item.Id })
-                } else if ((item.Semester % 2 == 1
-                     && firstSemester != null
-                     && userSpecialDisciplines.Count(el => el.Semester == item.Semester) < firstSemester.RequiredAmount
-                     && userSpecialDisciplines.All(usd => usd.Id != item.Id))
-                 ||
-                 (item.Semester % 2 == 0
-                     && secondSemester != null
-                     && userSpecialDisciplines.Count(el => el.Semester == item.Semester) < secondSemester.RequiredAmount
-                     && userSpecialDisciplines.All(usd => usd.Id != item.Id))
-                 )
+                }
+                else if ((item.Semester % 2 == 1
+                       && firstSemester != null
+                       && userSocioDisciplines.Count(el => el.Semester == item.Semester) < firstSemester.RequiredAmount
+                       && userSocioDisciplines.All(usd => usd.Id != item.Id))
+                   ||
+                   (item.Semester % 2 == 0
+                       && secondSemester != null
+                       && userSocioDisciplines.Count(el => el.Semester == item.Semester) < secondSemester.RequiredAmount
+                       && userSocioDisciplines.All(usd => usd.Id != item.Id))
+                    &&
+                    item.Count < Constants.DisciplineMaxCapacity
+                   )
                 {
                     @:| @Html.ActionLink("Register", "Register", new { id = item.Id })
-                 }
-                
+                }
+
             </td>
         </tr>
     }
 
 </table>
+@functions{
+    public bool CanRegister(
+    GroupDisciplineModel item,
+    DisciplineConfiguration firstSemester,
+    DisciplineConfiguration secondSemester,
+    List<Discipline> userSocioDisciplines)
+    {
+        bool result = ((item.Semester % 2 == 1
+                       && firstSemester != null
+                       && userSocioDisciplines.Count(el => el.Semester == item.Semester) < firstSemester.RequiredAmount
+                       && userSocioDisciplines.All(usd => usd.Id != item.Id))
+                   ||
+                   (item.Semester % 2 == 0
+                       && secondSemester != null
+                       && userSocioDisciplines.Count(el => el.Semester == item.Semester) < secondSemester.RequiredAmount
+                       && userSocioDisciplines.All(usd => usd.Id != item.Id)))
+                    &&
+                    item.Count < Constants.DisciplineMaxCapacity;
+
+        return result && CheckTime();
+    }
+
+    public bool CheckTime()
+    {
+        var now = DateTime.Now;
+
+        return Model.Start != null && Model.First != null && Model.Second != null
+        && (
+            Model.Start.Value < now && Model.First.Value < now
+            ||
+            Model.First.Value.AddHours(1) < now && Model.Second.Value < now
+        );
+    }
+}

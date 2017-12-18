@@ -259,7 +259,7 @@
     <Content Include="Areas\Admin\Views\Cathedra\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Cathedra\Index.cshtml" />
     <Content Include="Areas\Student\Views\web.config" />
-    <Content Include="Areas\Student\Views\Discipline\SocioDisciplines.cshtml" />
+    <Content Include="Areas\Student\Views\Discipline\Index.cshtml" />
     <Content Include="Areas\Student\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Student\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Student\Views\Discipline\MyDisciplines.cshtml" />

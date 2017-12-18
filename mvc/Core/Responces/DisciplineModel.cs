@@ -36,5 +36,8 @@ namespace Core.Responces
         public string Lecturer { get; set; }
         [DisplayName("Зареєстровано студентів")]
         public int Count { get; set; }
+        public bool IsLocked { get; set; }
+        public bool Registered { get; set; }
+        public bool CanRegister { get; set; }
     }
 }

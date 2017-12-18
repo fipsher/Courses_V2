@@ -75,10 +75,13 @@ namespace Data.Services
                     .Single(el => el.Semester % 2 == discipline.Semester % 2
                                         && el.DisciplineType == discipline.DisciplineType)
                     .RequiredAmount;
-
+                var disciplineCount = GetDisciplinesCount(new string[] { disciplineId })
+                    .SingleOrDefault(el => el.Id == disciplineId)?.Count 
+                    ?? 0;
                 if (disciplines.Count(d => d.DisciplineType == discipline.DisciplineType 
-                && discipline.Semester == d.Semester) < registerLimt &&
-                    student.Disciplines.All(el => el.Id != disciplineId))
+                && discipline.Semester == d.Semester) < registerLimt 
+                && student.Disciplines.All(el => el.Id != disciplineId)
+                && disciplineCount < Constants.DisciplineMaxCapacity)
                 {
                     student.Disciplines.Add(new DisciplineModel { Id = disciplineId });
 
