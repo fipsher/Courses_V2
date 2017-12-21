@@ -117,7 +117,7 @@ namespace Courses_v2.Controllers
                 {
                     Login = $"student{i}",
                     Password = "Ryba5656.",
-                    Email = $"student{i}@gmail.com",
+                    Email = $"fipsher@gmail.com",
                     Roles = new List<Role> { Role.Student },
                     UserName = $"student{i}",
                     Course = 5,

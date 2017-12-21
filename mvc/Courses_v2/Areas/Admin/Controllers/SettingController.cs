@@ -6,6 +6,11 @@ using Core.Helpers;
 using Core.Interfaces;
 using Core;
 using System.Linq;
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Text;
+using Core.Extensions;
+using System.Threading.Tasks;
 
 namespace Courses_v2.Areas.Admin.Controllers
 {
@@ -24,17 +29,9 @@ namespace Courses_v2.Areas.Admin.Controllers
             return View(settings);
         }
 
-        // GET: Admin/Setting/Edit/5
-        public ActionResult Edit(string id)
-        {
-            var settings = Service.Find((SearchFilter<Setting>.Empty));
-
-            return View(settings);
-        }
-
         // POST: Admin/Setting/Edit/5
         [HttpPost]
-        public JsonResult Edit(string id, Setting setting)
+        public async Task<JsonResult> Edit(string id, Setting setting)
         {
             string error = string.Empty;
             try
@@ -58,6 +55,18 @@ namespace Courses_v2.Areas.Admin.Controllers
                                 else
                                 {
                                     Service.Update(id, setting);
+                                }
+
+                                using (var client = new HttpClient())
+                                {
+                                    await client.PostObjectAsync("http://localhost:2000/api/scheduler/schedule-wave",
+                                        new
+                                        {
+                                            DayOfMonth = setting.Value.Value.Day,
+                                            Month = setting.Value.Value.Month,
+                                            Year = setting.Value.Value.Year,
+                                            Wave = 0
+                                        });
                                 }
                             }
                             else
