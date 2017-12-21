@@ -16,8 +16,11 @@ namespace Courses_v2.Areas.Admin.Controllers
     [Authorize(Roles = "Admin, Moderator")]
     public class GroupController : BaseController<Group, IGroupService>
     {
+        private readonly IUserService _userService;
+
         public GroupController(IServiceFactory serviceFactory) : base(serviceFactory, serviceFactory.GroupService)
         {
+            _userService = serviceFactory.UserService;
         }
 
         // GET: Admin/User
@@ -121,6 +124,12 @@ namespace Courses_v2.Areas.Admin.Controllers
                 if (ModelState.IsValid)
                 {
                     Service.Update(id, group);
+                    var users = _userService.Find(SearchFilter<User>.FilterByEntity(new User { GroupId = group.Id } ));
+                    foreach (var user in users)
+                    {
+                        user.Course = group.Course;
+                        _userService.Update(user.Id, user);
+                    }
                     return RedirectToAction("Index");
                 }
             }

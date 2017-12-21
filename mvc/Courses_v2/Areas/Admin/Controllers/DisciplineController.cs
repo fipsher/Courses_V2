@@ -29,7 +29,7 @@ namespace Courses_v2.Areas.Admin.Controllers
                 };
             }
 
-            var disciplines = Service.FindDisciplineResponse(filter).OrderBy(el => el.Count);
+            var disciplines = Service.FindDisciplineResponse(filter).OrderByDescending(el => el.Count);
             return View(disciplines);
         }
         // Post: Moderator/Disciplines
@@ -44,7 +44,7 @@ namespace Courses_v2.Areas.Admin.Controllers
             }
             searchFilter.OptionList = FilterHelper.OptionListByEntity<Discipline>(filter);
 
-            var disciplines = Service.FindDisciplineResponse(searchFilter).OrderBy(el => el.Count);
+            var disciplines = Service.FindDisciplineResponse(searchFilter).OrderByDescending(el => el.Count);
             return View(disciplines);
         }
 

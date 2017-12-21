@@ -48,7 +48,7 @@ namespace Courses_v2.Areas.Student.Controllers
             var filter = SearchFilter<Discipline>.Empty;
             filter.OptionList = type == DisciplineType.Socio
                 ? FilterHelper.SocialDisciplines(user.Course.Value, true)
-                : FilterHelper.SpecialDisciplines(user.Course.Value, true);
+                : FilterHelper.SpecialDisciplines(user.Course.Value, group.DisciplineSubscriptions, true);
 
             var disciplines = Service.FindDisciplineResponse(filter);
             var userDisciplines = user.Disciplines != null && user.Disciplines.Any()
@@ -74,7 +74,7 @@ namespace Courses_v2.Areas.Student.Controllers
 
             return new StudentDisciplines
             {
-                Disciplines = disciplines,
+                Disciplines = disciplines.OrderByDescending(el => el.Count).ToList(),
                 Type = DisciplineType.Socio,
             };
         }

@@ -39,18 +39,20 @@ namespace Core.Helpers
             new Discipline { DisciplineType = DisciplineType.Special, Semester = course * 2 + 1, IsAvailable = isAvailable },
             new Discipline { DisciplineType = DisciplineType.Special, Semester = course * 2 + 2, IsAvailable = isAvailable }
         };
-        public static List<Discipline> SpecialDisciplines(int course, List<string> disciplineIds)
+        public static List<Discipline> SpecialDisciplines(int course, List<string> disciplineIds, bool? isAvailable)
         {
             var filter = disciplineIds.Select(el => new Discipline
             {
                 DisciplineType = DisciplineType.Special,
                 Semester = course * 2 + 1,
+                IsAvailable = isAvailable
             });
 
             filter = filter.Concat(disciplineIds.Select(el => new Discipline
             {
                 DisciplineType = DisciplineType.Special,
                 Semester = course * 2 + 2,
+                IsAvailable = isAvailable
             }));
 
             return filter.ToList();
