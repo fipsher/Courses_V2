@@ -2,6 +2,7 @@
 using Core.Helpers;
 using Core.Interfaces;
 using Core.Interfaces.Services;
+using Core.Responces;
 using Courses_v2.Controllers;
 using System;
 using System.Collections.Generic;
@@ -136,12 +137,12 @@ namespace Courses_v2.Areas.Admin.Controllers
         [Authorize(Roles = "Moderator, Admin")]
         public ActionResult Delete(string id)
         {
-            var disciplines = Service.FindDisciplineResponse((new SearchFilter<Discipline>()
+            GroupDisciplineModel disciplines = Service.FindDisciplineResponse((new SearchFilter<Discipline>()
             {
                 OptionList = new[] { new Discipline() { Id = id } }
-            }));
+            })).SingleOrDefault();
 
-            return View(disciplines?.SingleOrDefault());
+            return View(disciplines);
         }
         // POST: Moderator/Disciplines/Delete/5
         [HttpPost]
