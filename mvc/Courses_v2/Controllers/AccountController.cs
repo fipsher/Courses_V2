@@ -90,7 +90,7 @@ namespace Courses_v2.Controllers
                 Id = Guid.NewGuid().ToString(),
                 Login = $"Lecturer",
                 Password = "Ryba5656.",
-                Email = "fipsher@gmail.com",
+                Email = "Lecturer@gmail.com",
                 Roles = new List<Role> { Role.Lecturer },
                 UserName = "AnderewThe",
                 GroupId = "29627000-e32d-11e7-b070-a7a2334df747",
@@ -127,7 +127,7 @@ namespace Courses_v2.Controllers
                 {
                     Login = $"student{i}",
                     Password = "Ryba5656.",
-                    Email = $"fipsher@gmail.com",
+                    Email = $"student{i}@gmail.com",
                     Roles = new List<Role> { Role.Student },
                     UserName = $"student{i}",
                     Course = 5,

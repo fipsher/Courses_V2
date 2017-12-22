@@ -28,12 +28,7 @@
             @if (Model.PhoneNumber != null)
             {
                 <br />
-                    <text>[&nbsp;@Html.ActionLink("Змінити", "AddPhoneNumber")&nbsp;]</text>
-                using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <text>[<input type="submit" value="Видалити" class="btn-link" />]</text>
-                }
+                <text>[&nbsp;@Html.ActionLink("Змінити", "AddPhoneNumber")&nbsp;]</text>
             }
             else
             {
