@@ -7,7 +7,7 @@
     var cathedras = new SelectList(ViewBag.Cathedras, "Id", "Name");
 }
 
-<h2>Create</h2>
+<h2>Створити</h2>
 
 
 @using (Html.BeginForm()) 
@@ -15,7 +15,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Group</h4>
+        <h4>Група</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
