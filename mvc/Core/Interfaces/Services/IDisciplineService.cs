@@ -9,7 +9,10 @@ namespace Core.Interfaces.Services
     {
         List<GroupDisciplineModel> FindDisciplineResponse(SearchFilter<Discipline> filter);
 
+        List<User> GetDisciplineStudents(string disciplineId);
+
         bool TryRegisterStudent(string studentId, string disciplineId);
+
         bool UnregisterStudent(string studentId, string disciplineId);
     }
 }

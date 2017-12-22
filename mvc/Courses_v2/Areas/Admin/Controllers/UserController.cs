@@ -130,6 +130,7 @@ namespace Courses_v2.Areas.Admin.Controllers
             }
             var users = Service.Find((new SearchFilter<User>() { OptionList = new[] { new User() { Id = id } } }));
 
+            ViewBag.StudentGroups = ServiceFactory.GroupService.Find(SearchFilter<Group>.Empty);
             return View(users.SingleOrDefault());
         }
 

@@ -117,5 +117,10 @@ namespace Data.Services
         {
             return GenericProxies.RestPost<List<DisciplineCount>, IEnumerable<string>>($"{Repository.ApiUrl}/findStudentsCountForDisciplineId", disciplineIds);
         }
+
+        public List<User> GetDisciplineStudents(string disciplineId)
+        {
+            return GenericProxies.RestPost<List<User>, object>($"{Repository.ApiUrl}/findStudentsByDisciplineId", new { disciplineId = disciplineId });
+        }
     }
 }

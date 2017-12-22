@@ -27,7 +27,7 @@ namespace Core.Entities
         public string PhoneNumber { get; set; }
 
         [DisplayName("Ролі")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Поле обов'язкове до заповнення")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Поле обов'язкове до заповнення")]
         public List<Role> Roles { get; set; }
 
         [DisplayName("Дисципліни")]

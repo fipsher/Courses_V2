@@ -39,5 +39,7 @@ namespace Core.Responces
         public bool IsLocked { get; set; }
         public bool Registered { get; set; }
         public bool CanRegister { get; set; }
+
+        public List<User> Students { get; set; }
     }
 }

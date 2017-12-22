@@ -51,12 +51,17 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Moderator/Disciplines/Details/5
         public ActionResult Details(string id)
         {
-            var disciplines = Service.FindDisciplineResponse((new SearchFilter<Discipline>
+            var discipline = Service.FindDisciplineResponse((new SearchFilter<Discipline>
             {
                 OptionList = new[] { new Discipline() { Id = id } }
             })).SingleOrDefault();
 
-            return View(disciplines);
+            if (User.IsInRole("Moderator") || User.IsInRole("Admin"))
+            {
+                discipline.Students = Service.GetDisciplineStudents(discipline.Id);
+            }
+
+            return View(discipline);
         }
 
         // GET: Moderator/Disciplines/Create

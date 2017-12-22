@@ -3,43 +3,41 @@
     ViewBag.Title = "Manage";
 }
 
-<h2>@ViewBag.Title.</h2>
-
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
-    <h4>Change your account settings</h4>
+    <h4>Ппрофіль</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>Password:</dt>
+        <dt>Пароль:</dt>
         <dd>
             [
             @if (Model.HasPassword)
             {
-                @Html.ActionLink("Change your password", "ChangePassword")
+                @Html.ActionLink("Змінити", "ChangePassword")
             }
             else
             {
-                @Html.ActionLink("Create", "SetPassword")
+                @Html.ActionLink("Створити", "SetPassword")
             }
             ]
         </dd>
 
-        <dt>Phone Number:</dt>
+        <dt>Номер телефону:</dt>
         <dd>
             @(Model.PhoneNumber ?? "None")
             @if (Model.PhoneNumber != null)
             {
                 <br />
-                    <text>[&nbsp;@Html.ActionLink("Change", "AddPhoneNumber")&nbsp;]</text>
+                    <text>[&nbsp;@Html.ActionLink("Змінити", "AddPhoneNumber")&nbsp;]</text>
                 using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
-                    <text>[<input type="submit" value="Remove" class="btn-link" />]</text>
+                    <text>[<input type="submit" value="Видалити" class="btn-link" />]</text>
                 }
             }
             else
             {
-                <text>[&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")&nbsp;]</text>
+                <text>[&nbsp;@Html.ActionLink("Додати", "AddPhoneNumber")&nbsp;]</text>
             }
         </dd>
     </dl>
