@@ -54,50 +54,53 @@
     @Html.ActionLink("Редагувати", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Список", "Index")
 </p>
-<div class="row">
-    <div class="col-xs-12">
-        <h2>Зареєстровані студенти</h2>
-    </div>
+@if (User.IsInRole("Moderator") || User.IsInRole("Admin"))
+{
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Зареєстровані студенти</h2>
+        </div>
 
-    <table class="table">
-        <tr>
-            <th>
-                Логін
-            </th>
-
-            <th>
-                Ім'я
-            </th>
-            <th>
-                Пошта
-            </th>
-            <th>
-                Номер телефону
-            </th>
-            <th>
-                Course
-            </th>
-        </tr>
-
-        @foreach (var item in Model.Students)
-        {
+        <table class="table">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Login)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PhoneNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Course)
-                </td>
+                <th>
+                    Логін
+                </th>
+
+                <th>
+                    Ім'я
+                </th>
+                <th>
+                    Пошта
+                </th>
+                <th>
+                    Номер телефону
+                </th>
+                <th>
+                    Course
+                </th>
             </tr>
-        }
-    </table>
-</div>
+
+            @foreach (var item in Model.Students)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Login)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Course)
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+}
