@@ -87,6 +87,18 @@ namespace Courses_v2.Areas.Admin.Controllers
                                 {
                                     Service.Update(id, setting);
                                 }
+
+                                using (var client = new HttpClient())
+                                {
+                                    await client.PostObjectAsync("http://localhost:2000/api/scheduler/schedule-wave",
+                                        new
+                                        {
+                                            DayOfMonth = setting.Value.Value.Day,
+                                            Month = setting.Value.Value.Month,
+                                            Year = setting.Value.Value.Year,
+                                            Wave = 1
+                                        });
+                                }
                             }
                             else
                             {
@@ -103,6 +115,18 @@ namespace Courses_v2.Areas.Admin.Controllers
                                 else
                                 {
                                     Service.Update(id, setting);
+                                }
+
+                                using (var client = new HttpClient())
+                                {
+                                    await client.PostObjectAsync("http://localhost:2000/api/scheduler/schedule-wave",
+                                        new
+                                        {
+                                            DayOfMonth = setting.Value.Value.Day,
+                                            Month = setting.Value.Value.Month,
+                                            Year = setting.Value.Value.Year,
+                                            Wave = 2
+                                        });
                                 }
                             }
                             else

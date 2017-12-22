@@ -12,6 +12,7 @@ using Core.Entities;
 using System;
 using Core.Helpers;
 using System.Linq;
+using System.Net.Http;
 
 namespace Courses_v2.Controllers
 {
@@ -59,6 +60,15 @@ namespace Courses_v2.Controllers
             private set
             {
                 _userManager = value;
+            }
+        }
+
+        [AllowAnonymous]
+        public async Task Wave(int wave)
+        {
+            using (var client = new HttpClient())
+            {
+                await client.GetAsync($"http://localhost:2000/api/scheduler/test/schedule-wave/{wave}");
             }
         }
 
