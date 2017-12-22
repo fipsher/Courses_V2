@@ -18,7 +18,7 @@ namespace Data.Repositories
         }
 
         public virtual void Add(TEntity entity) => GenericProxies.RestPut($"{BaseUrl}/add", entity);
-        public virtual void Delete(string id) => GenericProxies.RestDelete($"{BaseUrl}/delete", id);
+        public virtual void Delete(string id) => GenericProxies.RestDelete($"{BaseUrl}/delete-by-id", new { id = id });
         public virtual List<TEntity> Find(SearchFilter<TEntity> filter) => GenericProxies.RestPost<List<TEntity>, SearchFilter<TEntity>>($"{BaseUrl}/find", filter);
         public virtual void Update(string id, TEntity entity) => GenericProxies.RestPostNonQuery($"{BaseUrl}/update", new { id = entity.Id, update = entity });
     }
