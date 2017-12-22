@@ -58,6 +58,7 @@
     <Compile Include="Entities\Group.cs" />
     <Compile Include="Entities\Setting.cs" />
     <Compile Include="Enums\Enums.cs" />
+    <Compile Include="Extensions\BaseAccessClientExtentions.cs" />
     <Compile Include="Helpers\FilterHelper.cs" />
     <Compile Include="Helpers\SearchFilter.cs" />
     <Compile Include="Interfaces\IEntity.cs" />
