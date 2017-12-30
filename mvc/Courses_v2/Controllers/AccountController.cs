@@ -89,7 +89,7 @@ namespace Courses_v2.Controllers
                 PhoneNumber = "123-123-123"
             });
             var fileName = $@"{HostingEnvironment.ApplicationPhysicalPath}\students.xls";
-            var connectionString = string.Format("Provider=Microsoft.Jet.OLEDB.4.0; data source={0}; Extended Properties=Excel 8.0;", fileName);
+            var connectionString = string.Format("Provider=Microsoft.ACE.OLEDB.12.0; data source={0}; Extended Properties=Excel 8.0;", fileName);
 
             var adapter = new OleDbDataAdapter("SELECT * FROM [Sheet1$]", connectionString);
             var ds = new DataSet();
