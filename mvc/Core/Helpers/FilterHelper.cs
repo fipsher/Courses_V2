@@ -43,17 +43,9 @@ namespace Core.Helpers
         {
             var filter = disciplineIds.Select(el => new Discipline
             {
-                DisciplineType = DisciplineType.Special,
-                Semester = course * 2 + 1,
+                Id = el,
                 IsAvailable = isAvailable
             });
-
-            filter = filter.Concat(disciplineIds.Select(el => new Discipline
-            {
-                DisciplineType = DisciplineType.Special,
-                Semester = course * 2 + 2,
-                IsAvailable = isAvailable
-            }));
 
             return filter.ToList();
         }

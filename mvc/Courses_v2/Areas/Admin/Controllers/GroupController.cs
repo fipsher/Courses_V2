@@ -26,7 +26,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         // GET: Admin/User
         public ActionResult Index()
         {
-            var users = Service.FindGroupResponce(SearchFilter<Group>.Default);
+            var users = Service.FindGroupResponce(SearchFilter<Group>.Empty);
             return View(users.ToList());
         }
         // Post: Admin/User
@@ -34,7 +34,7 @@ namespace Courses_v2.Areas.Admin.Controllers
         public ActionResult Index(Group filter = null)
         {
             filter = filter ?? new Group();
-            var searchFilter = SearchFilter<Group>.Default;
+            var searchFilter = SearchFilter<Group>.Empty;
 
             searchFilter.OptionList = FilterHelper.OptionListByEntity<Group>(filter);
 

@@ -13,6 +13,9 @@ using System;
 using Core.Helpers;
 using System.Linq;
 using System.Net.Http;
+using System.Data.OleDb;
+using System.Data;
+using System.Web.Hosting;
 
 namespace Courses_v2.Controllers
 {
@@ -22,21 +25,21 @@ namespace Courses_v2.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private IUserService _userService;
-        private readonly IDisciplineService d;
-        private readonly IGroupService g;
-        private readonly ICathedraService c;
+        private readonly IDisciplineService discService;
+        private readonly IGroupService groupService;
+        private readonly ICathedraService cathedraService;
 
         public AccountController(
             IUserService userService,
-            IDisciplineService d,
-            IGroupService g,
-            ICathedraService c
+            IDisciplineService discService,
+            IGroupService groupService,
+            ICathedraService cathedraService
             )
         {
             _userService = userService;
-            this.d = d;
-            this.g = g;
-            this.c = c;
+            this.discService = discService;
+            this.groupService = groupService;
+            this.cathedraService = cathedraService;
         }
 
         public ApplicationSignInManager SignInManager
@@ -45,9 +48,9 @@ namespace Courses_v2.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -75,7 +78,7 @@ namespace Courses_v2.Controllers
         [AllowAnonymous]
         public void Seed()
         {
-            _userService.Add(new Core.Entities.User()
+            _userService.Add(new User()
             {
                 Login = $"AndrewThe",
                 Password = "Ryba5656.",
@@ -85,90 +88,80 @@ namespace Courses_v2.Controllers
                 GroupId = "29627000-e32d-11e7-b070-a7a2334df747",
                 PhoneNumber = "123-123-123"
             });
-            var lecturer = new User()
-            {
-                Id = Guid.NewGuid().ToString(),
-                Login = $"Lecturer",
-                Password = "Ryba5656.",
-                Email = "Lecturer@gmail.com",
-                Roles = new List<Role> { Role.Lecturer },
-                UserName = "AnderewThe",
-                GroupId = "29627000-e32d-11e7-b070-a7a2334df747",
-                PhoneNumber = "123-123-123"
-            };
-            _userService.Add(lecturer);
+            var fileName = $@"{HostingEnvironment.ApplicationPhysicalPath}\students.xls";
+            var connectionString = string.Format("Provider=Microsoft.Jet.OLEDB.4.0; data source={0}; Extended Properties=Excel 8.0;", fileName);
 
-            var cathedra = new Cathedra
-            {
-                Id = Guid.NewGuid().ToString(),
-                Name = "App Math"
-            };
+            var adapter = new OleDbDataAdapter("SELECT * FROM [Sheet1$]", connectionString);
+            var ds = new DataSet();
 
-            c.Add(cathedra);
-            var group = new Group()
-            {
-                Id = Guid.NewGuid().ToString(),
-                CathedraId = cathedra.Id,
-                Name = "PMP-51",
-                DisciplineConfiguration = new List<DisciplineConfiguration>
-                {
-                    new DisciplineConfiguration { DisciplineType =  DisciplineType.Socio, RequiredAmount = 1, Semester = 1 },
-                    new DisciplineConfiguration { DisciplineType =  DisciplineType.Socio, RequiredAmount = 1, Semester = 2 },
-                    new DisciplineConfiguration { DisciplineType =  DisciplineType.Special, RequiredAmount = 1, Semester = 1 },
-                    new DisciplineConfiguration { DisciplineType =  DisciplineType.Special, RequiredAmount = 1, Semester = 2 },
-                },
-                Course = 5,
-            };
-            g.Add(group);
+            adapter.Fill(ds, "anyNameHere");
 
-            for (int i = 0; i < 99; i++)
-            {
-                _userService.Add(new User()
-                {
-                    Login = $"student{i}",
-                    Password = "Ryba5656.",
-                    Email = $"student{i}@gmail.com",
-                    Roles = new List<Role> { Role.Student },
-                    UserName = $"student{i}",
-                    Course = 5,
-                    GroupId = group.Id,
-                    PhoneNumber = "123-123-123",
-                });
+            DataTable data = ds.Tables["anyNameHere"];
 
-                d.Add(new Discipline
+            List<Group> groupExist = new List<Group>();
+            List<Cathedra> facultyExist = new List<Cathedra>();
+
+            int i = 0;
+            foreach (DataRow row in data.Rows)
+            {
+                Group usrGrp;
+                var student = new Student
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    DisciplineType = i % 2 == 0 ? DisciplineType.Socio : DisciplineType.Special,
-                    IsAvailable = true,
-                    LecturerId = lecturer.Id,
-                    Name = $"Discipline{i}_11",
-                    Semester = 11,
-                    ProviderCathedraId = cathedra.Id
-                });
-                var di = new Discipline
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    DisciplineType = i % 2 == 0 ? DisciplineType.Socio : DisciplineType.Special,
-                    IsAvailable = true,
-                    LecturerId = lecturer.Id,
-                    Name = $"Discipline{i}_12",
-                    Semester = 12,
-                    ProviderCathedraId = cathedra.Id
+                    LastName = row[0].ToString(),
+                    FirstName = row[1].ToString(),
+                    ParentName = row[2].ToString(),
+                    GroupName = row[3].ToString(),
+                    Faculty = row[4].ToString(),
+                    Course = row[5].ToString()
                 };
-                d.Add(di);
-            }
-            var disciplines = d.Find(SearchFilter<Discipline>.FilterByEntity(new Discipline { DisciplineType = DisciplineType.Special }));
-            disciplines = new List<Discipline> { disciplines[0], disciplines[1] };
-            group.DisciplineSubscriptions = disciplines.Select(d => d.Id).ToList();
 
-            g.Update(group.Id, group);
+                if (facultyExist.All(el => el.Name != student.Faculty))
+                {
+                    var cathedra = new Cathedra { Id = Guid.NewGuid().ToString(), Name = student.Faculty };
+                    cathedraService.Add(cathedra);
+                    facultyExist.Add(cathedra);
+                }
+
+                usrGrp = groupExist.SingleOrDefault(el => el.Name == student.GroupName);
+                if (usrGrp == null)
+                {                    
+                    usrGrp = new Group
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Name = student.GroupName,
+                        CathedraId = facultyExist.SingleOrDefault(c => c.Name == student.Faculty).Id,
+                        Course = Convert.ToInt32(student.Course),
+                        DisciplineConfiguration = new List<DisciplineConfiguration>
+                        {
+                            new DisciplineConfiguration{DisciplineType = DisciplineType.Socio, RequiredAmount = 1, Semester = 1},
+                            new DisciplineConfiguration{DisciplineType = DisciplineType.Socio, RequiredAmount = 1, Semester =  2},
+                            new DisciplineConfiguration{DisciplineType = DisciplineType.Special, RequiredAmount = 1, Semester = 1},
+                            new DisciplineConfiguration{DisciplineType = DisciplineType.Special, RequiredAmount = 1, Semester = 2}
+                        },
+                    };
+                    groupService.Add(usrGrp);
+                    groupExist.Add(usrGrp);
+                }
+
+                var studentUser = new User
+                {
+                    Roles = new List<Role> { Role.Student },
+                    Course = usrGrp.Course,
+                    UserName = $"{student.LastName} {student.FirstName} {student.ParentName}",
+                    Login = $"student{i++}",
+                    Password = "Ryba5656.",
+                    GroupId = usrGrp.Id
+                };
+
+                _userService.Add(studentUser);
+            }
         }
 
         //
         // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
-        {           
+        {
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
